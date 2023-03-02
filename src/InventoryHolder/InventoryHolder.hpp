@@ -1,0 +1,6 @@
+#ifndef INVENTORYHOLDER_HPP
+#define INVENTORYHOLDER_HPP
+
+// INVENTORYHOLDER class
+
+#endif
