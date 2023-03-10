@@ -13,6 +13,9 @@ protected:
     string PermenColors[4] = {"Hijau", "Biru", "Kuning", "Merah"};
 
 public:
+    PermenCard() : Card(-1, -1, -1, -1)
+    {
+    }
     PermenCard(int _value, int _color) : Card(-1, _color, _value, -1)
     {
     }
@@ -22,7 +25,7 @@ public:
         cout << "Kartu anda adalah " << value << " " << PermenColors[color] << ".";
     }
 
-    bool operator<(const Card &other)
+    bool operator<(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -30,7 +33,7 @@ public:
         }
         return this->value < other.getValue();
     };
-    bool operator>(const Card &other)
+    bool operator>(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -38,7 +41,7 @@ public:
         }
         return this->value > other.getValue();
     };
-    bool operator==(const Card &other)
+    bool operator==(const Card &other) const
     {
         if (this->value == other.getValue() && this->color == other.getColor())
         {

@@ -4,11 +4,12 @@
 class Valuable
 {
 protected:
-    int value;
+    float value;
 
 public:
+    Valuable() : value(0){};
     Valuable(int _value) : value(_value){};
-    int virtual getValue() const = 0;
+    float virtual getValue() const = 0;
 };
 
 #endif
