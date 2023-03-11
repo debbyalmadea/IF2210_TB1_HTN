@@ -4,6 +4,7 @@
 
 #include <bits/stdc++.h>
 #include "Player.hpp"
+#include "../Ability/Ability.hpp"
 #include <iostream>
 
 using namespace std;
@@ -15,6 +16,7 @@ protected:
     int nPlayer;
 
 public:
+    friend class Ability;
     PlayerQueue()
     {
         players = new Player[CAPACITY];
@@ -38,11 +40,19 @@ public:
             nPlayer++;
         }
     }
+    Player *getPlayers()
+    {
+        return players;
+    }
+    int getnPlayers()
+    {
+        return nPlayer;
+    }
 
     Player dequeue()
     {
         Player player = players[0];
-        for (int i = 0; i < nPlayer; i++)
+        for (int i = 0; i < nPlayer - 1; i++)
         {
             players[i] = players[i + 1];
         }
