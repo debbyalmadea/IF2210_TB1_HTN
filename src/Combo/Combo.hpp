@@ -270,6 +270,19 @@ public:
     {
         return description;
     }
+
+    bool operator<(const Combo &other) const
+    {
+        return this->getValue() < other.getValue();
+    };
+    bool operator>(const Combo &other) const
+    {
+        return this->getValue() > other.getValue();
+    };
+    bool operator==(const Combo &other) const
+    {
+        return abs(this->getValue() - other.getValue()) < 0.001;
+    };
 };
 
 #endif

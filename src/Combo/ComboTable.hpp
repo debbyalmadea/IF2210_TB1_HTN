@@ -22,7 +22,8 @@ protected:
     vector<PermenCard> handCards;
     vector<PermenCard> totalCards;
     vector<vector<PermenCard>> combinations;
-    float MAX_VAL_STRAIGHT_FLUSH = 512.09;
+    vector<Combo> possibleCombos;
+    int MAX_COMBI = 21;
 
 public:
     ComboTable(vector<PermenCard> _tableCard, vector<PermenCard> _handCard)
@@ -35,43 +36,28 @@ public:
         generateCombinations(5);
     };
 
-    vector<Combo> getCombos()
+    vector<Combo> getPossibleCombos()
     {
-        vector<Combo> combos;
-        Combo tableCombo = Combo(tableCards);
-        tableCombo.calculateValue();
+        return possibleCombos;
+    }
+    void calculatePossibleCombos()
+    {
         for (auto &combination : combinations)
         {
-            // If table special case
-            if (abs(tableCombo.getValue() - MAX_VAL_STRAIGHT_FLUSH) < 0.001)
-            {
-                if (combination == tableCards)
-                    continue;
-                Combo combinationValue = Combo(combination);
-                combinationValue.calculateValueSpecial();
-                combos.push_back(combinationValue);
-            }
-            else
-            {
-                Combo combinationValue = Combo(combination);
-                combinationValue.calculateValue();
-                combos.push_back(combinationValue);
-            }
+            Combo combinationCalc = Combo(combination);
+            combinationCalc.calculateValue();
+            possibleCombos.push_back(combinationCalc);
         }
-        return combos;
+        sort(possibleCombos.begin(), possibleCombos.end());
     }
 
-    void displayCombi()
+    void displayCombos()
     {
-        cout << combinations.size() << endl;
-        for (auto &elem : combinations)
+        for (auto &combo : possibleCombos)
         {
-            cout << "Kombinasi kartu: " << endl;
-            for (auto &elem2 : elem)
-            {
-                elem2.printInfo();
-            }
-            cout << endl;
+            combo.display();
+            cout << endl
+                 << combo.getDescription() << combo.getValue() << endl;
         }
     }
 
@@ -119,6 +105,29 @@ public:
 
         combinations = result;
     }
+
+    bool operator>(const ComboTable &other) const
+    {
+        for (int i = MAX_COMBI - 1; i >= 0; i--)
+        {
+            if (this->possibleCombos[i] == other.possibleCombos[i])
+            {
+                continue;
+            }
+            return this->possibleCombos[i] > other.possibleCombos[i];
+        }
+    };
+    bool operatorM(const ComboTable &other) const
+    {
+        for (int i = MAX_COMBI - 1; i >= 0; i--)
+        {
+            if (this->possibleCombos[i] == other.possibleCombos[i])
+            {
+                continue;
+            }
+            return this->possibleCombos[i] < other.possibleCombos[i];
+        }
+    };
 };
 
 #endif

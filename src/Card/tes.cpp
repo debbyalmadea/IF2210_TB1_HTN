@@ -20,10 +20,10 @@ int main()
      tes.push_back(baru4);
      tes.push_back(baru5);
 
-     baru = PermenCard(9, 3);
-     baru2 = PermenCard(10, 3);
-     baru3 = PermenCard(11, 3);
-     baru4 = PermenCard(12, 3);
+     baru = PermenCard(11, 3);
+     baru2 = PermenCard(5, 3);
+     baru3 = PermenCard(7, 3);
+     baru4 = PermenCard(9, 3);
      baru5 = PermenCard(13, 3);
      vector<PermenCard>
          tes2;
@@ -36,26 +36,32 @@ int main()
      Combo kom = Combo(tes);
      kom.display();
      kom.calculateValue();
-     cout << endl
-          << kom.getDescription() << kom.getValue() << endl;
-     Combo kom2 = Combo(tes2);
-     kom2.display();
-     kom2.calculateValue();
-     cout << endl
-          << kom2.getDescription() << kom2.getValue() << endl;
+     // cout << endl
+     //      << kom.getDescription() << kom.getValue() << endl;
+     // Combo kom2 = Combo(tes2);
+     // kom2.display();
+     // kom2.calculateValue();
+     // cout << endl
+     //      << kom2.getDescription() << kom2.getValue() << endl;
      // kom.displayCombi();
      vector<PermenCard> tes3;
      tes3.push_back(PermenCard(6, 3));
-     tes3.push_back(PermenCard(10, 2));
+     tes3.push_back(PermenCard(13, 2));
 
      cout << endl
           << endl;
+     // Jadi tes2 = table card, tes 3 = hand. combos itu semua kombinasi yang mungkin.
+     // Di sort biar kombinasi dengan value paling gede jadi palin belakang.
      ComboTable table = ComboTable(tes2, tes3);
-     vector<Combo> combos = table.getCombos();
-     for (auto &combo : combos)
-     {
-          combo.display();
-          cout << endl
-               << combo.getDescription() << combo.getValue() << endl;
-     }
+     table.calculatePossibleCombos();
+     table.displayCombos();
+     vector<PermenCard> tes4;
+     tes4.push_back(PermenCard(8, 3));
+     tes4.push_back(PermenCard(10, 1));
+
+     cout << endl
+          << endl;
+     ComboTable table2 = ComboTable(tes2, tes4);
+     table2.calculatePossibleCombos();
+     table2.displayCombos();
 }
