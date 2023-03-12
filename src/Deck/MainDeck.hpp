@@ -71,5 +71,11 @@ public:
         }
         return baru;
     }
+
+    /* tester method */
+    PermenCard operator[](const int &idx)
+    {
+        return deckCard[idx];
+    }
 };
 #endif

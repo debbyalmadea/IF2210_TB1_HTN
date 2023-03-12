@@ -2,6 +2,7 @@
 #define _CARD_
 
 #include "Valuable.hpp"
+#include <map>
 
 class Card : public Valuable
 {
@@ -36,4 +37,5 @@ public:
     bool virtual operator>(const Card &other) const = 0;
     bool virtual operator==(const Card &other) const = 0;
 };
+
 #endif
