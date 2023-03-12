@@ -11,29 +11,28 @@ using namespace std;
 class Ability
 {
 protected:
-    string name;
-    bool available;
-    bool used;
+    int idAbility;
+    int idPemilik;
+    bool isDead;
+    string abilityName[7] = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
+    static bool available[7];
 
 public:
-    Ability() : name(""), available(false), used(false)
-    {
-    }
-    Ability(string _name, bool _available, bool _used) : name(_name), available(_available), used(_used)
-    {
-    }
-    string getAbilityName()
-    {
-        return name;
-    }
-    bool getAbilityAvailability()
-    {
-        return available;
-    }
-    bool getUsedStatus()
-    {
-        return used;
-    }
-    // virtual void use() = 0;
+    // ctor
+    Ability();
+    Ability(int _idAbility, int _idPemilik, bool isDead);
+
+    int getIdAbility() const;
+    string getAbilityName() const;
+    bool getAbilityAvailability() const;
+    int getIdPemilik() const;
+    bool getDeadStatus() const;
+
+    void setIdAbility(int _idAbility);
+    void setAbilityAvailability(bool _available);
+    void setIdPemilik(int _idPemilik);
+    void setDeadStatus(bool _isDead);
+
+    virtual void use(int _idAbility);
 };
 #endif

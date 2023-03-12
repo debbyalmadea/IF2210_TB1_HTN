@@ -9,7 +9,7 @@ using namespace std;
 class Quadruple : public Ability
 {
 public:
-    Quadruple() : Ability("Quadruple", true, false)
+    Quadruple() : Ability(1, -1, false)
     {
     }
 }

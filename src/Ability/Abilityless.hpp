@@ -9,24 +9,41 @@ using namespace std;
 class Abilityless : public Ability
 {
 public:
-    Abilityless() : Ability("Abilityless", true, false)
+    Abilityless() : Ability(0, -1, false)
     {
     }
-    void use(int idPemain, PlayerQueue p)
+    Abilityless(int _idPemilik) : Ability(0, idPemilik, false)
     {
-        for (int i = 0; i < p.getnPlayers(); i++)
+    }
+    bool hasUsedAllAbility()
+    {
+        bool hasUsed = true;
+        for (int i = 0; i < 7; i++)
         {
-            if (p.getPlayers()[i].getID() == idPemain)
+            if (available[i] == true && i != getIdAbility())
             {
-                if (p.getPlayers()[i].getAbility().getUsedStatus() == true)
-                {
-                    cout << "Kartu ability " << p.getPlayers()[i].getID() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia" << endl;
-                }
-                else
-                {
-                }
+                hasUsed = false;
+                break;
             }
         }
+        return hasUsed;
+    }
+    void use(int _idAbility, Ability *target)
+    {
+        Ability ::use(_idAbility);
+        if (_idAbility == _idAbility)
+        {
+            if (target->getAbilityAvailability() == false)
+            {
+                cout << "Kartu ability pemain" << target->getIdPemilik() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+            }
+            else
+            {
+                cout << "Kartu ability pemain " << target->getIdPemilik() << " telah dimatikan." << endl;
+                target->setAbilityAvailability(false);
+            }
+        }
+        available[idAbility] = false;
     }
 }
 
