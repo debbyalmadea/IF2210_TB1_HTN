@@ -1,39 +1,40 @@
-#ifndef GAMESTATE_HPP
-#define GAMESTATE_HPP
+#ifndef Gamestate_HPP
+#define Gamestate_HPP
 #include "../Player/PlayerQueue.hpp"
+#include "../IO/FileReader.hpp"
+#include "../Deck/MainDeck.hpp"
+#include "../Ability/CommandInclude.hpp"
 
+#include <iostream>
+using namespace std;
 // game state class
 
 class Gamestate
 {
 protected:
-    int giftPoint = 1;
-    PlayerQueue p;
+    int round;
+    int giftPoint;
+    PlayerQueue playerQueue;
+    MainDeck mainDeck;
+    string input;
+    Command *command;
+    int game;
 
 public:
-    Gamestate(PlayerQueue _p) : giftPoint(1)
-    {
-        p = PlayerQueue();
-        // p = _p;
-    }
-    int getGiftPoint() const
-    {
-        return giftPoint;
-    }
-    void setGiftPoint(int _giftPoint)
-    {
-        giftPoint = _giftPoint;
-    }
-    PlayerQueue getPlayerQueue() const
-    {
-        return p;
-    }
-    void setPlayerQueue(PlayerQueue _p)
-    {
-        p = _p;
-    }
-}
-
-;
+    Gamestate();
+    int getGiftPoint() const;
+    void setGiftPoint(int _giftPoint);
+    PlayerQueue getPlayerQueue() const;
+    void setPlayerQueue(const PlayerQueue &_p);
+    void setNewPlayer();
+    void setCommand(string _command);
+    string getCommand();
+    void executeCommand();
+    void getInputCLI();
+    void clearInput();
+    void getInputCLI(int min, int max);
+    void displayCurrentState();
+    void start();
+};
 
 #endif
