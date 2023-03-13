@@ -2,6 +2,7 @@
 #define MULTIPLIER_HPP
 
 #include "Ability.hpp"
+#include "BasicCommand.hpp"
 
 #include <iostream>
 
@@ -21,7 +22,7 @@ public:
     {
         return multiplyBy;
     }
-    virtual void use(PlayerQueue *p, Gamestate *g)
+    virtual void use(Gamestate *g)
     {
         if (multiplyBy < 0)
         {
@@ -43,10 +44,23 @@ public:
     Quadruple(int _idPemilik) : Ability(1, _idPemilik), Multiplier(4)
     {
     }
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
         // cek ability
-        Multiplier::use(p, g);
+        if (available[getIdAbility()] == 1)
+        {
+            Multiplier::use(g);
+            available[getIdAbility()] = 0;
+            cout << "Kartu quadruple berhasil dipakai" << endl;
+        }
+        else if (available[getIdAbility()] == 2)
+        {
+            cout << "Kartu quadruple sudah mati" << endl;
+        }
+        else
+        {
+            cout << "Kartu quadruple sudah pernah dipakai" << endl;
+        }
     }
 };
 
@@ -59,35 +73,48 @@ public:
     Quarter(int _idPemilik) : Ability(2, _idPemilik), Multiplier(-4)
     {
     }
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
         // cek ability
-        Multiplier::use(p, g);
+        if (available[getIdAbility()] == 1)
+        {
+            Multiplier::use(g);
+            available[getIdAbility()] = 0;
+            cout << "Berhasil menggunakan Quarter" << endl;
+        }
+        else if (available[getIdAbility()] == 2)
+        {
+            cout << "Kartu quarter sudah mati" << endl;
+        }
+        else
+        {
+            cout << "Kartu quarter sudah pernah dipakai" << endl;
+        }
     }
 };
 
-class Double : public Multiplier
+class Double : public Multiplier, public BasicCommand
 {
 public:
-    Double() : Multiplier(2)
+    Double() : Multiplier(2), BasicCommand("Double")
     {
     }
-    void use(PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
-        Multiplier::use(p, g);
+        Multiplier::use(g);
         // print pemain yg melakukannya
     }
 };
 
-class Half : public Multiplier
+class Half : public Multiplier, public BasicCommand
 {
 public:
-    Half() : Multiplier(-2)
+    Half() : Multiplier(-2), BasicCommand("Half")
     {
     }
-    void use(PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
-        Multiplier::use(p, g);
+        Multiplier::use(g);
         // print pemain yg melakukannya
     }
 };

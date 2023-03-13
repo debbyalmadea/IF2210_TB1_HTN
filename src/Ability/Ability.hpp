@@ -3,19 +3,20 @@
 
 #include <iostream>
 #include <string>
+#include "Command.hpp"
 #include "../Player/PlayerQueue.hpp"
 #include "../GameState/GameState.hpp"
 
 using namespace std;
 
 // ABILITY class
-class Ability
+class Ability : public Command
 {
 protected:
     int idAbility;
     int idPemilik;
     string abilityName[7] = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
-    static int available[7]; // 0 : ga punya, 1 : ada, 2 : mati
+    static int available[7]; // 0 : ga punya atau pernah punya terus dipake, 1 : ada bs dipake, 2 : mati (kena abilityless), indeksnya berdasarkan idAbility
     static map<int, int> idPemilikidAbility;
 
 public:
@@ -33,6 +34,6 @@ public:
     void setAbilityAvailability(int _available);
     void setIdPemilik(int _idPemilik);
 
-    virtual void use(int _idAbility, PlayerQueue *p, Gamestate *g) = 0;
+    virtual void use(Gamestate *g) = 0;
 };
 #endif

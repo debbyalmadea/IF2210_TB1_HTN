@@ -17,16 +17,17 @@ public:
     ReverseDirection(int _idPemilik) : Ability(4, _idPemilik)
     {
     }
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
-        if (available[idAbility] == 0)
+        if (available[getIdAbility()] == 0)
         {
             cout << "Ets, tidak bisa. Kamu tidak punya kartu ability REVERSE" << endl;
         }
-        else if (available[idAbility] == 1)
+        else if (available[getIdAbility()] == 1)
         {
-            p->reverse();
+            g->getPlayerQueue().reverse();
             cout << "Pemain " << getIdPemilik() << " melakukan reverse!" << endl;
+            available[getIdAbility()] = 0;
             // urutan eksekusi next
         }
         else

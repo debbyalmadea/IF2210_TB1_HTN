@@ -16,10 +16,18 @@ public:
     ReRoll(int _idPemilik) : Ability(3, _idPemilik)
     {
     }
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
-        if (getIdAbility() == _idAbility)
+        if (available[getIdAbility()] == 1)
         {
+        }
+        else if (available[getIdAbility()] == 0)
+        {
+            cout << "Kartu sudah pernah dipakai" << endl;
+        }
+        else
+        {
+            cout << "Kartu sudah mati" << endl;
         }
     }
 };

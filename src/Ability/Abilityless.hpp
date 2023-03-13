@@ -14,7 +14,7 @@ public:
     Abilityless() : Ability(0, -1)
     {
     }
-    Abilityless(int _idPemilik) : Ability(0, idPemilik)
+    Abilityless(int _idPemilik) : Ability(0, _idPemilik)
     {
     }
     bool hasUsedAllAbility()
@@ -31,7 +31,7 @@ public:
         return hasUsed;
     }
 
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(Gamestate *g)
     {
         int idDeadPlayer;
         if (hasUsedAllAbility())
@@ -41,26 +41,31 @@ public:
         }
         else
         {
-            if (idAbility != _idAbility || getAbilityAvailability() != 1)
+            cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
+            cout << getIdPemilik() << endl;
+            /*print semua player*/
+            int count = 1;
+            for (int i = 0; i < 7; i++)
             {
-                cout << "Eits, kamu tidak punya kartunya" << endl;
+
+                if (getIdPemilik() != i)
+                {
+                    cout << count << ". Pemain " << i << endl;
+                    count++;
+                }
+            }
+
+            cin >> idDeadPlayer;
+            if (available[idPemilikidAbility[idDeadPlayer]] == 1)
+            {
+                available[idPemilikidAbility[idDeadPlayer]] = 2;
+                cout << "Kartu ability pemain " << idDeadPlayer << " berhasil dimatikan" << endl;
             }
             else
             {
-                cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
-                /*print semua player*/
-                int count = 1;
-                for (int i = 1; i <= 7; i++)
-                {
-                    if (idPemilik != i)
-                    {
-                        cout << count << ". Pemain " << i << endl;
-                        count++;
-                    }
-                }
-
-                cin >> idDeadPlayer;
-                available[idPemilikidAbility[idDeadPlayer]] = 2;
+                cout << "Kartu ability pemain "
+                     << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+                setAbilityAvailability(0);
             }
         }
     }

@@ -6,11 +6,11 @@ using namespace std;
 int Ability ::available[7] = {1, 1, 1, 1, 1, 1, 1};
 map<int, int> Ability ::idPemilikidAbility;
 
-Ability::Ability() : idAbility(-1), idPemilik(-1)
+Ability::Ability() : idAbility(-1), idPemilik(-1), Command("ability")
 {
     idPemilikidAbility[idPemilik] = idAbility;
 }
-Ability ::Ability(int _idAbility, int _idPemilik) : idAbility(_idAbility), idPemilik(_idPemilik)
+Ability ::Ability(int _idAbility, int _idPemilik) : idAbility(_idAbility), idPemilik(_idPemilik), Command("ability")
 {
     idPemilikidAbility[idPemilik] = idAbility;
 }
