@@ -16,7 +16,7 @@ public:
     ReRoll(int _idPemilik) : Ability(3, _idPemilik)
     {
     }
-    void use(Gamestate *g)
+    void use(Gamestate &g)
     {
         if (available[getIdAbility()] == 1)
         {

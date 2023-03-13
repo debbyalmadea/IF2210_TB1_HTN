@@ -12,39 +12,39 @@ public:
     SwapCard(int _idPemilik) : Ability(5, _idPemilik)
     {
     }
-    static void swap(int choice1, int choice2, int idx1, int idx2, Gamestate *g)
+    static void swap(int choice1, int choice2, int idx1, int idx2, Gamestate &g)
     {
         PermenCard temp;
         if (choice1 == 1)
         {
-            temp = g->getPlayerQueue().getPlayers()[idx1].getFirstCard();
+            temp = g.getPlayerQueue().getPlayers()[idx1].getFirstCard();
             if (choice2 == 1)
             {
-                g->getPlayerQueue().getPlayers()[idx1].setFirstCard(g->getPlayerQueue().getPlayers()[idx2].getFirstCard());
-                g->getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
+                g.getPlayerQueue().getPlayers()[idx1].setFirstCard(g.getPlayerQueue().getPlayers()[idx2].getFirstCard());
+                g.getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
             }
             else if (choice2 == 2)
             {
-                g->getPlayerQueue().getPlayers()[idx1].setFirstCard(g->getPlayerQueue().getPlayers()[idx2].getSecondCard());
-                g->getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
+                g.getPlayerQueue().getPlayers()[idx1].setFirstCard(g.getPlayerQueue().getPlayers()[idx2].getSecondCard());
+                g.getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
             }
         }
         else if (choice1 == 2)
         {
-            temp = g->getPlayerQueue().getPlayers()[idx1].getSecondCard();
+            temp = g.getPlayerQueue().getPlayers()[idx1].getSecondCard();
             if (choice2 == 1)
             {
-                g->getPlayerQueue().getPlayers()[idx1].setSecondCard(g->getPlayerQueue().getPlayers()[idx2].getFirstCard());
-                g->getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
+                g.getPlayerQueue().getPlayers()[idx1].setSecondCard(g.getPlayerQueue().getPlayers()[idx2].getFirstCard());
+                g.getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
             }
             else if (choice2 == 2)
             {
-                g->getPlayerQueue().getPlayers()[idx1].setSecondCard(g->getPlayerQueue().getPlayers()[idx2].getSecondCard());
-                g->getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
+                g.getPlayerQueue().getPlayers()[idx1].setSecondCard(g.getPlayerQueue().getPlayers()[idx2].getSecondCard());
+                g.getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
             }
         }
     }
-    void use(Gamestate *g)
+    void use(Gamestate &g)
     {
         if (available[getIdAbility()] == 1)
         {
@@ -52,29 +52,29 @@ public:
             int idToSwitch2, index2;
             cout << "Silahkan pilih pemain yang kartunya ingin anda tukar: " << endl;
             int count = 0;
-            for (int i = 0; i < g->getPlayerQueue().getnPlayers(); i++)
+            for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
                 cout << count + 1 << ". "
-                     << "Pemain " << g->getPlayerQueue().getPlayers()[i].getID() << endl;
+                     << "Pemain " << g.getPlayerQueue().getPlayers()[i].getID() << endl;
                 count++;
             }
             cin >> idToSwitch1;
             cout << "Silahkan pilih pemain lain yang kartunya ingin anda tukar: " << endl;
             int count = 0;
-            for (int i = 0; i < g->getPlayerQueue().getnPlayers(); i++)
+            for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
                 cout << count + 1 << ". "
-                     << "Pemain " << g->getPlayerQueue().getPlayers()[i].getID() << endl;
+                     << "Pemain " << g.getPlayerQueue().getPlayers()[i].getID() << endl;
                 count++;
             }
             cin >> idToSwitch2;
-            for (int i = 0; i < g->getPlayerQueue().getnPlayers(); i++)
+            for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
-                if (g->getPlayerQueue().getPlayers()[i].getID() == idToSwitch1)
+                if (g.getPlayerQueue().getPlayers()[i].getID() == idToSwitch1)
                 {
                     index1 = i;
                 }
-                else if (g->getPlayerQueue().getPlayers()[i].getID() == idToSwitch2)
+                else if (g.getPlayerQueue().getPlayers()[i].getID() == idToSwitch2)
                 {
                     index2 = i;
                 }

@@ -3,7 +3,7 @@
 #include "Multiplier.hpp"
 #include "Ability.cpp"
 #include "Next.hpp"
-#include "../GameState/GameState.hpp"
+#include "../Gamestate/GameState.hpp"
 
 #include <iostream>
 #include <string>

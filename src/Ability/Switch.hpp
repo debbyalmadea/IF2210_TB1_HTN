@@ -16,7 +16,7 @@ public:
     Switch(int _idPemilik) : Ability(6, _idPemilik)
     {
     }
-    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    void use(int _idAbility, PlayerQueue *p, Gamestate &g)
     {
         // Player temp;
         if (available[getIdAbility()] == 1)

@@ -3,9 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 #include "Command.hpp"
-#include "../Player/PlayerQueue.hpp"
-#include "../GameState/GameState.hpp"
 
 using namespace std;
 
@@ -34,6 +33,6 @@ public:
     void setAbilityAvailability(int _available);
     void setIdPemilik(int _idPemilik);
 
-    virtual void use(Gamestate *g) = 0;
+    virtual void use(Gamestate &g) = 0;
 };
 #endif

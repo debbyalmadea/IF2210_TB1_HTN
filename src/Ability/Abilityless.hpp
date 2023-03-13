@@ -31,7 +31,7 @@ public:
         return hasUsed;
     }
 
-    void use(Gamestate *g)
+    void use(Gamestate &g)
     {
         int idDeadPlayer;
         if (hasUsedAllAbility())
