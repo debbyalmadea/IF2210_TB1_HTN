@@ -3,36 +3,37 @@
 
 #include <iostream>
 #include <string>
-// #include "../Player/PlayerQueue.hpp"
+#include "Command.hpp"
+#include "../Player/PlayerQueue.hpp"
+#include "../GameState/GameState.hpp"
 
 using namespace std;
 
 // ABILITY class
-class Ability
+class Ability : public Command
 {
 protected:
     int idAbility;
     int idPemilik;
-    bool isDead;
     string abilityName[7] = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
-    static bool available[7];
+    static int available[7]; // 0 : ga punya atau pernah punya terus dipake, 1 : ada bs dipake, 2 : mati (kena abilityless), indeksnya berdasarkan idAbility
+    static map<int, int> idPemilikidAbility;
 
 public:
     // ctor
     Ability();
-    Ability(int _idAbility, int _idPemilik, bool isDead);
+    Ability(int _idAbility, int _idPemilik);
 
     int getIdAbility() const;
     string getAbilityName() const;
-    bool getAbilityAvailability() const;
+    int getAbilityAvailability() const;
     int getIdPemilik() const;
     bool getDeadStatus() const;
 
     void setIdAbility(int _idAbility);
-    void setAbilityAvailability(bool _available);
+    void setAbilityAvailability(int _available);
     void setIdPemilik(int _idPemilik);
-    void setDeadStatus(bool _isDead);
 
-    virtual void use(int _idAbility);
+    virtual void use(Gamestate *g) = 0;
 };
 #endif
