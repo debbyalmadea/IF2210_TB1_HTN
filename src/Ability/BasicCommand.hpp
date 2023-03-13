@@ -17,7 +17,7 @@ public:
     {
         name = _name;
     }
-    virtual void use(Gamestate *g) = 0;
+    virtual void use(Gamestate &g) = 0;
 };
 
 #endif

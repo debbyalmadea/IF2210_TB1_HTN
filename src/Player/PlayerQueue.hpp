@@ -12,23 +12,23 @@ using namespace std;
 class PlayerQueue
 {
 protected:
-    Player *players;
+    // Player *players;
+    vector<Player> players;
     int nPlayer;
 
 public:
     friend class Ability;
     PlayerQueue()
     {
-        players = new Player[CAPACITY];
         nPlayer = 0;
     }
 
-    ~PlayerQueue()
-    {
-        delete[] players;
-    }
+    // ~PlayerQueue()
+    // {
+    //     delete[] players;
+    // }
 
-    void enqueue(const Player player)
+    void enqueue(const Player &player)
     {
         if (nPlayer == CAPACITY)
         {
@@ -36,11 +36,17 @@ public:
         }
         else
         {
-            players[nPlayer] = player;
+            // players[nPlayer] = player;
+            players.push_back(player);
             nPlayer++;
         }
     }
-    Player *getPlayers()
+
+    Player getFirst()
+    {
+        return players[0];
+    }
+    vector<Player> getPlayers()
     {
         return players;
     }
@@ -73,11 +79,11 @@ public:
         maintainQueue(); // Mengurutkan kembali dari yang belum mendapat giliran
     }
 
-    void shuffleQueue() // for new game
-    {
-        unsigned seed = 0;
-        shuffle(players, players + nPlayer, default_random_engine(seed));
-    }
+    // void shuffleQueue() // for new game
+    // {
+    //     unsigned seed = 0;
+    //     shuffle(players, players + nPlayer, default_random_engine(seed));
+    // }
 
     void maintainQueue()
     {
@@ -95,9 +101,9 @@ public:
         enqueue(giliran);
 
         cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
-        cout << "Giliran saat ini: P" << players[0].getID() << "\n\n";
+        displayCurrentGiliran();
     }
-    void displayQueue()
+    void displayQueue() const
     {
         cout << "Urutan permainan saat ini:" << endl;
         for (int i = 0; i < nPlayer; i++)
@@ -107,9 +113,14 @@ public:
         cout << endl;
     }
 
+    void displayCurrentGiliran()
+    {
+        cout << "Giliran saat ini: P" << players[0].getID() << " " << players[0].getName() << endl;
+    }
+
     void displayGiliran()
     {
-        cout << "Giliran saat ini: P" << players[0].getID() << endl;
+        displayCurrentGiliran();
         cout << "Urutan giliran selanjutnya: ";
         for (int i = 1; i < nPlayer; i++)
         {
@@ -118,7 +129,7 @@ public:
                 cout << "P" << players[i].getID() << " ";
             }
         }
-        cout << "\n\n";
+        cout << "\n";
     }
 };
 

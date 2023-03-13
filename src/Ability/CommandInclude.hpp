@@ -1,0 +1,5 @@
+#include "Ability.hpp"
+#include "BasicCommand.hpp"
+#include "Command.hpp"
+#include "Next.hpp"
+#include "Multiplier.hpp"

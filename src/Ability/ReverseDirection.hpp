@@ -17,7 +17,7 @@ public:
     ReverseDirection(int _idPemilik) : Ability(4, _idPemilik)
     {
     }
-    void use(Gamestate *g)
+    void use(Gamestate &g)
     {
         if (available[getIdAbility()] == 0)
         {
@@ -25,7 +25,7 @@ public:
         }
         else if (available[getIdAbility()] == 1)
         {
-            g->getPlayerQueue().reverse();
+            g.getPlayerQueue().reverse();
             cout << "Pemain " << getIdPemilik() << " melakukan reverse!" << endl;
             available[getIdAbility()] = 0;
             // urutan eksekusi next
