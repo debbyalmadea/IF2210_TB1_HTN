@@ -2,8 +2,7 @@
 #define REVERSEDIRECTION_hpp
 
 #include "Ability.hpp"
-#include "../Player/PlayerQueue.hpp"
-#include "../Player/Player.hpp"
+#include "../GameState/GameState.hpp"
 #include <iostream>
 
 using namespace std;
