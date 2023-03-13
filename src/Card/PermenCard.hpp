@@ -13,66 +13,17 @@ protected:
     static map<string, int> PermenColors;
 
 public:
-    PermenCard() : Card(-1, -1, -1, -1)
-    {
-    }
-    PermenCard(int _value, int _color) : Card(-1, _color, _value, -1)
-    {
-    }
+    PermenCard();
+    PermenCard(int _value, int _color);
 
-    void printInfo()
-    {
-        cout << "Kartu anda adalah " << value << " " << intToColorString(color) << ".";
-    }
+    void printInfo();
+    bool operator<(const Card &other) const;
+    bool operator>(const Card &other) const;
+    bool operator==(const Card &other) const;
 
-    bool operator<(const Card &other) const
-    {
-        if (this->value == other.getValue())
-        {
-            return this->color < other.getColor();
-        }
-        return this->value < other.getValue();
-    }
-    bool operator>(const Card &other) const
-    {
-        if (this->value == other.getValue())
-        {
-            return this->color > other.getColor();
-        }
-        return this->value > other.getValue();
-    }
-    bool operator==(const Card &other) const
-    {
-        if (this->value == other.getValue() && this->color == other.getColor())
-        {
-            return true;
-        }
-        return false;
-    }
+    static string intToColorString(int code);
 
-    static string intToColorString(int code)
-    {
-        map<string, int>::iterator it;
-        for (it = PermenColors.begin(); it != PermenColors.end(); ++it)
-        {
-            if (it->second == code)
-            {
-                return it->first;
-            }
-        }
-
-        return "";
-    }
-
-    static int stringToColorInt(string color)
-    {
-        if (PermenColors.find(color) != PermenColors.end())
-        {
-            return PermenColors[color];
-        }
-        return -1;
-    }
+    static int stringToColorInt(string color);
 };
 
-map<string, int> PermenCard::PermenColors = {{"HIJAU", 0}, {"BIRU", 1}, {"KUNING", 2}, {"MERAH", 3}};
 #endif
