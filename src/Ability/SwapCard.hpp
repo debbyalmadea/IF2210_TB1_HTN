@@ -1,6 +1,7 @@
 #ifndef SWAPCARD_HPP
 #define SWAPCARD_HPP
 #include "Ability.hpp"
+#include "../GameState/GameState.hpp"
 
 // SWAPCARD class
 class SwapCard : public Ability
@@ -20,13 +21,13 @@ public:
             temp = g.getPlayerQueue().getPlayers()[idx1].getFirstCard();
             if (choice2 == 1)
             {
-                g.getPlayerQueue().getPlayers()[idx1].setFirstCard(g.getPlayerQueue().getPlayers()[idx2].getFirstCard());
-                g.getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
+                g.getPlayerQueue().getPlayer(idx1).setFirstCard(g.getPlayerQueue().getPlayer(idx2).getFirstCard());
+                g.getPlayerQueue().getPlayer(idx2).setFirstCard(temp);
             }
             else if (choice2 == 2)
             {
-                g.getPlayerQueue().getPlayers()[idx1].setFirstCard(g.getPlayerQueue().getPlayers()[idx2].getSecondCard());
-                g.getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
+                g.getPlayerQueue().getPlayer(idx1).setFirstCard(g.getPlayerQueue().getPlayer(idx2).getSecondCard());
+                g.getPlayerQueue().getPlayer(idx2).setSecondCard(temp);
             }
         }
         else if (choice1 == 2)
@@ -34,13 +35,13 @@ public:
             temp = g.getPlayerQueue().getPlayers()[idx1].getSecondCard();
             if (choice2 == 1)
             {
-                g.getPlayerQueue().getPlayers()[idx1].setSecondCard(g.getPlayerQueue().getPlayers()[idx2].getFirstCard());
-                g.getPlayerQueue().getPlayers()[idx2].setFirstCard(temp);
+                g.getPlayerQueue().getPlayer(idx1).setSecondCard(g.getPlayerQueue().getPlayer(idx2).getFirstCard());
+                g.getPlayerQueue().getPlayer(idx2).setFirstCard(temp);
             }
             else if (choice2 == 2)
             {
-                g.getPlayerQueue().getPlayers()[idx1].setSecondCard(g.getPlayerQueue().getPlayers()[idx2].getSecondCard());
-                g.getPlayerQueue().getPlayers()[idx2].setSecondCard(temp);
+                g.getPlayerQueue().getPlayer(idx1).setSecondCard(g.getPlayerQueue().getPlayer(idx2).getSecondCard());
+                g.getPlayerQueue().getPlayer(idx2).setSecondCard(temp);
             }
         }
     }
@@ -55,26 +56,26 @@ public:
             for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
                 cout << count + 1 << ". "
-                     << "Pemain " << g.getPlayerQueue().getPlayers()[i].getID() << endl;
+                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
                 count++;
             }
             cin >> idToSwitch1;
             cout << "Silahkan pilih pemain lain yang kartunya ingin anda tukar: " << endl;
-            int count = 0;
+            count = 0;
             for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
                 cout << count + 1 << ". "
-                     << "Pemain " << g.getPlayerQueue().getPlayers()[i].getID() << endl;
+                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
                 count++;
             }
             cin >> idToSwitch2;
             for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
             {
-                if (g.getPlayerQueue().getPlayers()[i].getID() == idToSwitch1)
+                if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch1)
                 {
                     index1 = i;
                 }
-                else if (g.getPlayerQueue().getPlayers()[i].getID() == idToSwitch2)
+                else if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch2)
                 {
                     index2 = i;
                 }

@@ -28,7 +28,9 @@ public:
     Gamestate();
     int getGiftPoint() const;
     void setGiftPoint(int _giftPoint);
-    PlayerQueue getPlayerQueue() const;
+    PlayerQueue &getPlayerQueue();
+    MainDeck &getMainDeck();
+    void setMainDeck(const MainDeck &_mainDeck);
     void setPlayerQueue(const PlayerQueue &_p);
     void setNewPlayer();
     void setCommand(string _command);

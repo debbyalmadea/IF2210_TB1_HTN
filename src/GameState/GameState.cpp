@@ -24,11 +24,18 @@ void Gamestate::setGiftPoint(int _giftPoint)
     giftPoint = _giftPoint;
 }
 
-PlayerQueue Gamestate::getPlayerQueue() const
+PlayerQueue &Gamestate::getPlayerQueue()
 {
     return playerQueue;
 }
-
+MainDeck &Gamestate ::getMainDeck()
+{
+    return mainDeck;
+}
+void Gamestate::setMainDeck(const MainDeck &_mainDeck)
+{
+    mainDeck = _mainDeck;
+}
 void Gamestate::setPlayerQueue(const PlayerQueue &_playerQueue)
 {
     playerQueue = _playerQueue;

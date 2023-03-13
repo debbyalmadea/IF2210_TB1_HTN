@@ -45,10 +45,15 @@ public:
     {
         return players[0];
     }
-    vector<Player> getPlayers()
+    vector<Player> getPlayers() const
     {
         return players;
     }
+    Player &getPlayer(int idx)
+    {
+        return players[idx];
+    }
+
     int getnPlayers()
     {
         return nPlayer;
