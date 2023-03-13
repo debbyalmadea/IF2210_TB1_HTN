@@ -2,9 +2,8 @@
 #define _PLAYERQUEUE_
 #define CAPACITY 7
 
-#include <bits/stdc++.h>
 #include "Player.hpp"
-#include "../Ability/Ability.hpp"
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -22,11 +21,6 @@ public:
         nPlayer = 0;
     }
 
-    // ~PlayerQueue()
-    // {
-    //     delete[] players;
-    // }
-
     void enqueue(const Player &player)
     {
         if (nPlayer == CAPACITY)
@@ -35,7 +29,6 @@ public:
         }
         else
         {
-            // players[nPlayer] = player;
             players.push_back(player);
             nPlayer++;
         }
@@ -45,10 +38,12 @@ public:
     {
         return players[0];
     }
+
     vector<Player> getPlayers() const
     {
         return players;
     }
+
     Player &getPlayer(int idx)
     {
         return players[idx];
@@ -61,7 +56,7 @@ public:
 
     Player dequeue()
     {
-        Player player = players[0];
+        Player player = getFirst();
         players.erase(players.begin());
         nPlayer--;
         return player;
@@ -80,46 +75,63 @@ public:
         maintainQueue(); // Mengurutkan kembali dari yang belum mendapat giliran
     }
 
-    // void shuffleQueue() // for new game
-    // {
-    //     unsigned seed = 0;
-    //     shuffle(players, players + nPlayer, default_random_engine(seed));
-    // }
-
     void maintainQueue()
     {
-        while (players[0].cekGiliran())
+        if (!rondeSelesai())
         {
-            Player giliran = dequeue();
-            enqueue(giliran);
+            while (players[0].cekGiliran())
+            {
+                Player giliran = dequeue();
+                enqueue(giliran);
+            }
         }
+    }
+
+    bool rondeSelesai()
+    {
+        bool check = true;
+        int i = 0;
+        while (check && i < nPlayer)
+        {
+            check = check && players[i].cekGiliran();
+            i++;
+        }
+        return check;
     }
 
     void next()
     {
-        Player giliran = dequeue();
-        giliran.giliranSelesai();
-        enqueue(giliran);
-        checkNewRound();
-
-        cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
-        displayCurrentGiliran();
-    }
-    void checkNewRound()
-    {
-        bool notPlayed = false;
-        for (auto &player : players)
+        if (!rondeSelesai())
         {
-            notPlayed |= !player.cekGiliran();
-        }
+            Player giliran = dequeue();
+            giliran.giliranSelesai();
+            enqueue(giliran);
+            maintainQueue();
 
-        if (!notPlayed)
-        {
-            for (auto &player : players)
+            if (!rondeSelesai())
             {
-                player.belumGiliran();
+                cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
+                displayCurrentGiliran();
+            }
+            else
+            {
+                cout << "Ronde selesai" << endl;
             }
         }
+        else
+        {
+            cout << "Ronde sudah selesai. Ganti ke ronde selanjutnya" << endl;
+        }
+    }
+
+    void newRound()
+    {
+        for (auto &player : players)
+        {
+            player.belumGiliran();
+        }
+        Player nextGiliran = dequeue();
+        enqueue(nextGiliran);
     }
 
     void displayQueue() const
@@ -139,16 +151,23 @@ public:
 
     void displayGiliran()
     {
-        displayCurrentGiliran();
-        cout << "Urutan giliran selanjutnya: ";
-        for (int i = 1; i < nPlayer; i++)
+        if (!rondeSelesai())
         {
-            if (!players[i].cekGiliran())
+            displayCurrentGiliran();
+            cout << "Urutan giliran selanjutnya: ";
+            for (int i = 1; i < nPlayer; i++)
             {
-                cout << "P" << players[i].getID() << " ";
+                if (!players[i].cekGiliran())
+                {
+                    cout << "P" << players[i].getID() << " ";
+                }
             }
+            cout << "\n";
         }
-        cout << "\n";
+        else
+        {
+            cout << "Semua player sudah mendapat giliran" << endl;
+        }
     }
 
     void awardPlayer(Player winner, int giftPoints)
