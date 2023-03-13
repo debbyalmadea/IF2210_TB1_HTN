@@ -11,7 +11,7 @@ PermenCard::PermenCard(int _value, int _color) : Card(-1, _color, _value, -1)
 
 void PermenCard::printInfo()
 {
-    cout << "Kartu anda adalah " << value << " " << intToColorString(color) << ".";
+    cout << "Card: " << value << " " << intToColorString(color) << "." << endl;
 }
 
 bool PermenCard::operator<(const Card &other) const
@@ -39,6 +39,21 @@ bool PermenCard::operator==(const Card &other) const
     return false;
 }
 
+string PermenCard::getColorString() const
+{
+
+    map<string, int>::iterator it;
+    for (it = PermenColors.begin(); it != PermenColors.end(); ++it)
+    {
+        if (it->second == color)
+        {
+            return it->first;
+        }
+    }
+
+    return "";
+}
+
 string PermenCard::intToColorString(int code)
 {
     map<string, int>::iterator it;
@@ -61,3 +76,9 @@ int PermenCard::stringToColorInt(string color)
     }
     return -1;
 }
+
+ostream &operator<<(ostream &os, const PermenCard &dt)
+{
+    os << "Kartu: " << dt.value << " " << dt.getColorString();
+    return os;
+};

@@ -2,7 +2,11 @@
 
 int main()
 {
-    Gamestate game;
-    game.start();
+    int again = 1;
+    while (again)
+    {
+        Gamestate game;
+        again = game.start();
+    }
     return 0;
 }

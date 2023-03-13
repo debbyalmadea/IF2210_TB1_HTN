@@ -20,9 +20,9 @@ int main()
      tes.push_back(baru4);
      tes.push_back(baru5);
 
-     baru = PermenCard(11, 3);
+     baru = PermenCard(5, 3);
      baru2 = PermenCard(5, 3);
-     baru3 = PermenCard(7, 3);
+     baru3 = PermenCard(5, 3);
      baru4 = PermenCard(9, 3);
      baru5 = PermenCard(13, 3);
      vector<PermenCard>
@@ -64,4 +64,6 @@ int main()
      ComboTable table2 = ComboTable(tes2, tes4);
      table2.calculatePossibleCombos();
      table2.displayCombos();
+     cout << (table > table2) << endl;
+     cout << (table < table2) << endl;
 }

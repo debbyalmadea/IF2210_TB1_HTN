@@ -17,9 +17,12 @@ public:
     PermenCard(int _value, int _color);
 
     void printInfo();
+    string getColorString() const;
     bool operator<(const Card &other) const;
     bool operator>(const Card &other) const;
     bool operator==(const Card &other) const;
+
+    friend ostream &operator<<(ostream &os, const PermenCard &dt);
 
     static string intToColorString(int code);
 

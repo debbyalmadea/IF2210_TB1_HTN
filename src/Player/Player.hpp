@@ -2,10 +2,12 @@
 #define _PLAYER_
 #include "../Card/PermenCard.hpp"
 #include "../Ability/Ability.hpp"
+#include "../InventoryHolder/InventoryHolder.hpp"
+
 #include <utility>
 //  PLAYER class
 
-class Player
+class Player : public InventoryHolder
 {
 protected:
     int id;
@@ -18,14 +20,10 @@ protected:
 public:
     Player() : id(0), point(0), sudahGiliran(false), name("")
     {
-        cards.first = PermenCard();
-        cards.second = PermenCard();
     }
 
     Player(int _id, string _name) : id(_id), point(0), sudahGiliran(false), name(_name)
     {
-        cards.first = PermenCard();
-        cards.second = PermenCard();
     }
 
     Player(const Player &other)
@@ -83,7 +81,25 @@ public:
     }
     void setBothCard(pair<PermenCard, PermenCard> _cards)
     {
-        cards = _cards;
+        cout << "Player " << name << " has received the following cards:" << endl;
+        cout << _cards.first << endl;
+        cout << _cards.second << endl
+             << endl;
+        cards.first = _cards.first;
+        cards.second = _cards.second;
+    }
+    void displayInv()
+    {
+        cout << "Player " << name << " has the following cards:" << endl;
+        cout << cards.first << endl;
+        cout << cards.second << endl;
+    }
+    vector<PermenCard> getInventory()
+    {
+        vector<PermenCard> listCard;
+        listCard.push_back(cards.first);
+        listCard.push_back(cards.second);
+        return listCard;
     }
     void setPoint(int _point)
     {
@@ -95,6 +111,10 @@ public:
     // }
     void addPoint(int _point)
     {
+        if (point + _point < point)
+        {
+            throw "Overflow";
+        }
         point += _point;
     }
     bool cekGiliran()

@@ -2,13 +2,14 @@
 #define _MAINDECK_
 
 #include "../Card/PermenCard.hpp"
+#include "../InventoryHolder/InventoryHolder.hpp"
 #include <vector>
 #include <algorithm>
 #include <random>
 
 using namespace std;
 
-class MainDeck
+class MainDeck : public InventoryHolder
 {
 protected:
     vector<PermenCard> deckCard;
@@ -70,6 +71,18 @@ public:
             baru.deckCard.erase(it);
         }
         return baru;
+    }
+    vector<PermenCard> getInventory()
+    {
+        return deckCard;
+    }
+
+    void displayInv()
+    {
+        for (auto &it : deckCard)
+        {
+            cout << it << endl;
+        }
     }
 
     /* tester method */

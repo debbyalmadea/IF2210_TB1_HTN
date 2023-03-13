@@ -9,6 +9,8 @@
 #include "../Card/PermenCard.hpp"
 #include "../Card/Valuable.hpp"
 #include "./Combo.hpp"
+#include "../Player/Player.hpp"
+#include "../Table/Table.hpp"
 
 #include <iostream>
 #include <array>
@@ -18,6 +20,7 @@ using namespace std;
 class ComboTable : public Combo
 {
 protected:
+    Player player;
     vector<PermenCard> tableCards;
     vector<PermenCard> handCards;
     vector<PermenCard> totalCards;
@@ -26,8 +29,9 @@ protected:
     int MAX_COMBI = 21;
 
 public:
-    ComboTable(vector<PermenCard> _tableCard, vector<PermenCard> _handCard)
+    ComboTable(vector<PermenCard> _tableCard, vector<PermenCard> _handCard, Player _player)
     {
+        player = _player;
         tableCards = _tableCard;
         handCards = _handCard;
         totalCards.reserve(_tableCard.size() + _handCard.size());
@@ -35,6 +39,22 @@ public:
         totalCards.insert(totalCards.end(), _handCard.begin(), _handCard.end());
         generateCombinations(5);
     };
+
+    ComboTable(Player _player, Table _table)
+    {
+        player = _player;
+        tableCards = _table.getInventory();
+        handCards = _player.getInventory();
+        totalCards.reserve(tableCards.size() + handCards.size());
+        totalCards.insert(totalCards.end(), tableCards.begin(), tableCards.end());
+        totalCards.insert(totalCards.end(), handCards.begin(), handCards.end());
+        generateCombinations(5);
+    };
+
+    Player getPlayer()
+    {
+        return player;
+    }
 
     vector<Combo> getPossibleCombos()
     {
@@ -53,11 +73,19 @@ public:
 
     void displayCombos()
     {
-        for (auto &combo : possibleCombos)
+        cout << "These are the TOP combinations possible for player " << player.getName() << " " << player.getID() << endl;
+
+        int count = 0;
+        float prev_val = 0;
+        for (auto it = possibleCombos.end() - 1; it != possibleCombos.begin() - 1 && count != 5; it--)
         {
-            combo.display();
-            cout << endl
-                 << combo.getDescription() << combo.getValue() << endl;
+            if (abs(prev_val - it->getValue()) < 0.001)
+                continue;
+            it->display();
+            cout << "Value: " << it->getValue() << " [" << it->getDescription() << "]" << endl
+                 << endl;
+            count += 1;
+            prev_val = it->getValue();
         }
     }
 
@@ -117,7 +145,7 @@ public:
             return this->possibleCombos[i] > other.possibleCombos[i];
         }
     };
-    bool operatorM(const ComboTable &other) const
+    bool operator<(const ComboTable &other) const
     {
         for (int i = MAX_COMBI - 1; i >= 0; i--)
         {

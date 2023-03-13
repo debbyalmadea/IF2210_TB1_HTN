@@ -4,6 +4,7 @@
 #include "../IO/FileReader.hpp"
 #include "../Deck/MainDeck.hpp"
 #include "../Ability/CommandInclude.hpp"
+#include "../Table/Table.hpp"
 
 #include <iostream>
 using namespace std;
@@ -15,9 +16,11 @@ protected:
     int round;
     int playerCount;
     int giftPoint;
+    bool win;
     PlayerQueue playerQueue;
     MainDeck mainDeck;
     string input;
+    Table tableCards;
     Command *command;
     int game;
 
@@ -36,7 +39,11 @@ public:
     void getInputCLI(int min, int max);
     void displayCurrentState();
     void nextRound();
-    void start();
+    void dealPlayers();
+    void dealTable();
+    void evaluateSession();
+    void resetSession();
+    int start();
 };
 
 #endif

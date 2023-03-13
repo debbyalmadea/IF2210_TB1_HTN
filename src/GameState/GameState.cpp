@@ -1,6 +1,18 @@
 #include "GameState.hpp"
+#include "../Combo/ComboTable.hpp"
+#include "../Template/MaxTemp.h"
 
-Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0) {}
+Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false), input("")
+{
+    cout << endl
+         << " SELAMAT DATANG DI" << endl
+         << "   ▄ .▄       ▐ ▄ ▄▄▄▄▄      ▄• ▄▌ ▐ ▄ ▪    " << endl
+         << "  ██▪▐█▪     •█▌▐█•██  ▪     █▪██▌•█▌▐███   " << endl
+         << "  ██▀▐█ ▄█▀▄ ▐█▐▐▌ ▐█.▪ ▄█▀▄ █▌▐█▌▐█▐▐▌▐█·  " << endl
+         << "  ██▌▐▀▐█▌.▐▌██▐█▌ ▐█▌·▐█▌.▐▌▐█▄█▌██▐█▌▐█▌  " << endl
+         << "  ▀▀▀ · ▀█▄▀▪▀▀ █▪ ▀▀▀  ▀█▄▀▪ ▀▀▀ ▀▀ █▪▀▀▀  " << endl
+         << endl;
+}
 
 int Gamestate::getGiftPoint() const
 {
@@ -69,8 +81,16 @@ void Gamestate::nextRound()
     round++;
 }
 
+void Gamestate::resetSession()
+{
+    input = "";
+    mainDeck = MainDeck();
+    tableCards = Table();
+}
+
 void Gamestate::executeCommand()
 {
+    bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS",
                               "RE-ROLL",
                               "REVERSE DIRECTION",
@@ -79,6 +99,7 @@ void Gamestate::executeCommand()
     if (input == "NEXT")
     {
         command = new Next();
+        shouldNext = false;
     }
     else if (input == "HALF")
     {
@@ -88,7 +109,6 @@ void Gamestate::executeCommand()
     {
         command = new Double();
     }
-
     else if (find(ability.begin(), ability.end(), input) != ability.end())
     {
         if (round == 1)
@@ -101,31 +121,33 @@ void Gamestate::executeCommand()
             command = currentPlayer.getAbility();
         }
     }
+    else if (input == "DISPLAY")
+    {
+        Player currentPlayer = playerQueue.getFirst();
+        currentPlayer.displayInv();
+        throw "DISPLAY";
+    }
     else
     {
         throw "Masukan Invalid";
     }
 
     command->use(*this);
+    delete command;
+    if (shouldNext)
+    {
+        playerQueue.next();
+    }
 }
 
-void Gamestate::start()
+int Gamestate::start()
 {
-    cout << endl
-         << " SELAMAT DATANG DI" << endl
-         << "   ▄ .▄       ▐ ▄ ▄▄▄▄▄      ▄• ▄▌ ▐ ▄ ▪    " << endl
-         << "  ██▪▐█▪     •█▌▐█•██  ▪     █▪██▌•█▌▐███   " << endl
-         << "  ██▀▐█ ▄█▀▄ ▐█▐▐▌ ▐█.▪ ▄█▀▄ █▌▐█▌▐█▐▐▌▐█·  " << endl
-         << "  ██▌▐▀▐█▌.▐▌██▐█▌ ▐█▌·▐█▌.▐▌▐█▄█▌██▐█▌▐█▌  " << endl
-         << "  ▀▀▀ · ▀█▄▀▪▀▀ █▪ ▀▀▀  ▀█▄▀▪ ▀▀▀ ▀▀ █▪▀▀▀  " << endl
-         << endl;
-
-    //! CHANGE This to something else
-    while (true)
+    setNewPlayer();
+    cout << input << endl;
+    while (!win)
     {
-        setNewPlayer();
         cout << " ------------------------------------------ " << endl
-             << "| Pilih metode memulai game                |" << endl
+             << "| Pilih metode membaca deck                |" << endl
              << "|                                          |" << endl
              << "| 1. Baca dari file                        |" << endl
              << "| 2. Random                                |" << endl
@@ -147,6 +169,10 @@ void Gamestate::start()
                     getInputCLI();
                     mainDeck = reader.readBasicCard(input);
                 }
+                if (input == "2")
+                {
+                    mainDeck = MainDeck();
+                }
                 mainDeck.shuffleDeck();
                 cout << "   ▄▄ •  ▄▄▄· • ▌ ▄ ·. ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄  ▄▄▄▄▄▄▄  " << endl
                      << "  ▐█ ▀ ▪▐█ ▀█ ·██ ▐███▪▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▀▄ █·•██  ██▌ " << endl
@@ -165,22 +191,38 @@ void Gamestate::start()
                 input = "";
             }
         }
-
+        cout << "HAIHIDF";
+        dealPlayers();
+        bool dealt = false;
+        dealTable();
+        dealTable();
+        dealTable();
+        dealTable();
+        dealTable();
+        round = 6;
+        playerCount = 6;
         while (round <= 6)
         {
+            if (round != 6 && playerCount == 0 && dealt == false)
+            {
+                dealTable();
+                dealt = true;
+            }
             try
             {
                 displayCurrentState();
                 getInputCLI();
                 executeCommand();
-                if (input != "NEXT")
-                {
-                    playerQueue.next();
-                }
                 playerCount++;
                 if (playerCount == 7)
                 {
                     nextRound();
+                    dealt = false;
+                }
+                if (round == 7)
+                {
+                    evaluateSession();
+                    resetSession();
                 }
             }
             catch (...)
@@ -189,4 +231,63 @@ void Gamestate::start()
             }
         }
     }
+    int newgame;
+    cout << "New game (1) or No (0)";
+    cin >> newgame;
+    return newgame;
 }
+
+void Gamestate::dealPlayers()
+{
+    cout << "Dealing cards..." << endl;
+    for (int i = 0; i < playerQueue.getnPlayers(); i++)
+    {
+        vector<PermenCard> cards = mainDeck.dealCard(2);
+        Player &currentPlayer = playerQueue.getFirst();
+        currentPlayer.setBothCard(pair<PermenCard, PermenCard>(cards[0], cards[1]));
+        playerQueue.next();
+    }
+}
+
+void Gamestate::dealTable()
+{
+    cout << "Dealing table at round " << round << endl;
+    vector<PermenCard> card = mainDeck.dealCard(1);
+    tableCards.addCard(card[0]);
+    tableCards.displayInv();
+};
+
+void Gamestate::evaluateSession()
+{
+    vector<ComboTable> playerCombos;
+    cout << "Evaluating combos.." << endl;
+    for (int i = 0; i < playerQueue.getnPlayers(); i++)
+    {
+        Player currPlayer = playerQueue.getFirst();
+        ComboTable playerCombo = ComboTable(currPlayer, tableCards);
+        playerCombo.calculatePossibleCombos();
+        playerCombo.displayCombos();
+        playerCombos.push_back(playerCombo);
+        playerQueue.next();
+    }
+    cout << "hitung maks" << endl;
+    ComboTable winningCombo = max<ComboTable>(playerCombos);
+    // ComboTable winningCombo = playerCombos[0];
+    // cout << "hii";
+    // for (auto &elem : playerCombos)
+    // {
+    //     if (elem > winningCombo)
+    //         winningCombo = elem;
+    // }
+    Player winner = winningCombo.getPlayer();
+    cout << "Player " << winner.getName() << " " << winner.getID() << " wins this round!";
+    try
+    {
+        playerQueue.awardPlayer(winner, giftPoint);
+    }
+    catch (...)
+    {
+        win = true;
+        cout << "Player " << winner.getName() << " " << winner.getID() << " points overflowed, winning the game!";
+    }
+};

@@ -12,7 +12,6 @@ using namespace std;
 class PlayerQueue
 {
 protected:
-    // Player *players;
     vector<Player> players;
     int nPlayer;
 
@@ -42,7 +41,7 @@ public:
         }
     }
 
-    Player getFirst()
+    Player &getFirst()
     {
         return players[0];
     }
@@ -58,10 +57,7 @@ public:
     Player dequeue()
     {
         Player player = players[0];
-        for (int i = 0; i < nPlayer - 1; i++)
-        {
-            players[i] = players[i + 1];
-        }
+        players.erase(players.begin());
         nPlayer--;
         return player;
     }
@@ -99,10 +95,28 @@ public:
         Player giliran = dequeue();
         giliran.giliranSelesai();
         enqueue(giliran);
+        checkNewRound();
 
         cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
         displayCurrentGiliran();
     }
+    void checkNewRound()
+    {
+        bool notPlayed = false;
+        for (auto &player : players)
+        {
+            notPlayed |= !player.cekGiliran();
+        }
+
+        if (!notPlayed)
+        {
+            for (auto &player : players)
+            {
+                player.belumGiliran();
+            }
+        }
+    }
+
     void displayQueue() const
     {
         cout << "Urutan permainan saat ini:" << endl;
@@ -131,6 +145,15 @@ public:
         }
         cout << "\n";
     }
+
+    void awardPlayer(Player winner, int giftPoints)
+    {
+        for (auto &player : players)
+        {
+            if (player.getID() == winner.getID())
+                winner.addPoint(giftPoints);
+        }
+    };
 };
 
 #endif
