@@ -30,23 +30,6 @@ public:
         }
         return hasUsed;
     }
-    // void use(int _idAbility, Ability *target)
-    // {
-    //     Ability ::use(_idAbility);
-    //     if (_idAbility == _idAbility)
-    //     {
-    //         if (target->getAbilityAvailability() == false)
-    //         {
-    //             cout << "Kartu ability pemain" << target->getIdPemilik() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
-    //         }
-    //         else
-    //         {
-    //             cout << "Kartu ability pemain " << target->getIdPemilik() << " telah dimatikan." << endl;
-    //             target->setAbilityAvailability(false);
-    //         }
-    //     }
-    //     available[idAbility] = false;
-    // }
 
     void use(int _idAbility, PlayerQueue *p, Gamestate *g)
     {

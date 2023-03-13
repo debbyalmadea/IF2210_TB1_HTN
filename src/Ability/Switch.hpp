@@ -10,6 +10,12 @@ using namespace std;
 class Switch : public Ability
 {
 public:
+    Switch() : Ability(6, -1)
+    {
+    }
+    Switch(int _idPemilik) : Ability(6, _idPemilik)
+    {
+    }
     void use(int _idAbility, PlayerQueue *p, Gamestate *g)
     {
         // Player temp;

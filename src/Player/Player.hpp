@@ -48,6 +48,14 @@ public:
     {
         return cards;
     }
+    void setFirstCard(PermenCard _card1)
+    {
+        cards.first = _card1;
+    }
+    void setSecondCard(PermenCard _card2)
+    {
+        cards.second = _card2;
+    }
     void setBothCard(pair<PermenCard, PermenCard> _cards)
     {
         cards = _cards;

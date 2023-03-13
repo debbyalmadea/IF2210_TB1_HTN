@@ -17,7 +17,7 @@ public:
     ReverseDirection(int _idPemilik) : Ability(4, _idPemilik)
     {
     }
-    void use(int _idAbility, PlayerQueue *p)
+    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
     {
         if (available[idAbility] == 0)
         {

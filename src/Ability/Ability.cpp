@@ -46,12 +46,3 @@ void Ability ::setIdPemilik(int _idPemilik)
 {
     idPemilik = _idPemilik;
 }
-
-// void Ability ::use(int _idAbility)
-// {
-
-//     if (idAbility != _idAbility)
-//     {
-//         cout << "Eits, kamu tidak punya kartunya" << endl;
-//     }
-// }
