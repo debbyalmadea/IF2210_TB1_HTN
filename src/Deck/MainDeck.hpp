@@ -73,7 +73,7 @@ public:
     }
 
     /* tester method */
-    PermenCard operator[](const int &idx)
+    PermenCard &operator[](const int &idx)
     {
         return deckCard[idx];
     }
