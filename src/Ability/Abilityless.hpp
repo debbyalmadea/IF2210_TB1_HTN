@@ -1,6 +1,8 @@
 #ifndef ABILITYLESS_HPP
 #define ABILITYLESS_HPP
 
+#include "../Player/PlayerQueue.hpp"
+#include "../Player/Player.hpp"
 #include "Ability.hpp"
 #include <iostream>
 
@@ -9,10 +11,10 @@ using namespace std;
 class Abilityless : public Ability
 {
 public:
-    Abilityless() : Ability(0, -1, false)
+    Abilityless() : Ability(0, -1)
     {
     }
-    Abilityless(int _idPemilik) : Ability(0, idPemilik, false)
+    Abilityless(int _idPemilik) : Ability(0, idPemilik)
     {
     }
     bool hasUsedAllAbility()
@@ -20,7 +22,7 @@ public:
         bool hasUsed = true;
         for (int i = 0; i < 7; i++)
         {
-            if (available[i] == true && i != getIdAbility())
+            if (available[i] == 1 && i != getIdAbility())
             {
                 hasUsed = false;
                 break;
@@ -28,22 +30,56 @@ public:
         }
         return hasUsed;
     }
-    void use(int _idAbility, Ability *target)
+    // void use(int _idAbility, Ability *target)
+    // {
+    //     Ability ::use(_idAbility);
+    //     if (_idAbility == _idAbility)
+    //     {
+    //         if (target->getAbilityAvailability() == false)
+    //         {
+    //             cout << "Kartu ability pemain" << target->getIdPemilik() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+    //         }
+    //         else
+    //         {
+    //             cout << "Kartu ability pemain " << target->getIdPemilik() << " telah dimatikan." << endl;
+    //             target->setAbilityAvailability(false);
+    //         }
+    //     }
+    //     available[idAbility] = false;
+    // }
+
+    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
     {
-        Ability ::use(_idAbility);
-        if (_idAbility == _idAbility)
+        int idDeadPlayer;
+        if (hasUsedAllAbility())
         {
-            if (target->getAbilityAvailability() == false)
+            cout << "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah kamu kena sendiri deh, kemampuanmu menjadi abilityless. Yah, pengunaan kartu ini sia-sia" << endl;
+            setAbilityAvailability(2);
+        }
+        else
+        {
+            if (idAbility != _idAbility || getAbilityAvailability() != 1)
             {
-                cout << "Kartu ability pemain" << target->getIdPemilik() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+                cout << "Eits, kamu tidak punya kartunya" << endl;
             }
             else
             {
-                cout << "Kartu ability pemain " << target->getIdPemilik() << " telah dimatikan." << endl;
-                target->setAbilityAvailability(false);
+                cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
+                /*print semua player*/
+                int count = 1;
+                for (int i = 1; i <= 7; i++)
+                {
+                    if (idPemilik != i)
+                    {
+                        cout << count << ". Pemain " << i << endl;
+                        count++;
+                    }
+                }
+
+                cin >> idDeadPlayer;
+                available[idPemilikidAbility[idDeadPlayer]] = 2;
             }
         }
-        available[idAbility] = false;
     }
 }
 

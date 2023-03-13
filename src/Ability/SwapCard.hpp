@@ -6,6 +6,9 @@
 class SwapCard : public Ability
 {
 public:
+    void use(int _idAbility, PlayerQueue *p, Gamestate *g)
+    {
+    }
 };
 
 #endif

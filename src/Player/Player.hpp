@@ -1,6 +1,5 @@
 #ifndef _PLAYER_
 #define _PLAYER_
-#include "../Ability/Ability.hpp"
 #include "../Card/PermenCard.hpp"
 #include <utility>
 //  PLAYER class
@@ -11,21 +10,19 @@ protected:
     int id;
     int point;
     pair<PermenCard, PermenCard> cards;
-    Ability ability;
+    int idAbility;
     bool sudahGiliran;
 
 public:
-    Player() : id(0), point(0), sudahGiliran(false)
+    Player() : id(0), point(0), sudahGiliran(false), idAbility(-1)
     {
         cards.first = PermenCard();
         cards.second = PermenCard();
-        ability = Ability();
     };
-    Player(int _id) : id(_id), point(0), sudahGiliran(false)
+    Player(int _id) : id(_id), point(0), sudahGiliran(false), idAbility(-1)
     {
         cards.first = PermenCard();
         cards.second = PermenCard();
-        ability = Ability();
     };
     int getID() const
     {
@@ -43,21 +40,25 @@ public:
     {
         return cards.second;
     }
+    int getIdAbility() const
+    {
+        return idAbility;
+    }
     pair<PermenCard, PermenCard> getBothCard() const
     {
         return cards;
     }
-    Ability getAbility() const
+    void setBothCard(pair<PermenCard, PermenCard> _cards)
     {
-        return ability;
-    }
-    void setAbility(Ability _ability)
-    {
-        ability = _ability;
+        cards = _cards;
     }
     void setPoint(int _point)
     {
         point = _point;
+    }
+    void setIdAbility(int _idAbility)
+    {
+        idAbility = _idAbility;
     }
     void addPoint(int _point)
     {

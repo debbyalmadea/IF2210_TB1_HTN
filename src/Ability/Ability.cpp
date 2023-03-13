@@ -3,13 +3,16 @@
 
 using namespace std;
 
-bool Ability ::available[7] = {true, true, true, true, true, true, true};
+int Ability ::available[7] = {1, 1, 1, 1, 1, 1, 1};
+map<int, int> Ability ::idPemilikidAbility;
 
-Ability::Ability() : idAbility(-1), idPemilik(-1), isDead(false)
+Ability::Ability() : idAbility(-1), idPemilik(-1)
 {
+    idPemilikidAbility[idPemilik] = idAbility;
 }
-Ability ::Ability(int _idAbility, int _idPemilik, bool _isDead) : idAbility(_idAbility), idPemilik(_idPemilik), isDead(_isDead)
+Ability ::Ability(int _idAbility, int _idPemilik) : idAbility(_idAbility), idPemilik(_idPemilik)
 {
+    idPemilikidAbility[idPemilik] = idAbility;
 }
 int Ability ::getIdAbility() const
 {
@@ -19,7 +22,7 @@ string Ability ::getAbilityName() const
 {
     return abilityName[idAbility];
 }
-bool Ability ::getAbilityAvailability() const
+int Ability ::getAbilityAvailability() const
 {
     return available[idAbility];
 }
@@ -29,13 +32,13 @@ int Ability ::getIdPemilik() const
 }
 bool Ability ::getDeadStatus() const
 {
-    return isDead;
+    return (available[idAbility] == 2);
 }
 void Ability ::setIdAbility(int _idAbility)
 {
     idAbility = _idAbility;
 }
-void Ability ::setAbilityAvailability(bool _available)
+void Ability ::setAbilityAvailability(int _available)
 {
     available[idAbility] = _available;
 }
@@ -43,15 +46,12 @@ void Ability ::setIdPemilik(int _idPemilik)
 {
     idPemilik = _idPemilik;
 }
-void Ability ::setDeadStatus(bool _isDead)
-{
-    isDead = _isDead;
-}
 
-void Ability ::use(int _idAbility)
-{
-    if (idAbility != _idAbility)
-    {
-        cout << "Eits, kamu tidak punya kartunya" << endl;
-    }
-}
+// void Ability ::use(int _idAbility)
+// {
+
+//     if (idAbility != _idAbility)
+//     {
+//         cout << "Eits, kamu tidak punya kartunya" << endl;
+//     }
+// }
