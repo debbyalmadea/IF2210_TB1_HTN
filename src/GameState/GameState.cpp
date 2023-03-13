@@ -1,6 +1,6 @@
 #include "GameState.hpp"
 
-Gamestate::Gamestate() : giftPoint(64), round(1) {}
+Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0) {}
 
 int Gamestate::getGiftPoint() const
 {
@@ -63,6 +63,11 @@ void Gamestate::clearInput()
 {
     input = "";
 }
+void Gamestate::nextRound()
+{
+    playerCount = 0;
+    round++;
+}
 
 void Gamestate::executeCommand()
 {
@@ -84,7 +89,7 @@ void Gamestate::executeCommand()
         command = new Double();
     }
 
-    if (find(ability.begin(), ability.end(), input) != ability.end())
+    else if (find(ability.begin(), ability.end(), input) != ability.end())
     {
         if (round == 1)
         {
@@ -95,6 +100,10 @@ void Gamestate::executeCommand()
             Player currentPlayer = playerQueue.getFirst();
             command = currentPlayer.getAbility();
         }
+    }
+    else
+    {
+        throw "Masukan Invalid";
     }
 
     command->use(*this);
@@ -164,6 +173,15 @@ void Gamestate::start()
                 displayCurrentState();
                 getInputCLI();
                 executeCommand();
+                if (input != "NEXT")
+                {
+                    playerQueue.next();
+                }
+                playerCount++;
+                if (playerCount == 7)
+                {
+                    nextRound();
+                }
             }
             catch (...)
             {

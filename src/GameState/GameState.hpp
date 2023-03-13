@@ -13,6 +13,7 @@ class Gamestate
 {
 protected:
     int round;
+    int playerCount;
     int giftPoint;
     PlayerQueue playerQueue;
     MainDeck mainDeck;
@@ -34,6 +35,7 @@ public:
     void clearInput();
     void getInputCLI(int min, int max);
     void displayCurrentState();
+    void nextRound();
     void start();
 };
 
