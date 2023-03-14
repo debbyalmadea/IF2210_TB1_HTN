@@ -5,10 +5,11 @@
 #include "../Card/PermenCard.hpp"
 // INVENTORYHOLDER class
 
+template <class T>
 class InventoryHolder
 {
 public:
-    virtual vector<PermenCard> getInventory() = 0;
+    virtual vector<T> getInventory() = 0;
     virtual void displayInv() = 0;
 };
 #endif

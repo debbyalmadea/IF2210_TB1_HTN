@@ -7,7 +7,7 @@
 #include <utility>
 //  PLAYER class
 
-class Player : public InventoryHolder
+class Player : public InventoryHolder<PermenCard>
 {
 protected:
     int id;

@@ -2,6 +2,7 @@
 #define _ABILITYDECK_
 
 #include "../Ability/Ability.hpp"
+#include "Deck.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -9,11 +10,8 @@
 
 using namespace std;
 
-class AbilityDeck
+class AbilityDeck : public Deck<Ability *>
 {
-protected:
-    vector<Ability *> deckAbility;
-
 public:
     AbilityDeck();
 
@@ -22,11 +20,5 @@ public:
     AbilityDeck(const AbilityDeck &other);
 
     AbilityDeck &operator=(const AbilityDeck &other);
-
-    int getSize();
-
-    void shuffleDeck();
-
-    vector<Ability *> dealCard(int n);
 };
 #endif

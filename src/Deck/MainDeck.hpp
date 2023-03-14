@@ -2,20 +2,18 @@
 #define _MAINDECK_
 
 #include "../Card/PermenCard.hpp"
-#include "../InventoryHolder/InventoryHolder.hpp"
+#include "Deck.hpp"
 #include <vector>
 #include <algorithm>
 #include <random>
 
 using namespace std;
 
-class MainDeck : public InventoryHolder
+class MainDeck : public Deck<PermenCard>
 {
-protected:
-    vector<PermenCard> deckCard;
 
 public:
-    MainDeck()
+    MainDeck() : Deck()
     {
         for (int value = 1; value <= 13; value++)
         {
@@ -26,34 +24,7 @@ public:
         }
     }
 
-    MainDeck(vector<PermenCard> cards)
-    {
-        deckCard = cards;
-    }
-
-    int getSize()
-    {
-        return deckCard.size();
-    }
-
-    void shuffleDeck()
-    {
-        shuffle(deckCard.begin(), deckCard.end(), random_device());
-    }
-
-    vector<PermenCard> dealCard(int n)
-    {
-        if (deckCard.size() < n)
-            throw "Deck too small";
-
-        vector<PermenCard> baru;
-        for (int i = 0; i < n; i++)
-        {
-            baru.push_back(deckCard.back());
-            deckCard.pop_back();
-        }
-        return baru;
-    }
+    MainDeck(vector<PermenCard> cards) : Deck(cards) {}
 
     MainDeck operator+(const PermenCard &other)
     {
@@ -72,21 +43,9 @@ public:
         }
         return baru;
     }
-    vector<PermenCard> getInventory()
-    {
-        return deckCard;
-    }
-
-    void displayInv()
-    {
-        for (auto &it : deckCard)
-        {
-            cout << it << endl;
-        }
-    }
 
     /* tester method */
-    PermenCard &operator[](const int &idx)
+    PermenCard operator[](const int &idx)
     {
         return deckCard[idx];
     }

@@ -189,8 +189,8 @@ void Gamestate::executeCommand()
             else
             {
                 cout << "You dont have the card" << endl;
+                shouldNext = false;
             }
-            return;
         }
     }
     else if (input == "DISPLAY")

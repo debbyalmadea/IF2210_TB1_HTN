@@ -9,7 +9,7 @@ using namespace std;
 #include "../InventoryHolder/InventoryHolder.hpp"
 // INVENTORYHOLDER class
 
-class Table : public InventoryHolder
+class Table : public InventoryHolder<PermenCard>
 {
 protected:
     vector<PermenCard> tableCards;
