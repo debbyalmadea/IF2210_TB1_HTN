@@ -89,18 +89,14 @@ public:
 
     bool rondeSelesai()
     {
-        Player giliran;
-        do
+        bool check = true;
+        int i = 0;
+        while (check && i < nPlayer)
         {
-            giliran = dequeue();
-            giliran.giliranSelesai();
-            enqueue(giliran);
-            checkNewRound();
-        } while (giliran.cekGiliran() == true);
-
-        cout
-            << "Giliran dilanjut ke pemain selanjutnya" << endl;
-        displayCurrentGiliran();
+            check = check && players[i].cekGiliran();
+            i++;
+        }
+        return check;
     }
     bool checkNewRound()
     {
