@@ -72,9 +72,10 @@ public:
             players[i] = players[j];
             players[j] = temp;
         }
-        maintainQueue(); // Mengurutkan kembali dari yang belum mendapat giliran
+        maintainQueue();
     }
 
+    // Apabila queue terdepan sudah mendapat giliran, maka ia akan langsung dipindah ke belakang
     void maintainQueue()
     {
         if (!rondeSelesai())
@@ -98,18 +99,8 @@ public:
         }
         return check;
     }
-    bool checkNewRound()
-    {
-        bool check = true;
-        int i = 0;
-        while (check && i < nPlayer)
-        {
-            check = check && players[i].cekGiliran();
-            i++;
-        }
-        return check;
-    }
 
+    // Lanjut ke giliran player selanjutnya. Kalau sudah semua, maka otomatis akan terbuat ronde baru
     void next()
     {
         if (!rondeSelesai())
@@ -122,7 +113,6 @@ public:
             if (!rondeSelesai())
             {
                 cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
-                displayCurrentGiliran();
             }
             else
             {
@@ -142,14 +132,11 @@ public:
         {
             player.belumGiliran();
         }
-        Player giliran = players[0];
-        while (giliran.getID() != 1)
-        {
-            Player nextGiliran = dequeue();
-            enqueue(nextGiliran);
-        }
+        Player nextGiliran = dequeue();
+        enqueue(nextGiliran);
     }
 
+    // Melihat isi queue
     void displayQueue() const
     {
         cout << "Urutan permainan saat ini:" << endl;
@@ -160,11 +147,13 @@ public:
         cout << endl;
     }
 
+    // Melihat player giliran saat ini
     void displayCurrentGiliran()
     {
         cout << "Giliran saat ini: P" << players[0].getID() << " " << players[0].getName() << endl;
     }
 
+    // Melihat semua sisa giliran, termasuk yang saat ini.
     void displayGiliran()
     {
         if (!rondeSelesai())
@@ -186,6 +175,7 @@ public:
         }
     }
 
+    // Memberi point pada player yang menang
     void awardPlayer(Player winner, int giftPoints)
     {
         for (auto &player : players)

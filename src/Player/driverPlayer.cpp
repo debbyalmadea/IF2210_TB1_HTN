@@ -1,7 +1,7 @@
 #include "PlayerQueue.hpp"
 #include "../Card/PermenCard.cpp"
 
-// g++ driverPlayer.cpp -o driver
+// g++ driverPlayer.cpp -o driverPlayer && ./driverPlayer
 
 int main()
 {
@@ -30,18 +30,13 @@ int main()
     pq.displayQueue();
     pq.reverse();
     pq.displayQueue();
-    // p1.addPoint(25);
-    // p2.addPoint(18);
-    // p3.addPoint(10);
     pq.displayGiliran();
     pq.next();
     pq.next();
     pq.next();
     pq.next();
     pq.next(); // harusnya udah selesai
-    pq.displayGiliran();
     pq.displayQueue();
-    pq.newRound();
     pq.displayGiliran();
 
     return 0;
