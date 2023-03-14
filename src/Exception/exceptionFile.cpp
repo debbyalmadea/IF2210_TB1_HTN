@@ -1,11 +1,23 @@
 #include "exceptionFile.hpp"
 
-ExceptionFile::ExceptionFile(int id, string fileName) : Exception(id), fileName(fileName) {};
+string ExceptionFile::message[] = {
+    "Tidak ditemukan file",
+    "Konfigurasi file salah",
+    "Konfigurasi file salah : Jumlah kartu kurang"};
 
-ExceptionFile::ExceptionFile (const ExceptionFile& other) : Exception(other), fileName(other.fileName) {};
+ExceptionFile::ExceptionFile(int id, string fileName) : Exception(id),
+                                                        fileName(fileName){};
 
-void ExceptionFile::print() const {
-    cout << "Tidak ditemukan file : " << fileName << endl;
+ExceptionFile::ExceptionFile(const ExceptionFile &other) : Exception(other), fileName(other.fileName){};
+
+void ExceptionFile::print() const
+{
+    cout << message[this->getID()];
+    if (this->getID() == 0)
+    {
+        cout << " : " << fileName;
+    }
+    cout << endl;
 };
 
 string ExceptionFile::getFileName() const { return fileName; }

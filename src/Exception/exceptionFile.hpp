@@ -6,17 +6,16 @@ using namespace std;
 
 class ExceptionFile : public Exception
 {
-    private:
-        string fileName;
+private:
+    string fileName;
+    static string message[];
 
-    public:
-        ExceptionFile(int id, string fileName);
-        ExceptionFile (const ExceptionFile& other) ;
-        void print() const ;
+public:
+    ExceptionFile(int id, string fileName);
+    ExceptionFile(const ExceptionFile &other);
+    void print() const;
 
-        string getFileName() const ;
-        
+    string getFileName() const;
 };
-
 
 #endif

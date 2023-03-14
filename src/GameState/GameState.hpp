@@ -6,6 +6,10 @@
 #include "../Deck/AbilityDeck.hpp"
 #include "../Ability/CommandInclude.hpp"
 #include "../Table/Table.hpp"
+#include "../Exception/exception.hpp"
+#include "../Exception/ExceptionIO.hpp"
+#include "../Combo/ComboTable.hpp"
+#include "../Template/MaxTemp.h"
 
 #include <iostream>
 using namespace std;
@@ -35,8 +39,6 @@ public:
     void setMainDeck(const MainDeck &_mainDeck);
     void setPlayerQueue(const PlayerQueue &_p);
     void setNewPlayer();
-    void setCommand(string _command);
-    string getCommand();
     void executeCommand();
     void getInputCLI();
     void clearInput();

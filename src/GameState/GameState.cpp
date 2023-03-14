@@ -1,7 +1,4 @@
 #include "GameState.hpp"
-#include "../Combo/ComboTable.hpp"
-#include "../Deck/AbilityDeck.hpp"
-#include "../Template/MaxTemp.h"
 
 Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false), input("")
 {
@@ -73,9 +70,16 @@ void Gamestate::getInputCLI()
 void Gamestate::getInputCLI(int min, int max)
 {
     getInputCLI();
-    if (stoi(input) < min || stoi(input) > max)
+    try
     {
-        throw "Masukan Tidak Valid";
+        if (stoi(input) < min || stoi(input) > max)
+        {
+            throw ExceptionIO(input);
+        }
+    }
+    catch (invalid_argument &err)
+    {
+        throw ExceptionIO(input);
     }
 }
 
@@ -91,12 +95,62 @@ void Gamestate::nextRound()
 
 void Gamestate::resetSession()
 {
-    input = "";
-    mainDeck = MainDeck();
+    clearInput();
     tableCards = Table();
     abilityDeck = AbilityDeck();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
+    cout << " ------------------------------------------ " << endl
+         << "| Pilih metode membaca deck                |" << endl
+         << "|                                          |" << endl
+         << "| 1. Baca dari file                        |" << endl
+         << "| 2. Random                                |" << endl
+         << " ------------------------------------------ " << endl;
+
+    // ? SUGGESTION: Place it in another method?
+    while (input == "" || input == "1")
+    {
+        try
+        {
+            if (input != "1")
+            {
+                getInputCLI(1, 2);
+            }
+
+            if (input == "1")
+            {
+                FileReader reader;
+                cout << "Masukkan nama file" << endl;
+                getInputCLI();
+                mainDeck = reader.readBasicCard(input);
+            }
+            else if (input == "2")
+            {
+                mainDeck = MainDeck();
+            }
+            mainDeck.shuffleDeck();
+            cout << "   ▄▄ •  ▄▄▄· • ▌ ▄ ·. ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄  ▄▄▄▄▄▄▄  " << endl
+                 << "  ▐█ ▀ ▪▐█ ▀█ ·██ ▐███▪▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▀▄ █·•██  ██▌ " << endl
+                 << "  ▄█ ▀█▄▄█▀▀█ ▐█ ▌▐▌▐█·▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ▐▀▀▄  ▐█.▪▐█· " << endl
+                 << "  ▐█▄▪▐█▐█ ▪▐▌██ ██▌▐█▌▐█▄▄▌    ▐█▄▪▐█ ▐█▌·▐█ ▪▐▌▐█•█▌ ▐█▌·.▀  " << endl
+                 << "  ·▀▀▀▀  ▀  ▀ ▀▀  █▪▀▀▀ ▀▀▀      ▀▀▀▀  ▀▀▀  ▀  ▀ .▀  ▀ ▀▀▀  ▀  " << endl;
+        }
+        catch (ExceptionFile &err)
+        {
+            err.print();
+            input = "1";
+        }
+        catch (Exception &err)
+        {
+            err.print();
+            clearInput();
+        }
+        catch (invalid_argument &err)
+        {
+            cout << "Masukan Tidak Valid. Tidak bisa diubah ke Integer" << endl;
+            clearInput();
+        }
+    }
 }
 
 void Gamestate::executeCommand()
@@ -143,11 +197,11 @@ void Gamestate::executeCommand()
     {
         Player currentPlayer = playerQueue.getFirst();
         currentPlayer.displayInv();
-        throw "DISPLAY";
+        shouldNext = false;
     }
     else
     {
-        throw "Masukan Invalid";
+        throw ExceptionIO(input);
     }
 
     if (command != NULL)
@@ -167,51 +221,7 @@ int Gamestate::start()
     setNewPlayer();
     while (!win)
     {
-        cout << " ------------------------------------------ " << endl
-             << "| Pilih metode membaca deck                |" << endl
-             << "|                                          |" << endl
-             << "| 1. Baca dari file                        |" << endl
-             << "| 2. Random                                |" << endl
-             << " ------------------------------------------ " << endl;
-
-        // ? SUGGESTION: Place it in another method?
-        while (input == "" || input == "1")
-        {
-            try
-            {
-                if (input != "1")
-                {
-                    getInputCLI(1, 2);
-                }
-                if (input == "1")
-                {
-                    FileReader reader;
-                    cout << "Masukkan nama file" << endl;
-                    getInputCLI();
-                    mainDeck = reader.readBasicCard(input);
-                }
-                if (input == "2")
-                {
-                    mainDeck = MainDeck();
-                }
-                mainDeck.shuffleDeck();
-                cout << "   ▄▄ •  ▄▄▄· • ▌ ▄ ·. ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄  ▄▄▄▄▄▄▄  " << endl
-                     << "  ▐█ ▀ ▪▐█ ▀█ ·██ ▐███▪▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▀▄ █·•██  ██▌ " << endl
-                     << "  ▄█ ▀█▄▄█▀▀█ ▐█ ▌▐▌▐█·▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ▐▀▀▄  ▐█.▪▐█· " << endl
-                     << "  ▐█▄▪▐█▐█ ▪▐▌██ ██▌▐█▌▐█▄▄▌    ▐█▄▪▐█ ▐█▌·▐█ ▪▐▌▐█•█▌ ▐█▌·.▀  " << endl
-                     << "  ·▀▀▀▀  ▀  ▀ ▀▀  █▪▀▀▀ ▀▀▀      ▀▀▀▀  ▀▀▀  ▀  ▀ .▀  ▀ ▀▀▀  ▀  " << endl;
-            }
-            catch (const char *err)
-            {
-                cout << err << endl;
-                input = "";
-            } // TODO: FileException Handling
-            catch (...)
-            {
-                cout << "Masukan Tidak Valid" << endl;
-                input = "";
-            }
-        }
+        resetSession();
         cout << "HAIHIDF";
         dealPlayers();
         bool dealt = false;
@@ -258,7 +268,7 @@ int Gamestate::start()
     }
     int newgame;
     cout << "New game (1) or No (0)";
-    cin >> newgame;
+    getInputCLI(0, 1);
     return newgame;
 }
 
