@@ -7,6 +7,6 @@ void Next::use(Gamestate &g)
 {
     PlayerQueue p = g.getPlayerQueue();
     p.next();
-    p.displayQueue();
+    // p.displayQueue();
     g.setPlayerQueue(p);
 }
