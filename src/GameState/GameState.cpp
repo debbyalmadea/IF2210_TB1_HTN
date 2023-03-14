@@ -277,10 +277,9 @@ void Gamestate::dealAbility()
     {
         Ability *card = abilityDeck.dealCard(1)[0];
         cout << card->getIdAbility() << endl;
-        Player &currentPlayer = playerQueue.getFirst();
+        Player &currentPlayer = playerQueue.getPlayer(i);
         currentPlayer.setAbility(card);
         card->setIdPemilik(currentPlayer.getID());
-        playerQueue.next();
     }
 }
 void Gamestate::dealPlayers()
@@ -289,9 +288,8 @@ void Gamestate::dealPlayers()
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
         vector<PermenCard> cards = mainDeck.dealCard(2);
-        Player &currentPlayer = playerQueue.getFirst();
+        Player &currentPlayer = playerQueue.getPlayer(i);
         currentPlayer.setBothCard(pair<PermenCard, PermenCard>(cards[0], cards[1]));
-        playerQueue.next();
     }
 }
 
