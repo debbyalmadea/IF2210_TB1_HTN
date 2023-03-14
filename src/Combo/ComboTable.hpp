@@ -144,6 +144,7 @@ public:
             }
             return this->possibleCombos[i] > other.possibleCombos[i];
         }
+        return false;
     };
     bool operator<(const ComboTable &other) const
     {
@@ -155,6 +156,8 @@ public:
             }
             return this->possibleCombos[i] < other.possibleCombos[i];
         }
+
+        return false;
     };
 };
 

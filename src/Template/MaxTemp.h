@@ -1,5 +1,5 @@
 #ifndef _template_
-#define _template
+#define _template_
 
 #include <vector>
 #include <iostream>

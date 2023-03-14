@@ -22,6 +22,7 @@ public:
     // ctor
     Ability();
     Ability(int _idAbility, int _idPemilik);
+    virtual ~Ability() {}
 
     void static resetAbilityState()
     {
