@@ -11,7 +11,7 @@ private:
     static string message[];
 
 public:
-    ExceptionFile(int id, string fileName);
+    ExceptionFile(int ID, string fileName);
     ExceptionFile(const ExceptionFile &other);
     void print() const;
 
