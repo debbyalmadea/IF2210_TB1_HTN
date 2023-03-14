@@ -4,6 +4,7 @@
 #include <fstream>
 #include "../Card/PermenCard.hpp"
 #include "../Deck/MainDeck.hpp"
+#include "../Exception/exceptionFile.hpp"
 
 using namespace std;
 

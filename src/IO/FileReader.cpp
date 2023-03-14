@@ -40,19 +40,28 @@ MainDeck FileReader::readBasicCard(string filename)
     if (!file.is_open())
     {
         // !TODO: file not found exception
-        throw filename + " not found\n";
+        throw ExceptionFile(0, filename);
     }
     if (file.is_open())
     {
         while (getline(file, line))
         {
-            vector<string> words = splitByWhiteSpace(line);
-            // !TODO: non int exception
-            int value = stoi(words[0]);
-            // !TODO: color not found exception
-            int color = PermenCard::stringToColorInt(words[1]);
-            permenCards.push_back(PermenCard(value, color));
-            numOfLines++;
+            try
+            {
+                vector<string> words = splitByWhiteSpace(line);
+                int value = stoi(words[0]);
+                int color = PermenCard::stringToColorInt(words[1]);
+                if (color == -1)
+                {
+                    throw invalid_argument("Invalid color");
+                }
+                permenCards.push_back(PermenCard(value, color));
+                numOfLines++;
+            }
+            catch (invalid_argument &err)
+            {
+                throw ExceptionFile(1, filename);
+            }
         }
     }
     // !TODO: card not enough exception

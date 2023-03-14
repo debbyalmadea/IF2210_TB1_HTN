@@ -15,6 +15,7 @@ public:
     Command(string _type) : type(_type)
     {
     }
+    virtual ~Command() {}
     virtual void use(Gamestate &g) = 0;
 };
 
