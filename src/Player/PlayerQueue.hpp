@@ -97,12 +97,17 @@ public:
 
     void next()
     {
-        Player giliran = dequeue();
-        giliran.giliranSelesai();
-        enqueue(giliran);
-        checkNewRound();
+        Player giliran;
+        do
+        {
+            giliran = dequeue();
+            giliran.giliranSelesai();
+            enqueue(giliran);
+            checkNewRound();
+        } while (giliran.cekGiliran() == true);
 
-        cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
+        cout
+            << "Giliran dilanjut ke pemain selanjutnya" << endl;
         displayCurrentGiliran();
     }
     void checkNewRound()

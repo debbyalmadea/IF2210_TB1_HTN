@@ -3,6 +3,7 @@
 #include "../Player/PlayerQueue.hpp"
 #include "../IO/FileReader.hpp"
 #include "../Deck/MainDeck.hpp"
+#include "../Deck/AbilityDeck.hpp"
 #include "../Ability/CommandInclude.hpp"
 #include "../Table/Table.hpp"
 
@@ -18,6 +19,7 @@ protected:
     int giftPoint;
     bool win;
     PlayerQueue playerQueue;
+    AbilityDeck abilityDeck;
     MainDeck mainDeck;
     string input;
     Table tableCards;
@@ -43,6 +45,7 @@ public:
     void nextRound();
     void dealPlayers();
     void dealTable();
+    void dealAbility();
     void evaluateSession();
     void resetSession();
     int start();

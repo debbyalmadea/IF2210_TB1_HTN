@@ -13,10 +13,7 @@ protected:
     string name;
 
 public:
-    BasicCommand(string _name) : Command("basic")
-    {
-        name = _name;
-    }
+    BasicCommand(string _name);
     virtual void use(Gamestate &g) = 0;
 };
 

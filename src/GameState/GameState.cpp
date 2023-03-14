@@ -1,5 +1,6 @@
 #include "GameState.hpp"
 #include "../Combo/ComboTable.hpp"
+#include "../Deck/AbilityDeck.hpp"
 #include "../Template/MaxTemp.h"
 
 Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false), input("")
@@ -93,16 +94,16 @@ void Gamestate::resetSession()
     input = "";
     mainDeck = MainDeck();
     tableCards = Table();
+    abilityDeck = AbilityDeck();
+    abilityDeck.shuffleDeck();
+    Ability::resetAbilityState();
 }
 
 void Gamestate::executeCommand()
 {
     bool shouldNext = true;
-    vector<string> ability = {"ABILITYLESS",
-                              "RE-ROLL",
-                              "REVERSE DIRECTION",
-                              "SWAP CARD",
-                              "SWITCH"};
+    vector<string> ability = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
+    command = NULL;
     if (input == "NEXT")
     {
         command = new Next();
@@ -116,7 +117,8 @@ void Gamestate::executeCommand()
     {
         command = new Double();
     }
-    else if (find(ability.begin(), ability.end(), input) != ability.end())
+    else if (
+        find(ability.begin(), ability.end(), input) != ability.end())
     {
         if (round == 1)
         {
@@ -125,7 +127,16 @@ void Gamestate::executeCommand()
         else
         {
             Player currentPlayer = playerQueue.getFirst();
-            command = currentPlayer.getAbility();
+            Ability *ability = currentPlayer.getAbility();
+            if (ability->getAbilityName() == input)
+            {
+                ability->use(*this);
+            }
+            else
+            {
+                cout << "You dont have the card" << endl;
+            }
+            return;
         }
     }
     else if (input == "DISPLAY")
@@ -139,8 +150,11 @@ void Gamestate::executeCommand()
         throw "Masukan Invalid";
     }
 
-    command->use(*this);
-    delete command;
+    if (command != NULL)
+    {
+        command->use(*this);
+        delete command;
+    }
     if (shouldNext)
     {
         playerQueue.next();
@@ -149,8 +163,8 @@ void Gamestate::executeCommand()
 
 int Gamestate::start()
 {
+    resetSession();
     setNewPlayer();
-    cout << input << endl;
     while (!win)
     {
         cout << " ------------------------------------------ " << endl
@@ -201,17 +215,21 @@ int Gamestate::start()
         cout << "HAIHIDF";
         dealPlayers();
         bool dealt = false;
-        dealTable();
-        dealTable();
-        dealTable();
-        dealTable();
-        dealTable();
-        round = 6;
-        playerCount = 6;
+        // dealTable();
+        // dealTable();
+        // dealTable();
+        // dealTable();
+        // dealTable();
+        // round = 6;
+        // playerCount = 6;
         while (round <= 6)
         {
             if (round != 6 && playerCount == 0 && dealt == false)
             {
+                if (round == 2)
+                {
+                    dealAbility();
+                }
                 dealTable();
                 dealt = true;
             }
@@ -244,6 +262,18 @@ int Gamestate::start()
     return newgame;
 }
 
+void Gamestate::dealAbility()
+{
+    cout << "Dealing ability ..." << endl;
+    for (int i = 0; i < playerQueue.getnPlayers(); i++)
+    {
+        Ability *card = abilityDeck.dealCard(1)[0];
+        Player &currentPlayer = playerQueue.getFirst();
+        currentPlayer.setAbility(card);
+        card->setIdPemilik(currentPlayer.getID());
+        playerQueue.next();
+    }
+}
 void Gamestate::dealPlayers()
 {
     cout << "Dealing cards..." << endl;

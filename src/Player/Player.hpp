@@ -63,6 +63,12 @@ public:
     {
         return ability;
     }
+
+    void setAbility(Ability *_ability)
+    {
+        cout << "Player " << getName() << " has received ability " << _ability->getAbilityName() << endl;
+        ability = _ability;
+    }
     // int getIdAbility() const
     // {
     //     return idAbility;

@@ -23,6 +23,15 @@ public:
     Ability();
     Ability(int _idAbility, int _idPemilik);
 
+    void static resetAbilityState()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            available[i] = 1;
+        }
+        idPemilikidAbility.clear();
+    }
+
     int getIdAbility() const;
     string getAbilityName() const;
     int getAbilityAvailability() const;
