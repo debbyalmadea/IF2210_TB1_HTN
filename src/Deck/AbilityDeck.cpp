@@ -38,12 +38,12 @@ AbilityDeck::~AbilityDeck()
 AbilityDeck::AbilityDeck(const AbilityDeck &other)
 {
     deckAbility.push_back(new Quadruple());
-    // deckAbility.push_back(new Quarter());
-    // deckAbility.push_back(new Switch());
-    // deckAbility.push_back(new ReRoll());
-    // deckAbility.push_back(new ReverseDirection());
-    // deckAbility.push_back(new ReRoll());
-    // deckAbility.push_back(new Abilityless());
+    deckAbility.push_back(new Quarter());
+    deckAbility.push_back(new Switch());
+    deckAbility.push_back(new ReRoll());
+    deckAbility.push_back(new ReverseDirection());
+    deckAbility.push_back(new ReRoll());
+    deckAbility.push_back(new Abilityless());
 }
 
 AbilityDeck &AbilityDeck::operator=(const AbilityDeck &other)
@@ -51,12 +51,12 @@ AbilityDeck &AbilityDeck::operator=(const AbilityDeck &other)
     if (&other != this)
     {
         deckAbility.push_back(new Quadruple());
-        // deckAbility.push_back(new Quarter());
-        // deckAbility.push_back(new Switch());
-        // deckAbility.push_back(new ReRoll());
-        // deckAbility.push_back(new ReverseDirection());
-        // deckAbility.push_back(new ReRoll());
-        // deckAbility.push_back(new Abilityless());
+        deckAbility.push_back(new Quarter());
+        deckAbility.push_back(new Switch());
+        deckAbility.push_back(new ReRoll());
+        deckAbility.push_back(new ReverseDirection());
+        deckAbility.push_back(new ReRoll());
+        deckAbility.push_back(new Abilityless());
     }
     return *this;
 }

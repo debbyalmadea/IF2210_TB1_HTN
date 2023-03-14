@@ -127,6 +127,7 @@ public:
             else
             {
                 cout << "Ronde selesai" << endl;
+                newRound();
             }
         }
         else
@@ -141,8 +142,12 @@ public:
         {
             player.belumGiliran();
         }
-        Player nextGiliran = dequeue();
-        enqueue(nextGiliran);
+        Player giliran = players[0];
+        while (giliran.getID() != 1)
+        {
+            Player nextGiliran = dequeue();
+            enqueue(nextGiliran);
+        }
     }
 
     void displayQueue() const

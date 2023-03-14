@@ -268,6 +268,7 @@ void Gamestate::dealAbility()
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
         Ability *card = abilityDeck.dealCard(1)[0];
+        cout << card->getIdAbility() << endl;
         Player &currentPlayer = playerQueue.getFirst();
         currentPlayer.setAbility(card);
         card->setIdPemilik(currentPlayer.getID());
