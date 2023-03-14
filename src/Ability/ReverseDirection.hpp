@@ -1,5 +1,5 @@
 #ifndef REVERSEDIRECTION_HPP
-#define REVERSEDIRECTION_hpp
+#define REVERSEDIRECTION_HPP
 
 #include "Ability.hpp"
 #include "../GameState/GameState.hpp"
