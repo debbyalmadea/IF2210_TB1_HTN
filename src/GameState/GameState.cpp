@@ -217,12 +217,11 @@ void Gamestate::executeCommand()
 
 int Gamestate::start()
 {
-    resetSession();
     setNewPlayer();
     while (!win)
     {
         resetSession();
-        cout << "HAIHIDF";
+        // cout << "HAIHIDF";
         dealPlayers();
         bool dealt = false;
         // dealTable();
@@ -254,17 +253,16 @@ int Gamestate::start()
                     nextRound();
                     dealt = false;
                 }
-                if (round == 7)
-                {
-                    evaluateSession();
-                    resetSession();
-                }
+                // if (round == 7)
+                // {
+                //                 }
             }
             catch (...)
             {
                 cout << "Something is wrong" << endl; //! CHANGE
             }
         }
+        evaluateSession();
     }
     int newgame;
     cout << "New game (1) or No (0)";
