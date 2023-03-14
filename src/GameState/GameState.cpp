@@ -97,7 +97,6 @@ void Gamestate::resetSession()
 {
     clearInput();
     tableCards = Table();
-    abilityDeck = AbilityDeck();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
