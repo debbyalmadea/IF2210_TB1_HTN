@@ -14,6 +14,7 @@ void Switch::use(Gamestate &g)
     // Player temp;
     if (available[getIdAbility()] == 1)
     {
+        string input;
         pair<PermenCard, PermenCard> temp;
         int idToSwitch;
         int index1, index2;
@@ -34,12 +35,27 @@ void Switch::use(Gamestate &g)
         int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
-            cout << count + 1 << ". "
-                 << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-            count++;
+            if (g.getPlayerQueue().getPlayer(i).getID() != getIdPemilik())
+            {
+                cout << count + 1 << ". "
+                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
+                count++;
+            }
         }
-        cin >> idToSwitch;
-        // todo : add exception handling
+
+        cin >> input;
+        try
+        {
+            if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+            {
+                throw ExceptionIO(input);
+            }
+        }
+        catch (invalid_argument &err)
+        {
+            throw ExceptionIO(input);
+        }
+        idToSwitch = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch)

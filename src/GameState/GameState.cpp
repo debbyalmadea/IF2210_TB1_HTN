@@ -62,6 +62,10 @@ void Gamestate::displayCurrentState()
     cout << "--------------------------------------------" << endl;
 }
 
+string Gamestate ::getInput()
+{
+    return input;
+}
 void Gamestate::getInputCLI()
 {
     cout << ">> ";
