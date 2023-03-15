@@ -136,17 +136,17 @@ public:
         sudahGiliran = false;
     }
 
-    bool operator==(const Player &other)
+    bool operator==(const Player &other) const
     {
         return this->point == other.point;
     }
 
-    bool operator<(const Player &other)
+    bool operator<(const Player &other) const
     {
         return this->point < other.point;
     }
 
-    bool operator>(const Player &other)
+    bool operator>(const Player &other) const
     {
         return this->point > other.point;
     }

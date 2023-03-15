@@ -9,10 +9,11 @@
 
 using namespace std;
 
+template <typename T>
 class PlayerQueue
 {
 protected:
-    vector<Player> players;
+    vector<T> players;
     int nPlayer;
 
 public:
@@ -22,7 +23,7 @@ public:
         nPlayer = 0;
     }
 
-    void enqueue(const Player &player)
+    void enqueue(const T &player)
     {
         if (nPlayer == CAPACITY)
         {
@@ -35,17 +36,17 @@ public:
         }
     }
 
-    Player &getFirst()
+    T &getFirst()
     {
         return players[0];
     }
 
-    vector<Player> getPlayers() const
+    vector<T> getPlayers() const
     {
         return players;
     }
 
-    Player &getPlayer(int idx)
+    T &getPlayer(int idx)
     {
         return players[idx];
     }
@@ -55,9 +56,9 @@ public:
         return nPlayer;
     }
 
-    Player dequeue()
+    T dequeue()
     {
-        Player player = getFirst();
+        T player = getFirst();
         players.erase(players.begin());
         nPlayer--;
         return player;
@@ -65,7 +66,7 @@ public:
 
     void reverse()
     {
-        Player temp;
+        T temp;
         int j = nPlayer - 1;
         for (int i = 1; i < j; i++, j--)
         {
@@ -83,7 +84,7 @@ public:
         {
             while (players[0].cekGiliran())
             {
-                Player giliran = dequeue();
+                T giliran = dequeue();
                 enqueue(giliran);
             }
         }
@@ -118,7 +119,7 @@ public:
     {
         if (!rondeSelesai())
         {
-            Player giliran = dequeue();
+            T giliran = dequeue();
             giliran.giliranSelesai();
             enqueue(giliran);
             maintainQueue();
@@ -144,7 +145,7 @@ public:
         {
             player.belumGiliran();
         }
-        Player nextGiliran = dequeue();
+        T nextGiliran = dequeue();
         enqueue(nextGiliran);
     }
 
@@ -188,7 +189,7 @@ public:
     }
 
     // Memberi point pada player yang menang
-    void awardPlayer(Player winner, unsigned long long giftPoints)
+    void awardPlayer(T winner, unsigned long long giftPoints)
     {
         for (auto &player : players)
         {

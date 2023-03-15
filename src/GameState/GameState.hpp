@@ -23,10 +23,10 @@ protected:
     int round;
     unsigned long long giftPoint;
     bool win;
-    PlayerQueue playerQueue;
+    PlayerQueue<Player> playerQueue;
     AbilityDeck abilityDeck;
     MainDeck mainDeck;
-    Table tableCards;
+    Table<PermenCard> tableCards;
     ConsoleInput cli;
     int game;
 
@@ -34,10 +34,10 @@ public:
     Gamestate();
     unsigned long long getGiftPoint() const;
     void setGiftPoint(unsigned long long _giftPoint);
-    PlayerQueue &getPlayerQueue();
+    PlayerQueue<Player> &getPlayerQueue();
     MainDeck &getMainDeck();
     void setMainDeck(const MainDeck &_mainDeck);
-    void setPlayerQueue(const PlayerQueue &_p);
+    void setPlayerQueue(const PlayerQueue<Player> &_p);
     void setNewPlayer();
     void executeCommand();
     string getInput();

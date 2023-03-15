@@ -23,7 +23,7 @@ void Gamestate::setGiftPoint(unsigned long long _giftPoint)
     giftPoint = _giftPoint;
 }
 
-PlayerQueue &Gamestate::getPlayerQueue()
+PlayerQueue<Player> &Gamestate::getPlayerQueue()
 {
     return playerQueue;
 }
@@ -35,7 +35,7 @@ void Gamestate::setMainDeck(const MainDeck &_mainDeck)
 {
     mainDeck = _mainDeck;
 }
-void Gamestate::setPlayerQueue(const PlayerQueue &_playerQueue)
+void Gamestate::setPlayerQueue(const PlayerQueue<Player> &_playerQueue)
 {
     playerQueue = _playerQueue;
 }
@@ -111,7 +111,7 @@ void Gamestate::nextRound()
 void Gamestate::resetSession()
 {
     cli.clearInput();
-    tableCards = Table();
+    tableCards = Table<PermenCard>();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl

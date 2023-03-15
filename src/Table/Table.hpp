@@ -9,18 +9,19 @@ using namespace std;
 #include "../InventoryHolder/InventoryHolder.hpp"
 // INVENTORYHOLDER class
 
-class Table : public InventoryHolder<PermenCard>
+template <typename T>
+class Table : public InventoryHolder<T>
 {
 protected:
-    vector<PermenCard> tableCards;
+    vector<T> tableCards;
 
 public:
-    void addCard(PermenCard kartu)
+    void addCard(T kartu)
     {
         tableCards.push_back(kartu);
     }
 
-    vector<PermenCard> getInventory()
+    vector<T> getInventory()
     {
         return tableCards;
     };
