@@ -11,7 +11,7 @@ class Player : public InventoryHolder<PermenCard>
 {
 protected:
     int id;
-    int point;
+    unsigned int point;
     string name;
     pair<PermenCard, PermenCard> cards;
     Ability *ability;
@@ -46,7 +46,7 @@ public:
         return name;
     }
 
-    int getPoint() const
+    unsigned int getPoint() const
     {
         return point;
     }
@@ -107,7 +107,7 @@ public:
         listCard.push_back(cards.second);
         return listCard;
     }
-    void setPoint(int _point)
+    void setPoint(unsigned int _point)
     {
         point = _point;
     }
@@ -117,8 +117,9 @@ public:
     // }
     void addPoint(unsigned long long _point)
     {
-        if (point + _point < point)
+        if (point + _point < point || _point > (UINT_MAX))
         {
+            this->point = UINT_MAX;
             throw "Overflow";
         }
         point += _point;
