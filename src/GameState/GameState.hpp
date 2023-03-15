@@ -21,8 +21,7 @@ class Gamestate
 {
 protected:
     int round;
-    int playerCount;
-    unsigned int giftPoint;
+    unsigned long long giftPoint;
     bool win;
     PlayerQueue<Player> playerQueue;
     AbilityDeck abilityDeck;
@@ -33,8 +32,8 @@ protected:
 
 public:
     Gamestate();
-    int getGiftPoint() const;
-    void setGiftPoint(int _giftPoint);
+    unsigned long long getGiftPoint() const;
+    void setGiftPoint(unsigned long long _giftPoint);
     PlayerQueue<Player> &getPlayerQueue();
     MainDeck &getMainDeck();
     void setMainDeck(const MainDeck &_mainDeck);

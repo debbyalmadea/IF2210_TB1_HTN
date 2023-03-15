@@ -1,6 +1,6 @@
 #include "GameState.hpp"
 
-Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false)
+Gamestate::Gamestate() : giftPoint(64), round(1), win(false)
 {
     system("clear");
     cout << endl
@@ -13,12 +13,12 @@ Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false)
          << endl;
 }
 
-int Gamestate::getGiftPoint() const
+unsigned long long Gamestate::getGiftPoint() const
 {
     return giftPoint;
 }
 
-void Gamestate::setGiftPoint(int _giftPoint)
+void Gamestate::setGiftPoint(unsigned long long _giftPoint)
 {
     giftPoint = _giftPoint;
 }
@@ -140,8 +140,8 @@ void Gamestate::resetSession()
             else if (cli.getInput() == "2")
             {
                 mainDeck = MainDeck();
+                mainDeck.shuffleDeck();
             }
-            mainDeck.shuffleDeck();
             system("clear");
             cout << "   ▄▄ •  ▄▄▄· • ▌ ▄ ·. ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄  ▄▄▄▄▄▄▄  " << endl
                  << "  ▐█ ▀ ▪▐█ ▀█ ·██ ▐███▪▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▀▄ █·•██  ██▌ " << endl
@@ -202,10 +202,10 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
-                if (input != "REVERSEDIRECTION")
-                {
-                    playerCount++;
-                }
+                // if (input != "REVERSEDIRECTION")
+                // {
+                //     playerCount++;
+                // }
             }
             else
             {
@@ -233,7 +233,7 @@ void Gamestate::executeCommand()
     if (command != NULL)
     {
         command->use(*this);
-        playerCount++;
+        // playerCount++;
         delete command;
     }
     // if (shouldNext)
@@ -275,7 +275,7 @@ int Gamestate::start()
                 displayCurrentState();
                 cli.getInputCLI();
                 executeCommand();
-                cout << "[DEBUG] PLAYER COUNT: " << playerCount << endl;
+                // cout << "[DEBUG] PLAYER COUNT: " << playerCount << endl;
                 // playerCount++;
                 if (playerQueue.rondeSelesai())
                 {
@@ -298,7 +298,9 @@ int Gamestate::start()
         evaluateSession();
     }
     int newgame;
-    cout << "New game (1) or No (0)";
+    cout << "Lanjut?";
+    cout << "   1. Main lagi" << endl;
+    cout << "   2. Exit" << endl;
     cli.getInputInt(0, 1);
     return newgame;
 }
@@ -358,17 +360,18 @@ void Gamestate::dealTable()
 void Gamestate::evaluateSession()
 {
     vector<ComboTable> playerCombos;
-    cout << "Evaluating combos.." << endl;
+    cout << "Melakukan Evaluasi Combo.." << endl;
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
         Player currPlayer = playerQueue.getFirst();
+        cout << "Evaluasi Combo P" << currPlayer.getID() << " " << currPlayer.getName() << endl;
         ComboTable playerCombo = ComboTable(currPlayer, tableCards);
         playerCombo.calculatePossibleCombos();
-        playerCombo.displayCombos();
+        // playerCombo.displayCombos();
         playerCombos.push_back(playerCombo);
         playerQueue.next();
     }
-    cout << "hitung maks" << endl;
+    // cout << "hitung maks" << endl;
     ComboTable winningCombo = max<ComboTable>(playerCombos);
     // ComboTable winningCombo = playerCombos[0];
     // cout << "hii";
@@ -378,14 +381,18 @@ void Gamestate::evaluateSession()
     //         winningCombo = elem;
     // }
     Player winner = winningCombo.getPlayer();
-    cout << "Player " << winner.getName() << " " << winner.getID() << " wins this round!";
+    cout << "Pemain P" << winner.getID() << " " << winner.getName() << " memenangkan sesi ini!" << endl;
     try
     {
         playerQueue.awardPlayer(winner, giftPoint);
+        cout << "Pemain belum menyentuh 2^32. Permainan dilanjutkan." << endl;
+        cout << "Memulai ronde baru..." << endl;
     }
     catch (...)
     {
         win = true;
-        cout << "Player " << winner.getName() << " " << winner.getID() << " points overflowed, winning the game!";
+        cout << "POINTS OVERFLOWED! Permainan berakhir." << endl;
+        playerQueue.displayLeaderboard();
+        cout << "Permainan dimenangkan oleh Pemain P" << winner.getID() << " " << winner.getName() << endl;
     }
 };
