@@ -1,6 +1,6 @@
 #include "GameState.hpp"
 
-Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false), input("")
+Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false)
 {
     system("clear");
     cout << endl
@@ -45,12 +45,12 @@ void Gamestate::setNewPlayer()
     for (int i = 0; i < 7; i++)
     {
         cout << "Masukkan Nama Pemain " << i + 1 << endl;
-        getInputCLI();
-        playerQueue.enqueue(Player(i + 1, input));
+        cli.getInputCLI();
+        playerQueue.enqueue(Player(i + 1, cli.getInput()));
         cout << endl;
     }
 
-    clearInput();
+    cli.clearInput();
 }
 
 void Gamestate::displayCurrentState()
@@ -63,36 +63,43 @@ void Gamestate::displayCurrentState()
     cout << "--------------------------------------------" << endl;
 }
 
-string Gamestate ::getInput()
-{
-    return input;
-}
-void Gamestate::getInputCLI()
-{
-    cout << ">> ";
-    cin >> input;
-}
+// string Gamestate ::getInput()
+// {
+//     return input;
+// }
+// void Gamestate::getInputCLI()
+// {
+//     cout << ">> ";
+//     cin >> input;
+// }
 
-void Gamestate::getInputCLI(int min, int max)
-{
-    getInputCLI();
-    try
-    {
-        if (stoi(input) < min || stoi(input) > max)
-        {
-            throw ExceptionIO(input);
-        }
-    }
-    catch (invalid_argument &err)
-    {
-        throw ExceptionIO(input);
-    }
-}
+// void Gamestate::getInputCLI(int min, int max)
+// {
 
-void Gamestate::clearInput()
-{
-    input = "";
-}
+//     getInputCLI();
+//     try
+//     {
+//         if (stoi(input) < min || stoi(input) > max)
+//         {
+//             throw ExceptionIO(input);
+//         }
+//     }
+//     catch (Exception &err)
+//     {
+//         err.print();
+//         clearInput();
+//     }
+//     catch (invalid_argument &err)
+//     {
+//         cout << input << " bukan masukan yang valid." << endl;
+//         clearInput();
+//     }
+// }
+
+// void Gamestate::clearInput()
+// {
+//     input = "";
+// }
 void Gamestate::nextRound()
 {
     system("clear");
@@ -103,7 +110,7 @@ void Gamestate::nextRound()
 
 void Gamestate::resetSession()
 {
-    clearInput();
+    cli.clearInput();
     tableCards = Table();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
@@ -115,23 +122,22 @@ void Gamestate::resetSession()
          << " ------------------------------------------ " << endl;
 
     // ? SUGGESTION: Place it in another method?
-    while (input == "" || input == "1")
+    while (cli.getInput() == "" || cli.getInput() == "1")
     {
         try
         {
-            if (input != "1")
+            if (cli.getInput() != "1")
             {
-                getInputCLI(1, 2);
+                cli.getInputInt(1, 2);
             }
 
-            if (input == "1")
+            if (cli.getInput() == "1")
             {
                 FileReader reader;
                 cout << "Masukkan nama file" << endl;
-                getInputCLI();
-                mainDeck = reader.readBasicCard(input);
+                mainDeck = reader.readBasicCard(cli.getInputCLI());
             }
-            else if (input == "2")
+            else if (cli.getInput() == "2")
             {
                 mainDeck = MainDeck();
             }
@@ -146,17 +152,17 @@ void Gamestate::resetSession()
         catch (ExceptionFile &err)
         {
             err.print();
-            input = "1";
+            cli.getInput() = "1";
         }
         catch (Exception &err)
         {
             err.print();
-            clearInput();
+            cli.clearInput();
         }
         catch (invalid_argument &err)
         {
             cout << "Masukan Tidak Valid. Tidak bisa diubah ke Integer" << endl;
-            clearInput();
+            cli.clearInput();
         }
     }
 }
@@ -167,6 +173,7 @@ void Gamestate::executeCommand()
     // bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;
+    string input = cli.getInput();
     if (input == "NEXT")
     {
         command = new Next();
@@ -195,10 +202,10 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
-                // if (input == "REVERSEDIRECTION")
-                // {
-                //     shouldNext = false;
-                // }
+                if (input != "REVERSEDIRECTION")
+                {
+                    playerCount++;
+                }
             }
             else
             {
@@ -226,6 +233,7 @@ void Gamestate::executeCommand()
     if (command != NULL)
     {
         command->use(*this);
+        playerCount++;
         delete command;
     }
     // if (shouldNext)
@@ -265,8 +273,9 @@ int Gamestate::start()
             try
             {
                 displayCurrentState();
-                getInputCLI();
+                cli.getInputCLI();
                 executeCommand();
+                cout << "[DEBUG] PLAYER COUNT: " << playerCount << endl;
                 // playerCount++;
                 if (playerQueue.rondeSelesai())
                 {
@@ -290,7 +299,7 @@ int Gamestate::start()
     }
     int newgame;
     cout << "New game (1) or No (0)";
-    getInputCLI(0, 1);
+    cli.getInputInt(0, 1);
     return newgame;
 }
 

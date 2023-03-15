@@ -12,6 +12,7 @@ Switch::Switch(int _idPemilik) : Ability(6, _idPemilik)
 void Switch::use(Gamestate &g)
 {
     // Player temp;
+    ConsoleInput cli;
     if (available[getIdAbility()] == 1)
     {
         string input;
@@ -39,21 +40,21 @@ void Switch::use(Gamestate &g)
                      << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
             }
         }
-
         cout << "Masukkan id pemain yang kartunya ingin anda tukar: ";
-        cin >> input;
-        try
-        {
-            if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-            {
-                throw ExceptionIO(input);
-            }
-        }
-        catch (invalid_argument &err)
-        {
-            throw ExceptionIO(input);
-        }
-        idToSwitch = stoi(input);
+        vector<int> except = {getIdPemilik()};
+        idToSwitch = cli.getInputInt(1, 7, except);
+        // try
+        // {
+        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+        //     {
+        //         throw ExceptionIO(input);
+        //     }
+        // }
+        // catch (invalid_argument &err)
+        // {
+        //     throw ExceptionIO(input);
+        // }
+        // idToSwitch = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch)

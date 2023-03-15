@@ -40,6 +40,7 @@ void SwapCard::swap(int choice1, int choice2, int idx1, int idx2, Gamestate &g)
 }
 void SwapCard::use(Gamestate &g)
 {
+    ConsoleInput cli;
     if (available[getIdAbility()] == 1)
     {
         string input;
@@ -56,19 +57,20 @@ void SwapCard::use(Gamestate &g)
                 count++;
             }
         }
-        cin >> input;
-        try
-        {
-            if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-            {
-                throw ExceptionIO(input);
-            }
-        }
-        catch (invalid_argument &err)
-        {
-            throw ExceptionIO(input);
-        }
-        idToSwitch1 = stoi(input);
+        vector<int> except = {getIdPemilik()};
+        idToSwitch1 = cli.getInputInt(1, 7, except);
+        // try
+        // {
+        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+        //     {
+        //         throw ExceptionIO(input);
+        //     }
+        // }
+        // catch (invalid_argument &err)
+        // {
+        //     throw ExceptionIO(input);
+        // }
+        // idToSwitch1 = stoi(input);
         cout << "Masukkan id pemain lain yang kartunya ingin anda tukar: " << endl;
         count = 0;
 
@@ -81,19 +83,20 @@ void SwapCard::use(Gamestate &g)
                 count++;
             }
         }
-        cin >> input;
-        try
-        {
-            if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik() || stoi(input) == idToSwitch1)
-            {
-                throw ExceptionIO(input);
-            }
-        }
-        catch (invalid_argument &err)
-        {
-            throw ExceptionIO(input);
-        }
-        idToSwitch2 = stoi(input);
+        except.push_back(idToSwitch1);
+        idToSwitch2 = cli.getInputInt(1, 7, except);
+        // try
+        // {
+        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik() || stoi(input) == idToSwitch1)
+        //     {
+        //         throw ExceptionIO(input);
+        //     }
+        // }
+        // catch (invalid_argument &err)
+        // {
+        //     throw ExceptionIO(input);
+        // }
+        // idToSwitch2 = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch1)
@@ -106,14 +109,14 @@ void SwapCard::use(Gamestate &g)
             }
         }
         int choice1, choice2;
-        cout << "Pilih kartu kanan/kiri dari pemain " << idToSwitch1 << endl;
+        cout << endl
+             << "Pilih kartu kanan/kiri dari pemain " << idToSwitch1 << endl;
         cout << "1. Kiri\n2. Kanan\n";
-        g.getInputCLI(1, 2);
-        choice1 = stoi(g.getInput());
-        cout << "Pilih kartu kanan/kiri dari pemain " << idToSwitch2 << endl;
+        choice1 = cli.getInputInt(1, 2);
+        cout << endl
+             << "Pilih kartu kanan/kiri dari pemain " << idToSwitch2 << endl;
         cout << "1. Kiri\n2. Kanan\n";
-        g.getInputCLI(1, 2);
-        choice2 = stoi(g.getInput());
+        choice2 = cli.getInputInt(1, 2);
 
         swap(choice1, choice2, index1, index2, g);
         available[getIdAbility()] = 0;

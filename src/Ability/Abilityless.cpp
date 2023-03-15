@@ -30,6 +30,7 @@ bool Abilityless::hasUsedAllAbility()
 
 void Abilityless::use(Gamestate &g)
 {
+    ConsoleInput cli;
     string input;
     int idDeadPlayer;
     if (hasUsedAllAbility())
@@ -55,19 +56,20 @@ void Abilityless::use(Gamestate &g)
                 }
             }
             cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan: ";
-            cin >> input;
-            try
-            {
-                if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-                {
-                    throw ExceptionIO(input);
-                }
-            }
-            catch (invalid_argument &err)
-            {
-                throw ExceptionIO(input);
-            }
-            idDeadPlayer = stoi(input);
+            vector<int> except = {getIdPemilik()};
+            idDeadPlayer = cli.getInputInt(1, 7, except);
+            // try
+            // {
+            //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+            //     {
+            //         throw ExceptionIO(input);
+            //     }
+            // }
+            // catch (invalid_argument &err)
+            // {
+            //     throw ExceptionIO(input);
+            // }
+            // idDeadPlayer = stoi(input);
             if (available[idPemilikidAbility[idDeadPlayer]] == 1)
             {
                 setAbilityAvailability(idPemilikidAbility[idDeadPlayer], 2);

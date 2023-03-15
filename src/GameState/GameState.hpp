@@ -2,6 +2,7 @@
 #define Gamestate_HPP
 #include "../Player/PlayerQueue.hpp"
 #include "../IO/FileReader.hpp"
+#include "../IO/ConsoleInput.hpp"
 #include "../Deck/MainDeck.hpp"
 #include "../Deck/AbilityDeck.hpp"
 #include "../Ability/CommandInclude.hpp"
@@ -26,8 +27,8 @@ protected:
     PlayerQueue playerQueue;
     AbilityDeck abilityDeck;
     MainDeck mainDeck;
-    string input;
     Table tableCards;
+    ConsoleInput cli;
     int game;
 
 public:
