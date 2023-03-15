@@ -177,7 +177,7 @@ public:
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
     {
-        cout << "Giliran saat ini: " << players[0].getName() << endl;
+        cout << "Giliran saat ini: P" << players[0].getID() << " " << players[0].getName() << endl;
     }
 
     // Melihat semua sisa giliran, termasuk yang saat ini.
@@ -191,7 +191,7 @@ public:
             {
                 if (!players[i].cekGiliran())
                 {
-                    cout << "<" << players[i].getName() << "> ";
+                    cout << "P" << players[i].getID() << "<" << players[i].getName() << "> ";
                 }
             }
             cout << "\n";
@@ -208,7 +208,7 @@ public:
         for (auto &player : players)
         {
             if (player.getID() == winner.getID())
-                winner.addPoint(giftPoints);
+                player.addPoint(giftPoints);
         }
     };
 

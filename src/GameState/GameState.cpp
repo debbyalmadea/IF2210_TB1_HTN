@@ -309,7 +309,7 @@ int Gamestate::start()
         evaluateSession();
     }
     int newgame;
-    cout << "Lanjut?";
+    cout << "Lanjut?" << endl;
     cout << "   1. Main lagi" << endl;
     cout << "   2. Exit" << endl;
     cli.getInputInt(0, 1);
@@ -381,6 +381,7 @@ void Gamestate::evaluateSession()
         // playerCombo.displayCombos();
         playerCombos.push_back(playerCombo);
         playerQueue.next();
+        cout << endl;
     }
     // cout << "hitung maks" << endl;
     ComboTable winningCombo = max<ComboTable>(playerCombos);
