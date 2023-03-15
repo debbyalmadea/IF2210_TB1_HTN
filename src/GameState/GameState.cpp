@@ -129,6 +129,7 @@ void Gamestate::resetSession()
     tableCards = Table<PermenCard>();
     abilityDeck = AbilityDeck();
     round = 1;
+    setGiftPoint(64);
     playerQueue.newRound();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
