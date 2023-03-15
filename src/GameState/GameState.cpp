@@ -130,7 +130,7 @@ void Gamestate::resetSession()
     abilityDeck = AbilityDeck();
     round = 1;
     setGiftPoint(64);
-    playerQueue.newRound();
+    // playerQueue.newRound();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
