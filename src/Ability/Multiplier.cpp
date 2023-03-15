@@ -54,11 +54,15 @@ Quarter::Quarter(int _idPemilik) : Ability(2, _idPemilik), Multiplier(-4)
 void Quarter::use(Gamestate &g)
 {
     // cek ability
+    cout << "Berhasil menggunakan Quarter" << endl;
+    if (g.getGiftPoint() == 1)
+    {
+        return;
+    }
     if (available[getIdAbility()] == 1)
     {
         Multiplier::use(g);
         available[getIdAbility()] = 0;
-        cout << "Berhasil menggunakan Quarter" << endl;
     }
     else if (available[getIdAbility()] == 2)
     {
@@ -84,6 +88,11 @@ Half::Half() : Multiplier(-2), BasicCommand("Half")
 }
 void Half::use(Gamestate &g)
 {
+    cout << "Berhasil menggunakan Half" << endl;
+    if (g.getGiftPoint() == 1)
+    {
+        return;
+    }
     Multiplier::use(g);
     // print pemain yg melakukannya
 }
