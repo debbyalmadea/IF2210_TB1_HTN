@@ -38,31 +38,37 @@ void Abilityless::use(Gamestate &g)
     }
     else
     {
-        cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
-        cout << getIdPemilik() << endl;
-        /*print semua player*/
-        int count = 1;
-        for (int i = 0; i < 7; i++)
+        if (available[getIdAbility()] == 1)
         {
-
-            if (getIdPemilik() != i)
+            cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
+            // cout << getIdPemilik() << endl;
+            /*print semua player*/
+            int count = 1;
+            for (int i = 1; i <= 7; i++)
             {
-                cout << count << ". Pemain " << i << endl;
-                count++;
+                if (getIdPemilik() != i)
+                {
+                    cout << count << ". Pemain " << i << endl;
+                    count++;
+                }
             }
-        }
 
-        cin >> idDeadPlayer;
-        if (available[idPemilikidAbility[idDeadPlayer]] == 1)
-        {
-            available[idPemilikidAbility[idDeadPlayer]] = 2;
-            cout << "Kartu ability pemain " << idDeadPlayer << " berhasil dimatikan" << endl;
+            cin >> idDeadPlayer;
+            if (available[idPemilikidAbility[idDeadPlayer]] == 1)
+            {
+                setAbilityAvailability(idPemilikidAbility[idDeadPlayer], 2);
+                cout << "Kartu ability pemain " << idDeadPlayer << " berhasil dimatikan" << endl;
+            }
+            else
+            {
+                cout << "Kartu ability pemain "
+                     << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+            }
+            setAbilityAvailability(0);
         }
         else
         {
-            cout << "Kartu ability pemain "
-                 << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
-            setAbilityAvailability(0);
+            cout << "Kartu Abilityless sudah pernah dipakai" << endl;
         }
     }
 }

@@ -41,6 +41,7 @@ public:
 
     void setIdAbility(int _idAbility);
     void setAbilityAvailability(int _available);
+    void setAbilityAvailability(int _idAbility, int _available);
     void setIdPemilik(int _idPemilik);
 
     virtual void use(Gamestate &g) = 0;

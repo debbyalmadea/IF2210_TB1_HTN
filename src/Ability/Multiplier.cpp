@@ -63,7 +63,6 @@ void Quarter::use(Gamestate &g)
     {
         Multiplier::use(g);
         available[getIdAbility()] = 0;
-        cout << "Berhasil menggunakan Quarter" << endl;
     }
     else if (available[getIdAbility()] == 2)
     {
