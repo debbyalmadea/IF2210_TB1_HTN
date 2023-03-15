@@ -22,18 +22,15 @@ void Switch::use(Gamestate &g)
         cout << g.getPlayerQueue().getnPlayers() << endl;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
-            cout << "idPemilik1 " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-            cout << "idPemilik2 " << getIdPemilik() << endl;
             if (g.getPlayerQueue().getPlayer(i).getID() == getIdPemilik())
             {
                 temp = g.getPlayerQueue().getPlayer(i).getBothCard();
                 index1 = i;
             }
         }
-        cout << "index1 " << index1 << endl;
         temp.first.printInfo();
         temp.second.printInfo();
-        cout << "Silahkan pilih pemain yang kartunya ingin anda tukar: " << endl;
+        cout << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl;
         int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {

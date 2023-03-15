@@ -44,7 +44,7 @@ void SwapCard::use(Gamestate &g)
     {
         int idToSwitch1, index1;
         int idToSwitch2, index2;
-        cout << "Silahkan pilih pemain yang kartunya ingin anda tukar: " << endl;
+        cout << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl;
         int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
@@ -53,7 +53,7 @@ void SwapCard::use(Gamestate &g)
             count++;
         }
         cin >> idToSwitch1;
-        cout << "Silahkan pilih pemain lain yang kartunya ingin anda tukar: " << endl;
+        cout << "Masukkan id pemain lain yang kartunya ingin anda tukar: " << endl;
         count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {

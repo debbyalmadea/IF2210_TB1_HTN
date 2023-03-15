@@ -1,7 +1,7 @@
 
-
 #include "../Player/PlayerQueue.hpp"
 #include "../Player/Player.hpp"
+#include "../GameState/GameState.hpp"
 #include "Ability.hpp"
 #include <iostream>
 #include "Abilityless.hpp"
@@ -40,19 +40,19 @@ void Abilityless::use(Gamestate &g)
     {
         if (available[getIdAbility()] == 1)
         {
-            cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
+            cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan:" << endl;
             // cout << getIdPemilik() << endl;
             /*print semua player*/
             int count = 1;
-            for (int i = 1; i <= 7; i++)
+            for (int i = 0; i < 7; i++)
             {
-                if (getIdPemilik() != i)
+                if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID())
                 {
-                    cout << count << ". Pemain " << i << endl;
+                    cout << count << ". Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
                     count++;
                 }
             }
-
+            // add exception
             cin >> idDeadPlayer;
             if (available[idPemilikidAbility[idDeadPlayer]] == 1)
             {
