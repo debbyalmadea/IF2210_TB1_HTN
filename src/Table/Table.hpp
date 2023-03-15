@@ -25,6 +25,7 @@ public:
     {
         return tableCards;
     };
+
     void displayInv()
     {
         cout << "Kartu di meja adalah sebagai berikut" << endl;
@@ -35,5 +36,23 @@ public:
             index += 1;
         }
     };
+
+    void displayTop()
+    {
+        if (tableCards.size() == 0)
+            cout << "Kartu di meja kosong" << endl;
+        cout << "Kartu paling atas di meja adalah " << tableCards.end() - 1 << endl;
+    }
+
+    T takeTop()
+    {
+        T atas = tableCards.back();
+        tableCards.pop_back();
+        return atas;
+    }
+    T seeTop()
+    {
+        return tableCards.back();
+    }
 };
 #endif

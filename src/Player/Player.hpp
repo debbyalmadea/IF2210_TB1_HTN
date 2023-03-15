@@ -41,6 +41,11 @@ public:
         return id;
     }
 
+    int getSize()
+    {
+        return 2;
+    }
+
     string getName() const
     {
         return name;
