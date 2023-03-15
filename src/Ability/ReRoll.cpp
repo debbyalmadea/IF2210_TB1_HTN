@@ -29,6 +29,10 @@ void ReRoll::use(Gamestate &g)
                 break;
             }
         }
+        available[getIdAbility()] = 0;
+        PlayerQueue p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
     else if (available[getIdAbility()] == 0)
     {

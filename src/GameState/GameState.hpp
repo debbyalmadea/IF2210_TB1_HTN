@@ -41,6 +41,7 @@ public:
     void setPlayerQueue(const PlayerQueue &_p);
     void setNewPlayer();
     void executeCommand();
+    string getInput();
     void getInputCLI();
     void clearInput();
     void getInputCLI(int min, int max);

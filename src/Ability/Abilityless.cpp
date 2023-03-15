@@ -30,18 +30,21 @@ bool Abilityless::hasUsedAllAbility()
 
 void Abilityless::use(Gamestate &g)
 {
+    string input;
     int idDeadPlayer;
     if (hasUsedAllAbility())
     {
         cout << "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah kamu kena sendiri deh, kemampuanmu menjadi abilityless. Yah, pengunaan kartu ini sia-sia" << endl;
         setAbilityAvailability(2);
+        PlayerQueue p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
     else
     {
         if (available[getIdAbility()] == 1)
         {
             cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan:" << endl;
-            // cout << getIdPemilik() << endl;
             /*print semua player*/
             int count = 1;
             for (int i = 0; i < 7; i++)
@@ -52,8 +55,19 @@ void Abilityless::use(Gamestate &g)
                     count++;
                 }
             }
-            // add exception
-            cin >> idDeadPlayer;
+            cin >> input;
+            try
+            {
+                if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+                {
+                    throw ExceptionIO(input);
+                }
+            }
+            catch (invalid_argument &err)
+            {
+                throw ExceptionIO(input);
+            }
+            idDeadPlayer = stoi(input);
             if (available[idPemilikidAbility[idDeadPlayer]] == 1)
             {
                 setAbilityAvailability(idPemilikidAbility[idDeadPlayer], 2);
@@ -65,6 +79,9 @@ void Abilityless::use(Gamestate &g)
                      << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
             }
             setAbilityAvailability(0);
+            PlayerQueue p = g.getPlayerQueue();
+            p.next();
+            g.setPlayerQueue(p);
         }
         else
         {
