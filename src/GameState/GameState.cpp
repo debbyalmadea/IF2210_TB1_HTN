@@ -110,6 +110,10 @@ void Gamestate::nextRound()
         {
             playerQueue.silentNext(reverseSkip + 5);
         }
+        else if (reverseSkip == 6)
+        {
+            playerQueue.silentNext(5);
+        }
         else
         {
             playerQueue.silentNext(reverseSkip - 2);
