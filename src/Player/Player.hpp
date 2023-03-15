@@ -26,15 +26,15 @@ public:
     {
     }
 
-    Player(const Player &other)
-    {
-        this->id = other.id;
-        this->point = other.point;
-        this->name = other.name;
-        this->cards = other.cards;
-        this->ability = other.ability;
-        this->sudahGiliran = other.sudahGiliran;
-    }
+    // Player(const Player &other)
+    // {
+    //     this->id = other.id;
+    //     this->point = other.point;
+    //     this->name = other.name;
+    //     this->cards = other.cards;
+    //     this->ability = other.ability;
+    //     this->sudahGiliran = other.sudahGiliran;
+    // }
 
     int getID() const
     {
@@ -115,7 +115,7 @@ public:
     // {
     //     idAbility = _idAbility;
     // }
-    void addPoint(int _point)
+    void addPoint(unsigned long long _point)
     {
         if (point + _point < point)
         {
@@ -136,16 +136,31 @@ public:
         sudahGiliran = false;
     }
 
-    Player &operator=(const Player &other)
+    bool operator==(const Player &other)
     {
-        id = other.id;
-        point = other.point;
-        name = other.name;
-        cards = other.cards;
-        ability = other.ability;
-        sudahGiliran = other.sudahGiliran;
-        return *this;
+        return this->point == other.point;
     }
+
+    bool operator<(const Player &other)
+    {
+        return this->point < other.point;
+    }
+
+    bool operator>(const Player &other)
+    {
+        return this->point > other.point;
+    }
+
+    // Player &operator=(const Player &other)
+    // {
+    //     id = other.id;
+    //     point = other.point;
+    //     name = other.name;
+    //     cards = other.cards;
+    //     ability = other.ability;
+    //     sudahGiliran = other.sudahGiliran;
+    //     return *this;
+    // }
 };
 
 #endif

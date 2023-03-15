@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -126,15 +127,15 @@ public:
             {
                 cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
             }
-            else
-            {
-                cout << "Ronde selesai" << endl;
-            }
+            // else
+            // {
+            //     cout << "Ronde selesai" << endl;
+            // }
         }
-        else
-        {
-            cout << "Ronde sudah selesai. Ganti ke ronde selanjutnya" << endl;
-        }
+        // else
+        // {
+        //     cout << "Ronde sudah selesai. Ganti ke ronde selanjutnya" << endl;
+        // }
     }
 
     void newRound()
@@ -148,15 +149,15 @@ public:
     }
 
     // Melihat isi queue
-    void displayQueue() const
-    {
-        cout << "Urutan permainan saat ini:" << endl;
-        for (int i = 0; i < nPlayer; i++)
-        {
-            cout << "Player #" << players[i].getID() << " dengan point " << players[i].getPoint() << endl;
-        }
-        cout << endl;
-    }
+    // void displayQueue() const
+    // {
+    //     // cout << "Urutan permainan saat ini:" << endl;
+    //     for (int i = 0; i < nPlayer; i++)
+    //     {
+    //         cout << "Player #" << players[i].getID() << " dengan point " << players[i].getPoint() << endl;
+    //     }
+    //     cout << endl;
+    // }
 
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
@@ -187,7 +188,7 @@ public:
     }
 
     // Memberi point pada player yang menang
-    void awardPlayer(Player winner, int giftPoints)
+    void awardPlayer(Player winner, unsigned long long giftPoints)
     {
         for (auto &player : players)
         {
@@ -195,6 +196,16 @@ public:
                 winner.addPoint(giftPoints);
         }
     };
+
+    void displayLeaderboard()
+    {
+        sort(players.begin(), players.end());
+        cout << "Leaderboard:" << endl;
+        for (int i = 0; i < players.size(); i++)
+        {
+            cout << "   " << i + 1 << ". Pemain P" << players[i].getID() << " " << players[i].getName() << ": " << players[i].getPoint() << endl;
+        }
+    }
 };
 
 #endif
