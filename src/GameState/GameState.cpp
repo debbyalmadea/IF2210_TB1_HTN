@@ -319,7 +319,7 @@ int Gamestate::start()
     cout << "Lanjut?" << endl;
     cout << "   1. Main lagi" << endl;
     cout << "   2. Exit" << endl;
-    newgame = cli.getInputInt(0, 1);
+    newgame = cli.getInputInt(1, 2);
 
     return newgame;
 }
