@@ -1,6 +1,6 @@
 #include "FileReader.hpp"
 
-string FileReader::configPath = "../../config/";
+string FileReader::configPath = "config/";
 
 vector<string> FileReader::splitByWhiteSpace(string line)
 {
@@ -34,6 +34,7 @@ MainDeck FileReader::readBasicCard(string filename)
 {
     string line;
     vector<PermenCard> permenCards;
+    cout << configPath + filename << endl;
     ifstream file(configPath + filename);
     int numOfLines = 0;
 

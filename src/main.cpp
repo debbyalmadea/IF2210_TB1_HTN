@@ -1,4 +1,4 @@
-#include "GameState.hpp"
+#include "GameState/GameState.hpp"
 
 int main()
 {

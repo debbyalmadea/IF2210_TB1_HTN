@@ -1,6 +1,6 @@
 #include "CangkulState.hpp"
 
-CangkulState::CangkulState() : win(false), round(1)
+CangkulState::CangkulState() : win(false), round(1), freshRound(false)
 {
     system("clear");
     cout << endl
@@ -33,7 +33,10 @@ void CangkulState::setPlayerQueue(const PlayerQueue<CangkulPlayer> &_playerQueue
 
 void CangkulState::setNewPlayer()
 {
-    for (int i = 0; i < 4; i++)
+    cout << "Masukkan banyak player" << endl;
+    int n_player;
+    n_player = cli.getInputInt(2, 4);
+    for (int i = 0; i < n_player; i++)
     {
         cout << "Masukkan Nama Pemain " << i + 1 << endl;
         cli.getInputCLI();
@@ -51,6 +54,10 @@ void CangkulState::displayCurrentState()
          << "Ronde: " << round << endl;
     playerQueue.displayGiliran();
     cout << "Kartu di meja: " << tableCards.seeTop() << endl;
+    if (freshRound)
+    {
+        cout << "Anda pemain pertama di ronde ini! Anda dapat memainkan kartu apa saja." << endl;
+    }
     cout << "--------------------------------------------" << endl;
 }
 
@@ -64,11 +71,12 @@ void CangkulState::nextRound()
     else
     {
         CangkulPlayer tertinggi = getMaxPlayer();
-        cout << "Ronde akan dimulai dengan pemain dengan kartu tertinggi " << tertinggi.getName();
+        cout << "Ronde akan dimulai dengan pemain dengan kartu tertinggi " << tertinggi.getName() << endl;
         playerQueue.newRound(getMaxPlayer());
     }
     tablePrio.clear();
     round++;
+    freshRound = true;
 }
 
 CangkulPlayer CangkulState::getMaxPlayer()
@@ -76,7 +84,11 @@ CangkulPlayer CangkulState::getMaxPlayer()
     pair<CangkulPlayer, StandardCard> maks = tablePrio[0];
     for (auto &pair : tablePrio)
     {
-        if (pair.second > maks.second)
+        if (!playerQueue.stillInGame(maks.first) && playerQueue.stillInGame(pair.first))
+        {
+            maks = pair;
+        }
+        if (pair.second > maks.second && playerQueue.stillInGame(pair.first))
         {
             maks = pair;
         }
@@ -89,7 +101,6 @@ void CangkulState::executeCommand()
     CangkulPlayer &currPlayer = playerQueue.getFirst();
     string input = cli.getInput();
     StandardCard top = tableCards.seeTop();
-
     if (input == "CANGKUL")
     {
         if (currPlayer.canDeal(top))
@@ -118,12 +129,20 @@ void CangkulState::executeCommand()
             cout << "Silahkan input angka dari kartu yang anda inginkan" << endl;
             int cardChoice = cli.getInputInt(1, currPlayer.getSize());
             StandardCard card = currPlayer.getCardIdx(cardChoice);
-            if (isValid(card))
+            if (freshRound)
+            {
+                freshRound = false;
+                currPlayer.removeCardIdx(cardChoice);
+                tableCards.addCard(card);
+                tablePrio.push_back({currPlayer, card});
+                playerQueue.next();
+            }
+            else if (isValid(card))
             {
                 currPlayer.removeCardIdx(cardChoice);
                 tableCards.addCard(card);
-                playerQueue.next();
                 tablePrio.push_back({currPlayer, card});
+                playerQueue.next();
             }
             else
             {
@@ -164,21 +183,23 @@ int CangkulState::start()
             displayCurrentState();
             cli.getInputCLI();
             executeCommand();
+            evaluateWinner();
             if (playerQueue.rondeSelesai())
             {
                 nextRound();
             }
-            evaluateWinner();
         }
         catch (char const *s)
         {
             cout << s << endl;
         }
     }
+    cout << endl
+         << "Game has ended! " << endl;
     int newgame;
     cout << "Lanjut?";
-    cout << "   1. Main lagi" << endl;
     cout << "   0. Exit" << endl;
+    cout << "   1. Main Lagi" << endl;
     newgame = cli.getInputInt(0, 1);
     return newgame;
 }

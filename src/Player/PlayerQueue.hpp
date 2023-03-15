@@ -246,6 +246,17 @@ public:
             }
         }
     }
+    bool stillInGame(T Player)
+    {
+        for (auto it = players.begin(); it != players.end(); it++)
+        {
+            if (it->getID() == Player.getID())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 #endif
