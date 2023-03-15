@@ -112,7 +112,7 @@ void Gamestate::nextRound()
         }
         else if (reverseSkip == 6)
         {
-            playerQueue.silentNext(5);
+            playerQueue.silentNext(3);
         }
         else
         {
