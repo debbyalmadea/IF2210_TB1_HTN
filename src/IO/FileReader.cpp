@@ -63,6 +63,11 @@ MainDeck FileReader::readBasicCard(string filename)
                 throw ExceptionFile(1, filename);
             }
         }
+
+        if (numOfLines != 52)
+        {
+            throw ExceptionFile(2, filename);
+        }
     }
     // !TODO: card not enough exception
     file.close();
