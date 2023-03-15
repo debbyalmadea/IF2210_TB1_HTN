@@ -54,7 +54,8 @@ void Gamestate::setNewPlayer()
 
 void Gamestate::displayCurrentState()
 {
-    cout << "--------------------------------------------" << endl
+    cout << endl
+         << "--------------------------------------------" << endl
          << "Ronde: " << round << endl
          << "Poin Hadiah: " << giftPoint << endl;
     playerQueue.displayGiliran();
@@ -155,7 +156,7 @@ void Gamestate::resetSession()
 void Gamestate::executeCommand()
 {
     bool shouldNext = true;
-    vector<string> ability = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
+    vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;
     if (input == "NEXT")
     {
@@ -176,7 +177,7 @@ void Gamestate::executeCommand()
     {
         if (round == 1)
         {
-            throw "Masih round 1";
+            throw ExceptionCard(0, input);
         }
         else
         {
@@ -185,15 +186,14 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
-                if (input == "ReverseDirection")
+                if (input == "REVERSEDIRECTION")
                 {
                     shouldNext = false;
                 }
             }
             else
             {
-                cout << "You dont have the card" << endl;
-                shouldNext = false;
+                throw ExceptionCard(0, input);
             }
         }
     }
@@ -262,6 +262,10 @@ int Gamestate::start()
                 // {
                 //                 }
             }
+            catch (Exception &err)
+            {
+                err.print();
+            }
             catch (...)
             {
                 cout << "Something is wrong" << endl; //! CHANGE
@@ -277,19 +281,40 @@ int Gamestate::start()
 
 void Gamestate::dealAbility()
 {
-    cout << "Dealing ability ..." << endl;
+    cout << endl;
+    cout << "           .-----. D e a l i n g " << endl;
+    cout << "   ' /   _/    )/  A b i l i t y " << endl;
+    cout << "- ( ) -('---''--)  . . .         " << endl;
+    cout << " / . \((() ^_^ )()               " << endl;
+    cout << "  \\_  (()_)-((()()              " << endl
+         << endl;
+    // cout << "Dealing ability ..." << endl;
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
         Ability *card = abilityDeck.dealCard(1)[0];
-        cout << card->getIdAbility() << endl;
+        // cout << card->getIdAbility() << endl;
         Player &currentPlayer = playerQueue.getPlayer(i);
         currentPlayer.setAbility(card);
+        cout << endl;
         card->setIdPemilik(currentPlayer.getID());
     }
 }
 void Gamestate::dealPlayers()
 {
-    cout << "Dealing cards..." << endl;
+    cout << endl
+         << endl;
+    cout << "    _____  D e a l i n g C a r d s ... " << endl;
+    cout << "   |A .  | _____                       " << endl;
+    cout << "   | /.  ||A ^  | _____                " << endl;
+    cout << "   |(_._)||     ||A _  | _____         " << endl;
+    cout << "   |  |  ||     || ( ) ||A_ _ |        " << endl;
+    cout << "   |____V||  .  ||(_'_)||( v )|        " << endl;
+    cout << "          |____V||  |  ||  V  |        " << endl;
+    cout << "                 |____V||  .  |        " << endl;
+    cout << "                        |____V|        " << endl;
+    cout << endl
+         << endl;
+    // cout << "Dealing cards..." << endl;
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
         vector<PermenCard> cards = mainDeck.dealCard(2);

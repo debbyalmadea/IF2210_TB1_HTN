@@ -66,7 +66,7 @@ public:
 
     void setAbility(Ability *_ability)
     {
-        cout << "Player " << getName() << " has received ability " << _ability->getAbilityName() << endl;
+        cout << "Pemain " << getName() << " mendapatkan kartu ability " << _ability->getAbilityName() << endl;
         ability = _ability;
     }
     // int getIdAbility() const
@@ -87,7 +87,7 @@ public:
     }
     void setBothCard(pair<PermenCard, PermenCard> _cards)
     {
-        cout << "Player " << name << " has received the following cards:" << endl;
+        cout << "Pemain " << name << " menerima kartu:" << endl;
         cout << _cards.first << endl;
         cout << _cards.second << endl
              << endl;
@@ -96,7 +96,7 @@ public:
     }
     void displayInv()
     {
-        cout << "Player " << name << " has the following cards:" << endl;
+        cout << "Pemain " << name << " mempunyai kartu:" << endl;
         cout << cards.first << endl;
         cout << cards.second << endl;
     }
