@@ -26,16 +26,6 @@ public:
     {
     }
 
-    Player(const Player &other)
-    {
-        this->id = other.id;
-        this->point = other.point;
-        this->name = other.name;
-        this->cards = other.cards;
-        this->ability = other.ability;
-        this->sudahGiliran = other.sudahGiliran;
-    }
-
     int getID() const
     {
         return id;

@@ -1,7 +1,7 @@
 #ifndef _STDCARD_
 #define _STDCARD_
 
-#include "Card.hpp"
+#include "../Card.hpp"
 #include <string>
 #include <iostream>
 
@@ -23,7 +23,7 @@ public:
         cout << "Kartu anda adalah " << value << " " << StandardShapes[shape] << " " << StandardColors[color];
     }
 
-    bool operator<(const Card &other)
+    bool operator<(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -31,7 +31,7 @@ public:
         }
         return this->value < other.getValue();
     };
-    bool operator>(const Card &other)
+    bool operator>(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -39,7 +39,7 @@ public:
         }
         return this->value > other.getValue();
     };
-    bool operator==(const Card &other)
+    bool operator==(const Card &other) const
     {
         if (this->value == other.getValue() && this->shape == other.getShape() && this->color == other.getColor())
         {
@@ -47,5 +47,13 @@ public:
         }
         return false;
     };
+
+    friend ostream &operator<<(ostream &os, const StandardCard &dt);
 };
+
+ostream &operator<<(ostream &os, const StandardCard &dt)
+{
+    os << "Kartu: " << dt.value << " " << dt.StandardShapes[dt.shape] << " " << dt.StandardColors[dt.color];
+    return os;
+}
 #endif
