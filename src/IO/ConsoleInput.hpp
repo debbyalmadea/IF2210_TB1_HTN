@@ -19,12 +19,14 @@ public:
     }
     string getInputCLI()
     {
+
         cout << ">> ";
         cin >> input;
         return input;
     }
     int getInputInt(int min, int max)
     {
+        clearInput();
         while (input == "")
         {
             getInputCLI();
@@ -51,6 +53,7 @@ public:
 
     int getInputInt(int min, int max, vector<int> except)
     {
+        clearInput();
         while (input == "")
         {
             getInputCLI();
