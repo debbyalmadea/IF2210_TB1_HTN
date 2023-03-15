@@ -50,6 +50,9 @@ void Switch::use(Gamestate &g)
         g.getPlayerQueue().getPlayer(index1).setBothCard(g.getPlayerQueue().getPlayer(index2).getBothCard());
         g.getPlayerQueue().getPlayer(index1).getFirstCard().printInfo();
         g.getPlayerQueue().getPlayer(index2).setBothCard(temp);
+        PlayerQueue p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
 
     else if (available[getIdAbility()] == 0)

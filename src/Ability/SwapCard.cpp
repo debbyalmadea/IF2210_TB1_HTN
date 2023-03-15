@@ -81,6 +81,9 @@ void SwapCard::use(Gamestate &g)
         cout << "1. Kiri\n2. Kanan\n";
         cin >> choice2;
         swap(choice1, choice2, index1, index2, g);
+        PlayerQueue p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
     else if (available[getIdAbility()] == 0)
     {

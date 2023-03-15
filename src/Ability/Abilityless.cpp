@@ -35,6 +35,9 @@ void Abilityless::use(Gamestate &g)
     {
         cout << "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah kamu kena sendiri deh, kemampuanmu menjadi abilityless. Yah, pengunaan kartu ini sia-sia" << endl;
         setAbilityAvailability(2);
+        PlayerQueue p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
     else
     {
@@ -65,6 +68,9 @@ void Abilityless::use(Gamestate &g)
                      << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
             }
             setAbilityAvailability(0);
+            PlayerQueue p = g.getPlayerQueue();
+            p.next();
+            g.setPlayerQueue(p);
         }
         else
         {

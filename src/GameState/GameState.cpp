@@ -155,13 +155,13 @@ void Gamestate::resetSession()
 
 void Gamestate::executeCommand()
 {
-    bool shouldNext = true;
+    // bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;
     if (input == "NEXT")
     {
         command = new Next();
-        shouldNext = false;
+        // shouldNext = false;
         playerCount++;
     }
     else if (input == "HALF")
@@ -186,10 +186,10 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
-                if (input == "REVERSEDIRECTION")
-                {
-                    shouldNext = false;
-                }
+                // if (input == "REVERSEDIRECTION")
+                // {
+                //     shouldNext = false;
+                // }
             }
             else
             {
@@ -201,7 +201,7 @@ void Gamestate::executeCommand()
     {
         Player currentPlayer = playerQueue.getFirst();
         currentPlayer.displayInv();
-        shouldNext = false;
+        // shouldNext = false;
     }
     else
     {
@@ -213,11 +213,11 @@ void Gamestate::executeCommand()
         command->use(*this);
         delete command;
     }
-    if (shouldNext)
-    {
-        playerQueue.next();
-        playerCount++;
-    }
+    // if (shouldNext)
+    // {
+    //     playerQueue.next();
+    //     playerCount++;
+    // }
 }
 
 int Gamestate::start()

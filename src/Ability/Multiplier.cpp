@@ -18,6 +18,9 @@ void Multiplier::use(Gamestate &g)
     {
         g.setGiftPoint(getMultiplyBy() * g.getGiftPoint());
     }
+    PlayerQueue p = g.getPlayerQueue();
+    p.next();
+    g.setPlayerQueue(p);
 }
 
 Quadruple::Quadruple() : Ability(1, -1), Multiplier(4)
