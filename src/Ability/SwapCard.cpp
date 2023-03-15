@@ -116,6 +116,7 @@ void SwapCard::use(Gamestate &g)
         choice2 = stoi(g.getInput());
 
         swap(choice1, choice2, index1, index2, g);
+        available[getIdAbility()] = 0;
         PlayerQueue p = g.getPlayerQueue();
         p.next();
         g.setPlayerQueue(p);

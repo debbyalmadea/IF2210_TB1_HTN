@@ -69,6 +69,7 @@ void Switch::use(Gamestate &g)
         PlayerQueue p = g.getPlayerQueue();
         p.next();
         g.setPlayerQueue(p);
+        available[getIdAbility()] = 0;
     }
 
     else if (available[getIdAbility()] == 0)
