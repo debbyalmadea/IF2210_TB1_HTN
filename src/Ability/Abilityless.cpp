@@ -51,8 +51,7 @@ void Abilityless::use(Gamestate &g)
                 if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID())
                 {
                     cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
-                         << g.getPlayerQueue().getPlayer(i).getName() << ": "
-                         << g.getPlayerQueue().getPlayer(i).getAbility()->getAbilityName() << ">" << endl;
+                         << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
                 }
             }
             cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan: ";

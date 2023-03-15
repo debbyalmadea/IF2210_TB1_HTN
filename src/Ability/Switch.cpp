@@ -35,10 +35,8 @@ void Switch::use(Gamestate &g)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() != getIdPemilik())
             {
-                cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
-                     << g.getPlayerQueue().getPlayer(i).getName() << " memiliki kartu:" << endl;
-                g.getPlayerQueue().getPlayer(i).displayInv();
-                cout << endl;
+                cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
             }
         }
 
