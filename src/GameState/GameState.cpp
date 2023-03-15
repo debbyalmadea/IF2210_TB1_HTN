@@ -112,7 +112,7 @@ void Gamestate::nextRound()
         }
         else if (reverseSkip == 6)
         {
-            playerQueue.silentNext(5);
+            playerQueue.silentNext(3);
         }
         else
         {
@@ -127,6 +127,10 @@ void Gamestate::resetSession()
 {
     cli.clearInput();
     tableCards = Table<PermenCard>();
+    abilityDeck = AbilityDeck();
+    round = 1;
+    setGiftPoint(64);
+    // playerQueue.newRound();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
@@ -316,7 +320,8 @@ int Gamestate::start()
     cout << "Lanjut?" << endl;
     cout << "   1. Main lagi" << endl;
     cout << "   2. Exit" << endl;
-    cli.getInputInt(0, 1);
+    newgame = cli.getInputInt(1, 2);
+
     return newgame;
 }
 

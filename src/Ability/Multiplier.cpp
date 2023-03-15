@@ -18,7 +18,7 @@ void Multiplier::use(Gamestate &g)
     {
         g.setGiftPoint(getMultiplyBy() * g.getGiftPoint());
     }
-    PlayerQueue p = g.getPlayerQueue();
+    PlayerQueue<Player> p = g.getPlayerQueue();
     p.next();
     g.setPlayerQueue(p);
 }
