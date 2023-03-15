@@ -2,6 +2,7 @@
 #define Gamestate_HPP
 #include "../Player/PlayerQueue.hpp"
 #include "../IO/FileReader.hpp"
+#include "../IO/ConsoleInput.hpp"
 #include "../Deck/MainDeck.hpp"
 #include "../Deck/AbilityDeck.hpp"
 #include "../Ability/CommandInclude.hpp"
@@ -21,14 +22,13 @@ class Gamestate
 protected:
     int round;
     int playerCount;
-    int giftPoint;
+    unsigned int giftPoint;
     bool win;
     PlayerQueue playerQueue;
     AbilityDeck abilityDeck;
     MainDeck mainDeck;
-    string input;
     Table tableCards;
-    Command *command;
+    ConsoleInput cli;
     int game;
 
 public:
