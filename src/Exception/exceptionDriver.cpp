@@ -1,47 +1,45 @@
-#include <exception>
-#include "exceptionCard.cpp"
-#include "exceptionFile.cpp"
+// #include <exception>
+// #include "exceptionCard.cpp"
+// #include "exceptionFile.cpp"
 
-using namespace std;
+// using namespace std;
 
-int main(){
+// int main(){
 
-    int a = 0;
+//     int a = 0;
 
-    // try{
-    // string fileName;
-    // cout << "Masukkan nama file : ";
-    // cin >> fileName;
+//     // try{
+//     // string fileName;
+//     // cout << "Masukkan nama file : ";
+//     // cin >> fileName;
 
-    // throw ExceptionFile(0, fileName);
-    // }
+//     // throw ExceptionFile(0, fileName);
+//     // }
 
-    // catch (ExceptionFile& e){
-    //     e.print();
-    // }
+//     // catch (ExceptionFile& e){
+//     //     e.print();
+//     // }
 
-    // try{
-    // string cardName = "Abilityless";
+//     // try{
+//     // string cardName = "Abilityless";
 
-    // throw ExceptionCard(0, cardName);
-    
-    // }
+//     // throw ExceptionCard(0, cardName);
 
-    // catch (ExceptionCard& e){
-    //     e.print();
-    // }
+//     // }
 
-    // try{
-    // string cardName = "Abilityless";
+//     // catch (ExceptionCard& e){
+//     //     e.print();
+//     // }
 
-    // throw ExceptionCard(2, cardName);
-    
-    // }
+//     // try{
+//     // string cardName = "Abilityless";
 
-    // catch (ExceptionCard& e){
-    //     e.print();
-    // }
+//     // throw ExceptionCard(2, cardName);
 
+//     // }
 
-    
-}
+//     // catch (ExceptionCard& e){
+//     //     e.print();
+//     // }
+
+// }

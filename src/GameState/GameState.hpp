@@ -8,6 +8,7 @@
 #include "../Table/Table.hpp"
 #include "../Exception/exception.hpp"
 #include "../Exception/ExceptionIO.hpp"
+#include "../Exception/exceptionCard.hpp"
 #include "../Combo/ComboTable.hpp"
 #include "../Template/MaxTemp.h"
 

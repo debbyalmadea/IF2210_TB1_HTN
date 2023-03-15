@@ -14,7 +14,7 @@ class Ability : public Command
 protected:
     int idAbility;
     int idPemilik;
-    string abilityName[7] = {"Abilityless", "Quadruple", "Quarter", "ReRoll", "ReverseDirection", "SwapCard", "Switch"};
+    string abilityName[7] = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     static int available[7]; // 0 : ga punya atau pernah punya terus dipake, 1 : ada bs dipake, 2 : mati (kena abilityless), indeksnya berdasarkan idAbility
     static map<int, int> idPemilikidAbility;
 
