@@ -127,6 +127,9 @@ void Gamestate::resetSession()
 {
     cli.clearInput();
     tableCards = Table<PermenCard>();
+    abilityDeck = AbilityDeck();
+    round = 1;
+    playerQueue.newRound();
     abilityDeck.shuffleDeck();
     Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
@@ -316,7 +319,8 @@ int Gamestate::start()
     cout << "Lanjut?" << endl;
     cout << "   1. Main lagi" << endl;
     cout << "   2. Exit" << endl;
-    cli.getInputInt(0, 1);
+    newgame = cli.getInputInt(0, 1);
+
     return newgame;
 }
 
