@@ -34,9 +34,9 @@ void Quadruple::use(Gamestate &g)
     // cek ability
     if (available[getIdAbility()] == 1)
     {
+        cout << "Kartu quadruple berhasil dipakai" << endl;
         Multiplier::use(g);
         available[getIdAbility()] = 0;
-        cout << "Kartu quadruple berhasil dipakai" << endl;
     }
     else if (available[getIdAbility()] == 2)
     {
@@ -57,13 +57,13 @@ Quarter::Quarter(int _idPemilik) : Ability(2, _idPemilik), Multiplier(-4)
 void Quarter::use(Gamestate &g)
 {
     // cek ability
-    cout << "Berhasil menggunakan Quarter" << endl;
     if (g.getGiftPoint() == 1)
     {
         return;
     }
     if (available[getIdAbility()] == 1)
     {
+        cout << "Berhasil menggunakan Quarter" << endl;
         Multiplier::use(g);
         available[getIdAbility()] = 0;
     }

@@ -2,6 +2,7 @@
 
 Gamestate::Gamestate() : giftPoint(64), round(1), playerCount(0), win(false), input("")
 {
+    system("clear");
     cout << endl
          << " SELAMAT DATANG DI" << endl
          << "   ▄ .▄       ▐ ▄ ▄▄▄▄▄      ▄• ▄▌ ▐ ▄ ▪    " << endl
@@ -94,7 +95,9 @@ void Gamestate::clearInput()
 }
 void Gamestate::nextRound()
 {
-    playerCount = 0;
+    system("clear");
+    playerQueue.newRound();
+    // playerCount = 0;
     round++;
 }
 
@@ -133,6 +136,7 @@ void Gamestate::resetSession()
                 mainDeck = MainDeck();
             }
             mainDeck.shuffleDeck();
+            system("clear");
             cout << "   ▄▄ •  ▄▄▄· • ▌ ▄ ·. ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄  ▄▄▄▄▄▄▄  " << endl
                  << "  ▐█ ▀ ▪▐█ ▀█ ·██ ▐███▪▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▀▄ █·•██  ██▌ " << endl
                  << "  ▄█ ▀█▄▄█▀▀█ ▐█ ▌▐▌▐█·▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ▐▀▀▄  ▐█.▪▐█· " << endl
@@ -166,7 +170,7 @@ void Gamestate::executeCommand()
     {
         command = new Next();
         // shouldNext = false;
-        playerCount++;
+        // playerCount++;
     }
     else if (input == "HALF")
     {
@@ -248,7 +252,7 @@ int Gamestate::start()
         // playerCount = 6;
         while (round <= 6)
         {
-            if (round != 6 && playerCount == 0 && dealt == false)
+            if (round != 6 && playerQueue.rondeBaruMulai() && dealt == false)
             {
                 if (round == 2)
                 {
@@ -263,7 +267,7 @@ int Gamestate::start()
                 getInputCLI();
                 executeCommand();
                 // playerCount++;
-                if (playerCount == 7)
+                if (playerQueue.rondeSelesai())
                 {
                     nextRound();
                     dealt = false;

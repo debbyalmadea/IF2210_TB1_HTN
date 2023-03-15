@@ -100,6 +100,18 @@ public:
         return check;
     }
 
+    bool rondeBaruMulai()
+    {
+        bool check = true;
+        int i = 0;
+        while (check && i < nPlayer)
+        {
+            check = check && !players[i].cekGiliran();
+            i++;
+        }
+        return check;
+    }
+
     // Lanjut ke giliran player selanjutnya. Kalau sudah semua, maka otomatis akan terbuat ronde baru
     void next()
     {
@@ -117,7 +129,6 @@ public:
             else
             {
                 cout << "Ronde selesai" << endl;
-                newRound();
             }
         }
         else
@@ -136,7 +147,7 @@ public:
         enqueue(nextGiliran);
     }
 
-    // Melihat isi queue. Tidak pernah ditunjukkan ke user
+    // Melihat isi queue
     void displayQueue() const
     {
         cout << "Urutan permainan saat ini:" << endl;

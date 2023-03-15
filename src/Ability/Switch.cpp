@@ -31,18 +31,18 @@ void Switch::use(Gamestate &g)
         }
         temp.first.printInfo();
         temp.second.printInfo();
-        cout << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl;
-        int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() != getIdPemilik())
             {
-                cout << count + 1 << ". "
-                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-                count++;
+                cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << " memiliki kartu:" << endl;
+                g.getPlayerQueue().getPlayer(i).displayInv();
+                cout << endl;
             }
         }
 
+        cout << "Masukkan id pemain yang kartunya ingin anda tukar: ";
         cin >> input;
         try
         {
