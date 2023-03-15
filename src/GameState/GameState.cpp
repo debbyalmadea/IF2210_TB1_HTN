@@ -161,6 +161,7 @@ void Gamestate::executeCommand()
     {
         command = new Next();
         shouldNext = false;
+        playerCount++;
     }
     else if (input == "HALF")
     {
@@ -184,6 +185,10 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
+                if (input == "ReverseDirection")
+                {
+                    shouldNext = false;
+                }
             }
             else
             {
@@ -211,6 +216,7 @@ void Gamestate::executeCommand()
     if (shouldNext)
     {
         playerQueue.next();
+        playerCount++;
     }
 }
 
@@ -246,7 +252,7 @@ int Gamestate::start()
                 displayCurrentState();
                 getInputCLI();
                 executeCommand();
-                playerCount++;
+                // playerCount++;
                 if (playerCount == 7)
                 {
                     nextRound();
