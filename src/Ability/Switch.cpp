@@ -65,7 +65,7 @@ void Switch::use(Gamestate &g)
         g.getPlayerQueue().getPlayer(index1).setBothCard(g.getPlayerQueue().getPlayer(index2).getBothCard());
         g.getPlayerQueue().getPlayer(index1).getFirstCard().printInfo();
         g.getPlayerQueue().getPlayer(index2).setBothCard(temp);
-        PlayerQueue p = g.getPlayerQueue();
+        PlayerQueue<Player> p = g.getPlayerQueue();
         p.next();
         g.setPlayerQueue(p);
         available[getIdAbility()] = 0;

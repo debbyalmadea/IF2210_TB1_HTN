@@ -5,6 +5,7 @@
 #include "../InventoryHolder/InventoryHolder.hpp"
 
 #include <utility>
+#include <climits>
 //  PLAYER class
 
 class Player : public InventoryHolder<PermenCard>
@@ -96,7 +97,8 @@ public:
     }
     void displayInv()
     {
-        cout << "Pemain " << name << " mempunyai kartu:" << endl;
+        cout << "Pemain " << name << " memiliki point sebesar " << point << endl;
+        cout << "Kartu yang dimiliki:" << endl;
         cout << cards.first << endl;
         cout << cards.second << endl;
     }
