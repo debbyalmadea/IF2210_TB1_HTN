@@ -136,7 +136,7 @@ public:
         enqueue(nextGiliran);
     }
 
-    // Melihat isi queue
+    // Melihat isi queue. Tidak pernah ditunjukkan ke user
     void displayQueue() const
     {
         cout << "Urutan permainan saat ini:" << endl;
@@ -150,7 +150,7 @@ public:
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
     {
-        cout << "Giliran saat ini: P" << players[0].getID() << " " << players[0].getName() << endl;
+        cout << "Giliran saat ini: " << players[0].getName() << endl;
     }
 
     // Melihat semua sisa giliran, termasuk yang saat ini.
@@ -164,7 +164,7 @@ public:
             {
                 if (!players[i].cekGiliran())
                 {
-                    cout << "P" << players[i].getID() << " ";
+                    cout << "<" << players[i].getName() << "> ";
                 }
             }
             cout << "\n";
