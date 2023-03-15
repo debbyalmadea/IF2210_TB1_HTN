@@ -114,6 +114,19 @@ public:
         return check;
     }
 
+    int countGiliranDone()
+    {
+        int count = 0;
+        for (int i = 0; i < nPlayer; i++)
+        {
+            if (players[i].cekGiliran())
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     // Lanjut ke giliran player selanjutnya. Kalau sudah semua, maka otomatis akan terbuat ronde baru
     void next()
     {
@@ -128,15 +141,16 @@ public:
             {
                 cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
             }
-            // else
-            // {
-            //     cout << "Ronde selesai" << endl;
-            // }
         }
-        // else
-        // {
-        //     cout << "Ronde sudah selesai. Ganti ke ronde selanjutnya" << endl;
-        // }
+    }
+
+    void silentNext(int skip)
+    {
+        for (int i = 0; i < skip; i++)
+        {
+            T giliran = dequeue();
+            enqueue(giliran);
+        }
     }
 
     void newRound()

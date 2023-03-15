@@ -1,6 +1,6 @@
 #include "GameState.hpp"
 
-Gamestate::Gamestate() : giftPoint(64), round(1), win(false)
+Gamestate::Gamestate() : giftPoint(64), round(1), win(false), reverseSkip(-1)
 {
     system("clear");
     cout << endl
@@ -102,9 +102,20 @@ void Gamestate::displayCurrentState()
 // }
 void Gamestate::nextRound()
 {
-    system("clear");
+    // system("clear");
     playerQueue.newRound();
-    // playerCount = 0;
+    if (reverseSkip != -1)
+    {
+        if (reverseSkip < 2)
+        {
+            playerQueue.silentNext(reverseSkip + 5);
+        }
+        else
+        {
+            playerQueue.silentNext(reverseSkip - 2);
+        }
+    }
+    reverseSkip = -1;
     round++;
 }
 
@@ -202,10 +213,10 @@ void Gamestate::executeCommand()
             if (ability->getAbilityName() == input)
             {
                 ability->use(*this);
-                // if (input != "REVERSEDIRECTION")
-                // {
-                //     playerCount++;
-                // }
+                if (input == "REVERSEDIRECTION")
+                {
+                    reverseSkip = playerQueue.countGiliranDone();
+                }
             }
             else
             {

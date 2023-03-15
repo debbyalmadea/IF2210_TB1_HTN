@@ -23,6 +23,7 @@ protected:
     int round;
     unsigned long long giftPoint;
     bool win;
+    int reverseSkip;
     PlayerQueue<Player> playerQueue;
     AbilityDeck abilityDeck;
     MainDeck mainDeck;
