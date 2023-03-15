@@ -203,8 +203,14 @@ void Gamestate::executeCommand()
     }
     else if (input == "DISPLAY")
     {
+        tableCards.displayInv();
+        cout << endl;
         Player currentPlayer = playerQueue.getFirst();
         currentPlayer.displayInv();
+        if (round > 1)
+        {
+            cout << "Ability: " << currentPlayer.getAbility()->getAbilityName() << endl;
+        }
         // shouldNext = false;
     }
     else
