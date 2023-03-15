@@ -2,7 +2,6 @@
 #define _PLAYERQUEUE_
 #define CAPACITY 7
 
-#include "Player.hpp"
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -53,7 +52,7 @@ public:
 
     int getnPlayers()
     {
-        return nPlayer;
+        return players.size();
     }
 
     T dequeue()
@@ -163,6 +162,20 @@ public:
         enqueue(nextGiliran);
     }
 
+    void newRound(T startPlayer)
+    {
+        cout << "New round will start with player " << startPlayer.getName() << endl;
+        for (auto &player : players)
+        {
+            player.belumGiliran();
+        }
+        while (players[0].getID() != startPlayer.getID())
+        {
+            T nextGiliran = dequeue();
+            enqueue(nextGiliran);
+        }
+    }
+
     // Melihat isi queue
     // void displayQueue() const
     // {
@@ -214,11 +227,23 @@ public:
 
     void displayLeaderboard()
     {
-        sort(players.begin(), players.end());
+        sort(players.rbegin(), players.rend());
         cout << "Leaderboard:" << endl;
         for (int i = 0; i < players.size(); i++)
         {
             cout << "   " << i + 1 << ". Pemain P" << players[i].getID() << " " << players[i].getName() << ": " << players[i].getPoint() << endl;
+        }
+    }
+    void handleCangkulWin()
+    {
+        for (auto it = players.begin(); it != players.end(); it++)
+        {
+            if (it->getSize() == 0)
+            {
+                cout << it->getName() << " has won the game! He will leave the game.";
+                players.erase(it);
+                return;
+            }
         }
     }
 };

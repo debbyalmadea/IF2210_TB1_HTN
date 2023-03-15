@@ -2,8 +2,10 @@
 #define _CANGKULPLAYER_
 #include "../../Card/Bonus/StandardCard.hpp"
 #include "../../InventoryHolder/InventoryHolder.hpp"
-
+#include <iostream>
 #include <utility>
+
+using namespace std;
 //  PLAYER class
 
 class CangkulPlayer : public InventoryHolder<StandardCard>
@@ -39,24 +41,62 @@ public:
         return point;
     }
 
+    int getSize()
+    {
+        return cards.size();
+    }
+
     vector<StandardCard> getBothCard() const
     {
         return cards;
     }
 
-    void addCard(StandardCard _card1)
+    void addCard(StandardCard _card)
     {
-        cards.push_back(_card1);
+        cards.push_back(_card);
+    }
+
+    void addCards(vector<StandardCard> _card1)
+    {
+        cout << "Player " << name << " has received: " << endl;
+        for (auto &card : _card1)
+        {
+            cout << card << endl;
+            cards.push_back(card);
+        }
+        cout << endl;
+    }
+
+    bool canDeal(StandardCard _top)
+    {
+        for (auto &card : cards)
+        {
+            if (_top.getShape() == card.getShape())
+                return true;
+        }
+        return false;
     }
 
     void displayInv()
     {
-        cout << "Pemain " << name << " mempunyai kartu:" << endl;
+        cout << "Pemain " << name << " mempunyai kartu: " << endl;
+        int index = 1;
         for (auto &card : cards)
         {
-            cout << card << endl;
+            cout << index << ". " << card << endl;
+            index += 1;
         }
     }
+
+    StandardCard getCardIdx(int idx)
+    {
+        return cards[idx - 1];
+    }
+    void removeCardIdx(int idx)
+    {
+        cards.erase(cards.begin() + idx - 1);
+    }
+
     vector<StandardCard> getInventory()
     {
         return cards;

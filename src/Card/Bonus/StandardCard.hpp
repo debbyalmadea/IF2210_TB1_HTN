@@ -14,8 +14,26 @@ protected:
     string StandardColors[2] = {"Black", "Red"};
 
 public:
-    StandardCard(int _shape, int _color, int _value) : Card(_shape, _color, _value, false)
+    StandardCard(int _shape, int _value) : Card(_shape, 1, _value, false)
     {
+        if (_shape == 1 || _shape == 2)
+        {
+            color = 1;
+        }
+        else
+        {
+            color = 0;
+        }
+    }
+
+    string getStrShape() const
+    {
+        return StandardShapes[this->getShape()];
+    }
+
+    string getStrColor() const
+    {
+        return StandardColors[this->getColor()];
     }
 
     void printInfo()
@@ -51,9 +69,4 @@ public:
     friend ostream &operator<<(ostream &os, const StandardCard &dt);
 };
 
-ostream &operator<<(ostream &os, const StandardCard &dt)
-{
-    os << "Kartu: " << dt.value << " " << dt.StandardShapes[dt.shape] << " " << dt.StandardColors[dt.color];
-    return os;
-}
 #endif
