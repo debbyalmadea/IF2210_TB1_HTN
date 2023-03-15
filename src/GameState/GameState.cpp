@@ -163,6 +163,7 @@ void Gamestate::resetSession()
 
 void Gamestate::executeCommand()
 {
+    Command *command;
     // bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;

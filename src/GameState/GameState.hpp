@@ -21,14 +21,13 @@ class Gamestate
 protected:
     int round;
     int playerCount;
-    int giftPoint;
+    unsigned int giftPoint;
     bool win;
     PlayerQueue playerQueue;
     AbilityDeck abilityDeck;
     MainDeck mainDeck;
     string input;
     Table tableCards;
-    Command *command;
     int game;
 
 public:
