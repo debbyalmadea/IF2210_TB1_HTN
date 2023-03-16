@@ -320,6 +320,10 @@ void Gamestate::dealTable()
 void Gamestate::evaluateSession()
 {
     vector<ComboTable> playerCombos;
+    cout << "Kondisi akhir..." << endl;
+    tableCards.displayInv();
+    cout << endl;
+    playerQueue.displayPlayers();
     cout << "Melakukan Evaluasi Combo.." << endl;
     for (int i = 0; i < playerQueue.getnPlayers(); i++)
     {
@@ -327,19 +331,12 @@ void Gamestate::evaluateSession()
         cout << "Evaluasi Combo P" << currPlayer.getID() << " " << currPlayer.getName() << endl;
         ComboTable playerCombo = ComboTable(currPlayer, tableCards);
         playerCombo.calculatePossibleCombos();
-        // playerCombo.displayCombos();
         playerCombos.push_back(playerCombo);
         playerQueue.next();
         cout << endl;
     }
     ComboTable winningCombo = max<ComboTable>(playerCombos);
-    // ComboTable winningCombo = playerCombos[0];
-    // cout << "hii";
-    // for (auto &elem : playerCombos)
-    // {
-    //     if (elem > winningCombo)
-    //         winningCombo = elem;
-    // }
+
     Player winner = winningCombo.getPlayer();
     cout << "Pemain P" << winner.getID() << " " << winner.getName() << " memenangkan sesi ini!" << endl;
     try

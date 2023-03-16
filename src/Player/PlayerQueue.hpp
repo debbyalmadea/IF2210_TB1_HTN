@@ -248,6 +248,16 @@ public:
             cout << "   " << i + 1 << ". Pemain P" << tPlayers[i].getID() << " " << tPlayers[i].getName() << ": " << tPlayers[i].getPoint() << endl;
         }
     }
+
+    void displayPlayers()
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            players[i].displayInv();
+            cout << endl;
+        }
+    }
+
     void handleCangkulWin()
     {
         for (auto it = players.begin(); it != players.end(); it++)

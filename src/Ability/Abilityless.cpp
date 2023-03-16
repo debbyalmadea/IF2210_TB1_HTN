@@ -47,29 +47,19 @@ void Abilityless::use(Gamestate &g)
         {
             cout << "Kamu akan mematikan kartu ability dari salah satu pemain lain" << endl;
             /*print semua player*/
+            cout << endl;
             for (int i = 0; i < 7; i++)
             {
                 if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID())
                 {
-                    cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
-                         << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
+                    cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                         << g.getPlayerQueue().getPlayer(i).getName() << endl;
                 }
             }
-            cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan: ";
+            cout << endl
+                 << "Silahkan pilih id pemain yang kartunya ingin kamu matikan: " << endl;
             vector<int> except = {getIdPemilik()};
             idDeadPlayer = cli.getInputInt(1, 7, except);
-            // try
-            // {
-            //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-            //     {
-            //         throw ExceptionIO(input);
-            //     }
-            // }
-            // catch (invalid_argument &err)
-            // {
-            //     throw ExceptionIO(input);
-            // }
-            // idDeadPlayer = stoi(input);
             if (available[idPemilikidAbility[idDeadPlayer]] == 1)
             {
                 setAbilityAvailability(idPemilikidAbility[idDeadPlayer], 2);

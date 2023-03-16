@@ -10,6 +10,9 @@ using namespace std;
 
 class AbilityDeck : public Deck<Ability *>
 {
+private:
+    vector<Ability *> abilityDeck;
+
 public:
     AbilityDeck();
 

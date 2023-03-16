@@ -21,7 +21,7 @@ void Switch::use(Gamestate &g)
         int index1, index2;
         cout << "Pemain " << getIdPemilik() << " melakukan switch! \n";
         cout << "Kartumu sekarang adalah: " << endl;
-        cout << g.getPlayerQueue().getnPlayers() << endl;
+        // cout << g.getPlayerQueue().getnPlayers() << endl;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == getIdPemilik())
@@ -32,29 +32,19 @@ void Switch::use(Gamestate &g)
         }
         temp.first.printInfo();
         temp.second.printInfo();
+        cout << endl;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() != getIdPemilik())
             {
-                cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
-                     << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
+                cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << endl;
             }
         }
-        cout << "Masukkan id pemain yang kartunya ingin anda tukar: ";
+        cout << endl
+             << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl;
         vector<int> except = {getIdPemilik()};
         idToSwitch = cli.getInputInt(1, 7, except);
-        // try
-        // {
-        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-        //     {
-        //         throw ExceptionIO(input);
-        //     }
-        // }
-        // catch (invalid_argument &err)
-        // {
-        //     throw ExceptionIO(input);
-        // }
-        // idToSwitch = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch)
@@ -63,7 +53,7 @@ void Switch::use(Gamestate &g)
             }
         }
         g.getPlayerQueue().getPlayer(index1).setBothCard(g.getPlayerQueue().getPlayer(index2).getBothCard());
-        g.getPlayerQueue().getPlayer(index1).getFirstCard().printInfo();
+        // g.getPlayerQueue().getPlayer(index1).getFirstCard().printInfo();
         g.getPlayerQueue().getPlayer(index2).setBothCard(temp);
         PlayerQueue<Player> p = g.getPlayerQueue();
         p.next();
