@@ -134,7 +134,7 @@ void Gamestate::resetSession()
         catch (ExceptionFile &err)
         {
             err.print();
-            cli.getInput() = "1";
+            cli.setInput("1");
         }
         catch (Exception &err)
         {
