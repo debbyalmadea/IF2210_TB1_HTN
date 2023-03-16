@@ -2,7 +2,7 @@
 > Tugas Besar I Mata Kuliah IF2210-Pemrograman Berbasis Objek
 > Developed by HONTOUNI
 
-## Table of Contents
+
 
 ## General Information
 Permainan Kartu Kerajaan Permen adalah permainan kartu dimana pemain harus mengumpulkan poin hingga menjadi pemenang dengan cara mendapatkan nilai kartu tertinggi pada setiap permainan. Pemain dapat menggunakan ability dan perintah lain untuk memudahkan (atau tidak) mencapai kemenangannya! Permainan ini dibangun berbasis konsep OOP dengan Inheritance, Polymorphism, Function dan Operator Overloading, Abstract Class dan Virtual Function, Generic Function dan Generic Class, serta Standard Template Library (STL).
