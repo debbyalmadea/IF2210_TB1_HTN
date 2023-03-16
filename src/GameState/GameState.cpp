@@ -330,7 +330,7 @@ void Gamestate::evaluateSession()
         cout << "Evaluasi Combo P" << currPlayer.getID() << " " << currPlayer.getName() << endl;
         ComboTable playerCombo = ComboTable(currPlayer, tableCards);
         playerCombo.calculatePossibleCombos();
-        playerCombo.displayCombos();
+        // playerCombo.displayCombos();
         playerCombos.push_back(playerCombo);
         playerQueue.next();
         cout << endl;

@@ -16,7 +16,7 @@ class Combo : public Valuable
 {
 protected:
     vector<PermenCard> comboCards;
-    array<vector<PermenCard>, 25> cardsByValue;
+    array<vector<PermenCard>, 15> cardsByValue;
     string description;
     void calcHigh()
     {
