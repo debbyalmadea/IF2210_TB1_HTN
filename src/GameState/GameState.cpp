@@ -63,43 +63,6 @@ void Gamestate::displayCurrentState()
     cout << "--------------------------------------------" << endl;
 }
 
-// string Gamestate ::getInput()
-// {
-//     return input;
-// }
-// void Gamestate::getInputCLI()
-// {
-//     cout << ">> ";
-//     cin >> input;
-// }
-
-// void Gamestate::getInputCLI(int min, int max)
-// {
-
-//     getInputCLI();
-//     try
-//     {
-//         if (stoi(input) < min || stoi(input) > max)
-//         {
-//             throw ExceptionIO(input);
-//         }
-//     }
-//     catch (Exception &err)
-//     {
-//         err.print();
-//         clearInput();
-//     }
-//     catch (invalid_argument &err)
-//     {
-//         cout << input << " bukan masukan yang valid." << endl;
-//         clearInput();
-//     }
-// }
-
-// void Gamestate::clearInput()
-// {
-//     input = "";
-// }
 void Gamestate::nextRound()
 {
     // system("clear");
@@ -128,11 +91,11 @@ void Gamestate::resetSession()
     cli.clearInput();
     tableCards = Table<PermenCard>();
     abilityDeck = AbilityDeck();
+    Ability::resetAbilityState();
+    playerQueue.resetRound();
     round = 1;
     setGiftPoint(64);
-    // playerQueue.newRound();
     abilityDeck.shuffleDeck();
-    Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
          << "| Pilih metode membaca deck                |" << endl
          << "|                                          |" << endl
@@ -189,15 +152,12 @@ void Gamestate::resetSession()
 void Gamestate::executeCommand()
 {
     Command *command;
-    // bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;
     string input = cli.getInput();
     if (input == "NEXT")
     {
         command = new Next();
-        // shouldNext = false;
-        // playerCount++;
     }
     else if (input == "HALF")
     {
@@ -242,7 +202,6 @@ void Gamestate::executeCommand()
         {
             cout << "Ability: " << currentPlayer.getAbility()->getAbilityName() << endl;
         }
-        // shouldNext = false;
     }
     else
     {
@@ -252,14 +211,8 @@ void Gamestate::executeCommand()
     if (command != NULL)
     {
         command->use(*this);
-        // playerCount++;
         delete command;
     }
-    // if (shouldNext)
-    // {
-    //     playerQueue.next();
-    //     playerCount++;
-    // }
 }
 
 int Gamestate::start()
@@ -268,16 +221,8 @@ int Gamestate::start()
     while (!win)
     {
         resetSession();
-        // cout << "HAIHIDF";
         dealPlayers();
         bool dealt = false;
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // round = 6;
-        // playerCount = 6;
         while (round <= 6)
         {
             if (round != 6 && playerQueue.rondeBaruMulai() && dealt == false)
@@ -294,16 +239,11 @@ int Gamestate::start()
                 displayCurrentState();
                 cli.getInputCLI();
                 executeCommand();
-                // cout << "[DEBUG] PLAYER COUNT: " << playerCount << endl;
-                // playerCount++;
                 if (playerQueue.rondeSelesai())
                 {
                     nextRound();
                     dealt = false;
                 }
-                // if (round == 7)
-                // {
-                //                 }
             }
             catch (Exception &err)
             {
@@ -392,7 +332,6 @@ void Gamestate::evaluateSession()
         playerQueue.next();
         cout << endl;
     }
-    // cout << "hitung maks" << endl;
     ComboTable winningCombo = max<ComboTable>(playerCombos);
     // ComboTable winningCombo = playerCombos[0];
     // cout << "hii";
@@ -406,6 +345,7 @@ void Gamestate::evaluateSession()
     try
     {
         playerQueue.awardPlayer(winner, giftPoint);
+        playerQueue.displayLeaderboard();
         cout << "Pemain belum menyentuh 2^32. Permainan dilanjutkan." << endl;
         cout << "Memulai ronde baru..." << endl;
     }

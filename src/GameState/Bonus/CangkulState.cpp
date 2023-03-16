@@ -72,7 +72,7 @@ void CangkulState::nextRound()
     {
         CangkulPlayer tertinggi = getMaxPlayer();
         cout << "Ronde akan dimulai dengan pemain dengan kartu tertinggi " << tertinggi.getName() << endl;
-        playerQueue.newRound(getMaxPlayer());
+        playerQueue.newRound(tertinggi.getID());
     }
     tablePrio.clear();
     round++;
@@ -197,7 +197,7 @@ int CangkulState::start()
     cout << endl
          << "Game has ended! " << endl;
     int newgame;
-    cout << "Lanjut?";
+    cout << "Lanjut?" << endl;
     cout << "   0. Exit" << endl;
     cout << "   1. Main Lagi" << endl;
     newgame = cli.getInputInt(0, 1);
