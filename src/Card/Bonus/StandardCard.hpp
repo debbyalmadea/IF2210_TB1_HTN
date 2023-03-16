@@ -14,7 +14,7 @@ protected:
     string StandardColors[2] = {"Black", "Red"};
 
 public:
-    StandardCard(int _shape, int _color, int _value) : Card(_shape, 1, _value)
+    StandardCard(int _shape, int _value) : Card(_shape, 1, _value)
     {
         if (_shape == 1 || _shape == 2)
         {
