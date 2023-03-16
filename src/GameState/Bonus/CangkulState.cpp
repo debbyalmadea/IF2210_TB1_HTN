@@ -72,7 +72,7 @@ void CangkulState::nextRound()
     {
         CangkulPlayer tertinggi = getMaxPlayer();
         cout << "Ronde akan dimulai dengan pemain dengan kartu tertinggi " << tertinggi.getName() << endl;
-        playerQueue.newRound(getMaxPlayer());
+        playerQueue.newRound(tertinggi.getID());
     }
     tablePrio.clear();
     round++;

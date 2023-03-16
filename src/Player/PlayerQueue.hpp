@@ -162,18 +162,41 @@ public:
         enqueue(nextGiliran);
     }
 
-    void newRound(T startPlayer)
+    void newRound(int ID)
     {
-        cout << "New round will start with player " << startPlayer.getName() << endl;
         for (auto &player : players)
         {
             player.belumGiliran();
         }
-        while (players[0].getID() != startPlayer.getID())
+        while (players[0].getID() != ID)
         {
             T nextGiliran = dequeue();
             enqueue(nextGiliran);
         }
+    }
+
+    void resetRound() {
+        vector<T> reset;
+        bool finish = false;
+        int index = 1;
+        while(!finish) {
+            for (auto player: players) {
+                if (player.getID() == index) {
+                    player.belumGiliran();
+                    reset.push_back(player);
+                    break;
+                }
+            }
+            index += 1;
+            if (index == 8) {
+                finish = true;
+            }
+        }
+
+        for (auto & player : reset) {
+            cout << player.getID() << endl;
+        }
+        players=reset;
     }
 
     // Melihat isi queue
@@ -227,11 +250,12 @@ public:
 
     void displayLeaderboard()
     {
-        sort(players.rbegin(), players.rend());
+        vector<T> tPlayers = players;
+        sort(tPlayers.rbegin(), tPlayers.rend());
         cout << "Leaderboard:" << endl;
-        for (int i = 0; i < players.size(); i++)
+        for (int i = 0; i < tPlayers.size(); i++)
         {
-            cout << "   " << i + 1 << ". Pemain P" << players[i].getID() << " " << players[i].getName() << ": " << players[i].getPoint() << endl;
+            cout << "   " << i + 1 << ". Pemain P" << tPlayers[i].getID() << " " << tPlayers[i].getName() << ": " << tPlayers[i].getPoint() << endl;
         }
     }
     void handleCangkulWin()

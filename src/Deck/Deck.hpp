@@ -30,8 +30,10 @@ public:
 
     vector<T> dealCard(int n)
     {
-        if (deckCard.size() < n)
+        if (deckCard.size() < n) {
+            cout << n << endl;
             throw "Deck too small";
+        }
 
         vector<T> baru;
         for (int i = 0; i < n; i++)

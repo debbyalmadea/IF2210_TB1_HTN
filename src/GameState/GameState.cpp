@@ -63,43 +63,6 @@ void Gamestate::displayCurrentState()
     cout << "--------------------------------------------" << endl;
 }
 
-// string Gamestate ::getInput()
-// {
-//     return input;
-// }
-// void Gamestate::getInputCLI()
-// {
-//     cout << ">> ";
-//     cin >> input;
-// }
-
-// void Gamestate::getInputCLI(int min, int max)
-// {
-
-//     getInputCLI();
-//     try
-//     {
-//         if (stoi(input) < min || stoi(input) > max)
-//         {
-//             throw ExceptionIO(input);
-//         }
-//     }
-//     catch (Exception &err)
-//     {
-//         err.print();
-//         clearInput();
-//     }
-//     catch (invalid_argument &err)
-//     {
-//         cout << input << " bukan masukan yang valid." << endl;
-//         clearInput();
-//     }
-// }
-
-// void Gamestate::clearInput()
-// {
-//     input = "";
-// }
 void Gamestate::nextRound()
 {
     // system("clear");
@@ -128,11 +91,11 @@ void Gamestate::resetSession()
     cli.clearInput();
     tableCards = Table<PermenCard>();
     abilityDeck = AbilityDeck();
+    Ability::resetAbilityState();
+    playerQueue.resetRound();
     round = 1;
     setGiftPoint(64);
-    // playerQueue.newRound();
     abilityDeck.shuffleDeck();
-    Ability::resetAbilityState();
     cout << " ------------------------------------------ " << endl
          << "| Pilih metode membaca deck                |" << endl
          << "|                                          |" << endl
@@ -242,7 +205,6 @@ void Gamestate::executeCommand()
         {
             cout << "Ability: " << currentPlayer.getAbility()->getAbilityName() << endl;
         }
-        // shouldNext = false;
     }
     else
     {
@@ -264,22 +226,16 @@ void Gamestate::executeCommand()
 
 int Gamestate::start()
 {
-    setNewPlayer();
+    try {
+ setNewPlayer();
     while (!win)
     {
         resetSession();
-        // cout << "HAIHIDF";
         dealPlayers();
         bool dealt = false;
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // dealTable();
-        // round = 6;
-        // playerCount = 6;
         while (round <= 6)
         {
+            cout << mainDeck.getSize() << endl;
             if (round != 6 && playerQueue.rondeBaruMulai() && dealt == false)
             {
                 if (round == 2)
@@ -294,16 +250,11 @@ int Gamestate::start()
                 displayCurrentState();
                 cli.getInputCLI();
                 executeCommand();
-                // cout << "[DEBUG] PLAYER COUNT: " << playerCount << endl;
-                // playerCount++;
                 if (playerQueue.rondeSelesai())
                 {
                     nextRound();
                     dealt = false;
                 }
-                // if (round == 7)
-                // {
-                //                 }
             }
             catch (Exception &err)
             {
@@ -323,6 +274,9 @@ int Gamestate::start()
     newgame = cli.getInputInt(1, 2);
 
     return newgame;
+    } catch (char const* tes) {
+        cout << tes << endl;
+    }
 }
 
 void Gamestate::dealAbility()
@@ -392,7 +346,6 @@ void Gamestate::evaluateSession()
         playerQueue.next();
         cout << endl;
     }
-    // cout << "hitung maks" << endl;
     ComboTable winningCombo = max<ComboTable>(playerCombos);
     // ComboTable winningCombo = playerCombos[0];
     // cout << "hii";
@@ -406,6 +359,7 @@ void Gamestate::evaluateSession()
     try
     {
         playerQueue.awardPlayer(winner, giftPoint);
+        playerQueue.displayLeaderboard();
         cout << "Pemain belum menyentuh 2^32. Permainan dilanjutkan." << endl;
         cout << "Memulai ronde baru..." << endl;
     }
