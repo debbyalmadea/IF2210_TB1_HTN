@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include "../Template/MaxTemp.h"
 
 using namespace std;
 
@@ -200,6 +201,9 @@ public:
         players = reset;
     }
 
+    T getWinner() {
+        return max<T>(players);
+    }
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
     {

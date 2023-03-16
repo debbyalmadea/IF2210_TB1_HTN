@@ -151,9 +151,8 @@ void Gamestate::resetSession()
 
 void Gamestate::executeCommand()
 {
-    Command *command;
+    Command *command = NULL;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
-    command = NULL;
     string input = cli.getInput();
     if (input == "NEXT")
     {
@@ -336,7 +335,6 @@ void Gamestate::evaluateSession()
         cout << endl;
     }
     ComboTable winningCombo = max<ComboTable>(playerCombos);
-
     Player winner = winningCombo.getPlayer();
     cout << "Pemain P" << winner.getID() << " " << winner.getName() << " memenangkan sesi ini!" << endl;
     try
@@ -351,6 +349,7 @@ void Gamestate::evaluateSession()
         win = true;
         cout << "POINTS OVERFLOWED! Permainan berakhir." << endl;
         playerQueue.displayLeaderboard();
+        winner = playerQueue.getWinner();
         cout << "Permainan dimenangkan oleh Pemain P" << winner.getID() << " " << winner.getName() << endl;
     }
 };
