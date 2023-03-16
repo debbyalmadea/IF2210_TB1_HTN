@@ -19,7 +19,7 @@ protected:
     static map<int, int> idPemilikidAbility;
 
 public:
-    // ctor
+    // ctorSS
     Ability();
     Ability(int _idAbility, int _idPemilik);
     virtual ~Ability() {}
