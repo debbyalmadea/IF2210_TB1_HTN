@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <set>
+#include <math.h>
 
 #include "../Card/PermenCard.hpp"
 #include "../Card/Valuable.hpp"
@@ -103,7 +104,7 @@ protected:
             }
             if (i + 1 == comboCards.size() - 1)
             {
-                streak_ind = comboCards[i+1].getValue();
+                streak_ind = comboCards[i + 1].getValue();
                 color = comboCards[i + 1].getColor();
             }
         }
@@ -124,17 +125,18 @@ protected:
             if (comboCards[i].getColor() == comboCards[i + 1].getColor())
             {
                 streak += 1;
+                sum += comboCards[i].getValue() * pow(10, i + 1);
             }
             if (i + 1 == comboCards.size() - 1)
             {
-                sum += comboCards[i + 1].getValue();
+                sum += comboCards[i + 1].getValue() * pow(10, i + 2);
             }
         }
 
         if (streak == 4)
         {
             description = "FLUSH";
-            value = sum * 0.1 + CONST;
+            value = sum * 0.000001 + CONST;
         }
     }
     void calcFullHouse()
@@ -149,7 +151,8 @@ protected:
             if (cardsByValue[i].size() == 3)
             {
                 triple = i;
-                for (auto & card: cardsByValue[i]) {
+                for (auto &card : cardsByValue[i])
+                {
                     color += card.getColor();
                 }
             }
@@ -199,8 +202,8 @@ protected:
                 streak += 1;
             }
             if (i + 1 == comboCards.size() - 1)
-            {            
-                sum = comboCards[i+1].getValue();
+            {
+                sum = comboCards[i + 1].getValue();
             }
         }
 
