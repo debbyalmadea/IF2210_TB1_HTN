@@ -46,8 +46,8 @@ Project is: _complete_
 - Terimakasih kepada seluruh pihak terkait , asisten, dan dosen yang telah membantu
 
 ## Created By HONTOUNI
--13521123 / William Nixon
--13521128 / Muhammad Abdul Aziz Ghazali
--13521153 / Made Debby
--13521155 / Kandida Edgina Gunawan
--13521075 / Muhammad Rifko Favian
+- 13521123 / William Nixon
+- 13521128 / Muhammad Abdul Aziz Ghazali
+- 13521153 / Made Debby
+- 13521155 / Kandida Edgina Gunawan
+- 13521075 / Muhammad Rifko Favian
