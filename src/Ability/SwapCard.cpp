@@ -46,57 +46,37 @@ void SwapCard::use(Gamestate &g)
         string input;
         int idToSwitch1, index1;
         int idToSwitch2, index2;
-        cout << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl;
-        int count = 0;
+        cout << "Masukkan id pemain yang kartunya ingin anda tukar: " << endl
+             << endl;
+        // int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID())
             {
-                cout << count + 1 << ". "
-                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-                count++;
+                cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << endl;
+                // count++;
             }
         }
+        cout << endl;
         vector<int> except = {getIdPemilik()};
         idToSwitch1 = cli.getInputInt(1, 7, except);
-        // try
-        // {
-        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
-        //     {
-        //         throw ExceptionIO(input);
-        //     }
-        // }
-        // catch (invalid_argument &err)
-        // {
-        //     throw ExceptionIO(input);
-        // }
-        // idToSwitch1 = stoi(input);
-        cout << "Masukkan id pemain lain yang kartunya ingin anda tukar: " << endl;
-        count = 0;
-
+        cout << endl
+             << "Masukkan id pemain lain yang kartunya ingin anda tukar: " << endl
+             << endl;
+        // count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID() && idToSwitch1 != g.getPlayerQueue().getPlayer(i).getID())
             {
-                cout << count + 1 << ". "
-                     << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-                count++;
+                cout << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << endl;
+                // count++;
             }
         }
+        cout << endl;
         except.push_back(idToSwitch1);
         idToSwitch2 = cli.getInputInt(1, 7, except);
-        // try
-        // {
-        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik() || stoi(input) == idToSwitch1)
-        //     {
-        //         throw ExceptionIO(input);
-        //     }
-        // }
-        // catch (invalid_argument &err)
-        // {
-        //     throw ExceptionIO(input);
-        // }
-        // idToSwitch2 = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch1)

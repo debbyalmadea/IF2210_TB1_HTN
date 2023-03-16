@@ -19,23 +19,12 @@ protected:
     bool sudahGiliran;
 
 public:
-    Player() : id(0), point(0), sudahGiliran(false), name("")
-    {
+    Player() : id(0), point(0), sudahGiliran(false), name(""){
     }
 
     Player(int _id, string _name) : id(_id), point(0), sudahGiliran(false), name(_name)
     {
     }
-
-    // Player(const Player &other)
-    // {
-    //     this->id = other.id;
-    //     this->point = other.point;
-    //     this->name = other.name;
-    //     this->cards = other.cards;
-    //     this->ability = other.ability;
-    //     this->sudahGiliran = other.sudahGiliran;
-    // }
 
     int getID() const
     {
@@ -75,10 +64,7 @@ public:
         cout << "Pemain " << getName() << " mendapatkan kartu ability " << _ability->getAbilityName() << endl;
         ability = _ability;
     }
-    // int getIdAbility() const
-    // {
-    //     return idAbility;
-    // }
+
     pair<PermenCard, PermenCard> getBothCard() const
     {
         return cards;
@@ -118,10 +104,7 @@ public:
     {
         point = _point;
     }
-    // void setIdAbility(int _idAbility)
-    // {
-    //     idAbility = _idAbility;
-    // }
+
     void addPoint(unsigned long long _point)
     {
         if (point + _point < point || _point > (UINT_MAX))
@@ -159,16 +142,25 @@ public:
         return this->point > other.point;
     }
 
-    // Player &operator=(const Player &other)
-    // {
-    //     id = other.id;
-    //     point = other.point;
-    //     name = other.name;
-    //     cards = other.cards;
-    //     ability = other.ability;
-    //     sudahGiliran = other.sudahGiliran;
-    //     return *this;
-    // }
+    Player operator+(const PermenCard& other) {
+        Player baru = *this;
+        if (baru.cards.first.getValue() == -1) {
+            baru.setFirstCard(other);
+        } else if (baru.cards.second.getValue() == -1) {
+            baru.setSecondCard(other);
+        }
+        return baru;
+    }
+
+    Player operator-(const PermenCard& other) {
+        Player baru = *this;
+        if (baru.cards.first == other) {
+            baru.setFirstCard(PermenCard());
+        } else if (cards.second == other) {
+            baru.setSecondCard(PermenCard());
+        }
+        return baru;
+    }
 };
 
 #endif

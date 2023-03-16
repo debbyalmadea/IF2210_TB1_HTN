@@ -29,7 +29,7 @@ protected:
     MainDeck mainDeck;
     Table<PermenCard> tableCards;
     ConsoleInput cli;
-    int game;
+    // int game;
 
 public:
     Gamestate();
@@ -41,10 +41,10 @@ public:
     void setPlayerQueue(const PlayerQueue<Player> &_p);
     void setNewPlayer();
     void executeCommand();
-    string getInput();
-    void getInputCLI();
-    void clearInput();
-    void getInputCLI(int min, int max);
+    // string getInput();
+    // void getInputCLI();
+    // void clearInput();
+    // void getInputCLI(int min, int max);
     void displayCurrentState();
     void nextRound();
     void dealPlayers();

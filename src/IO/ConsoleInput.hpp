@@ -13,6 +13,10 @@ private:
     string input;
 
 public:
+    void setInput(string _input)
+    {
+        input = _input;
+    }
     string getInput()
     {
         return input;

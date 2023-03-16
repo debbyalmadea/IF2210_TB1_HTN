@@ -4,8 +4,6 @@
 #include "../Card/PermenCard.hpp"
 #include "Deck.hpp"
 #include <vector>
-#include <algorithm>
-#include <random>
 
 using namespace std;
 
@@ -33,7 +31,7 @@ public:
         return baru;
     }
 
-    MainDeck operator-(const Card &other)
+    MainDeck operator-(const PermenCard &other)
     {
         MainDeck baru = *this;
         auto it = find(baru.deckCard.begin(), baru.deckCard.end(), other);
@@ -42,6 +40,10 @@ public:
             baru.deckCard.erase(it);
         }
         return baru;
+    }
+
+    PermenCard getTop() {
+        return this->deckCard.back();
     }
 
     /* tester method */
