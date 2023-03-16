@@ -18,6 +18,7 @@ protected:
     vector<PermenCard> comboCards;
     array<vector<PermenCard>, 15> cardsByValue;
     string description;
+
     void calcHigh()
     {
         description = "HIGH CARD";
@@ -138,7 +139,7 @@ protected:
     }
     void calcFullHouse()
     {
-        int CONST = 300;
+        int CONST = 30;
         int color = 0;
         int pair = -1;
         int triple = -1;
@@ -161,13 +162,13 @@ protected:
         if (pair != -1 && triple != -1)
         {
             description = "FULL HOUSE";
-            value = triple * 0.1 + color * 0.03 + CONST;
+            value = triple * 0.2 + color * 0.01 + CONST;
         }
     }
 
     void calcFourOfAKind()
     {
-        int CONST = 400;
+        int CONST = 40;
         int index = -1;
 
         for (int i = 0; i < cardsByValue.size(); i++)
@@ -187,7 +188,7 @@ protected:
 
     void calcStraightFlush()
     {
-        int CONST = 500;
+        int CONST = 50;
         int streak = 0;
         int sum = 0;
 
@@ -205,7 +206,6 @@ protected:
 
         if (streak == 4)
         {
-            cout << "STRAIGHT FLUSH";
             description = "STRAIGHT FLUSH";
             value = sum * 0.1 + CONST;
         }
