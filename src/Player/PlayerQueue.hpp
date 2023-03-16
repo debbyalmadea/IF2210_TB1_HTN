@@ -188,14 +188,11 @@ public:
                 }
             }
             index += 1;
-            if (index == 8) {
+            if (index == players.size()+1) {
                 finish = true;
             }
         }
 
-        for (auto & player : reset) {
-            cout << player.getID() << endl;
-        }
         players=reset;
     }
 
