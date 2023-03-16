@@ -27,16 +27,6 @@ public:
     {
     }
 
-    // Player(const Player &other)
-    // {
-    //     this->id = other.id;
-    //     this->point = other.point;
-    //     this->name = other.name;
-    //     this->cards = other.cards;
-    //     this->ability = other.ability;
-    //     this->sudahGiliran = other.sudahGiliran;
-    // }
-
     int getID() const
     {
         return id;
@@ -75,10 +65,7 @@ public:
         cout << "Pemain " << getName() << " mendapatkan kartu ability " << _ability->getAbilityName() << endl;
         ability = _ability;
     }
-    // int getIdAbility() const
-    // {
-    //     return idAbility;
-    // }
+
     pair<PermenCard, PermenCard> getBothCard() const
     {
         return cards;
@@ -118,10 +105,7 @@ public:
     {
         point = _point;
     }
-    // void setIdAbility(int _idAbility)
-    // {
-    //     idAbility = _idAbility;
-    // }
+
     void addPoint(unsigned long long _point)
     {
         if (point + _point < point || _point > (UINT_MAX))
@@ -158,17 +142,6 @@ public:
     {
         return this->point > other.point;
     }
-
-    // Player &operator=(const Player &other)
-    // {
-    //     id = other.id;
-    //     point = other.point;
-    //     name = other.name;
-    //     cards = other.cards;
-    //     ability = other.ability;
-    //     sudahGiliran = other.sudahGiliran;
-    //     return *this;
-    // }
 };
 
 #endif

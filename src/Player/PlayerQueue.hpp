@@ -16,7 +16,6 @@ protected:
     int nPlayer;
 
 public:
-    friend class Ability;
     PlayerQueue()
     {
         nPlayer = 0;
@@ -175,37 +174,31 @@ public:
         }
     }
 
-    void resetRound() {
+    void resetRound()
+    {
         vector<T> reset;
         bool finish = false;
         int index = 1;
-        while(!finish) {
-            for (auto player: players) {
-                if (player.getID() == index) {
+        while (!finish)
+        {
+            for (auto player : players)
+            {
+                if (player.getID() == index)
+                {
                     player.belumGiliran();
                     reset.push_back(player);
                     break;
                 }
             }
             index += 1;
-            if (index == players.size()+1) {
+            if (index == players.size() + 1)
+            {
                 finish = true;
             }
         }
 
-        players=reset;
+        players = reset;
     }
-
-    // Melihat isi queue
-    // void displayQueue() const
-    // {
-    //     // cout << "Urutan permainan saat ini:" << endl;
-    //     for (int i = 0; i < nPlayer; i++)
-    //     {
-    //         cout << "Player #" << players[i].getID() << " dengan point " << players[i].getPoint() << endl;
-    //     }
-    //     cout << endl;
-    // }
 
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
@@ -255,6 +248,16 @@ public:
             cout << "   " << i + 1 << ". Pemain P" << tPlayers[i].getID() << " " << tPlayers[i].getName() << ": " << tPlayers[i].getPoint() << endl;
         }
     }
+
+    void displayPlayers()
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            players[i].displayInv();
+            cout << endl;
+        }
+    }
+
     void handleCangkulWin()
     {
         for (auto it = players.begin(); it != players.end(); it++)
