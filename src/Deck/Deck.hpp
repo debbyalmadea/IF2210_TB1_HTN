@@ -30,7 +30,7 @@ public:
 
     vector<T> dealCard(int n)
     {
-        if (deckCard.size() < n)
+        if (deckCard.size() < n) 
             throw "Deck too small";
 
         vector<T> baru;

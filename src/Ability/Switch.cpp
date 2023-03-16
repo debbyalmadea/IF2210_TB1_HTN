@@ -12,8 +12,10 @@ Switch::Switch(int _idPemilik) : Ability(6, _idPemilik)
 void Switch::use(Gamestate &g)
 {
     // Player temp;
+    ConsoleInput cli;
     if (available[getIdAbility()] == 1)
     {
+        string input;
         pair<PermenCard, PermenCard> temp;
         int idToSwitch;
         int index1, index2;
@@ -22,27 +24,37 @@ void Switch::use(Gamestate &g)
         cout << g.getPlayerQueue().getnPlayers() << endl;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
-            cout << "idPemilik1 " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-            cout << "idPemilik2 " << getIdPemilik() << endl;
             if (g.getPlayerQueue().getPlayer(i).getID() == getIdPemilik())
             {
                 temp = g.getPlayerQueue().getPlayer(i).getBothCard();
                 index1 = i;
             }
         }
-        cout << "index1 " << index1 << endl;
         temp.first.printInfo();
         temp.second.printInfo();
-        cout << "Silahkan pilih pemain yang kartunya ingin anda tukar: " << endl;
-        int count = 0;
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
-            cout << count + 1 << ". "
-                 << "Pemain " << g.getPlayerQueue().getPlayer(i).getID() << endl;
-            count++;
+            if (g.getPlayerQueue().getPlayer(i).getID() != getIdPemilik())
+            {
+                cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                     << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
+            }
         }
-        cin >> idToSwitch;
-        // todo : add exception handling
+        cout << "Masukkan id pemain yang kartunya ingin anda tukar: ";
+        vector<int> except = {getIdPemilik()};
+        idToSwitch = cli.getInputInt(1, 7, except);
+        // try
+        // {
+        //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+        //     {
+        //         throw ExceptionIO(input);
+        //     }
+        // }
+        // catch (invalid_argument &err)
+        // {
+        //     throw ExceptionIO(input);
+        // }
+        // idToSwitch = stoi(input);
         for (int i = 0; i < g.getPlayerQueue().getnPlayers(); i++)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == idToSwitch)
@@ -53,6 +65,10 @@ void Switch::use(Gamestate &g)
         g.getPlayerQueue().getPlayer(index1).setBothCard(g.getPlayerQueue().getPlayer(index2).getBothCard());
         g.getPlayerQueue().getPlayer(index1).getFirstCard().printInfo();
         g.getPlayerQueue().getPlayer(index2).setBothCard(temp);
+        PlayerQueue<Player> p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
+        available[getIdAbility()] = 0;
     }
 
     else if (available[getIdAbility()] == 0)

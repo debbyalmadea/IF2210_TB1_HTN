@@ -1,5 +1,5 @@
-#ifndef _STDCARD_
-#define _STDCARD_
+#ifndef _PRMCARD_
+#define _PRMCARD_
 
 #include "Card.hpp"
 #include <string>

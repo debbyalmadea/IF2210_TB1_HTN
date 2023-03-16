@@ -3,6 +3,7 @@
 
 #include "../Player/PlayerQueue.hpp"
 #include "../Player/Player.hpp"
+#include "../IO/ConsoleInput.hpp"
 #include "Ability.hpp"
 #include <iostream>
 

@@ -1,6 +1,6 @@
 #include "FileReader.hpp"
 
-string FileReader::configPath = "../../config/";
+string FileReader::configPath = "config/";
 
 vector<string> FileReader::splitByWhiteSpace(string line)
 {
@@ -34,6 +34,7 @@ MainDeck FileReader::readBasicCard(string filename)
 {
     string line;
     vector<PermenCard> permenCards;
+    cout << configPath + filename << endl;
     ifstream file(configPath + filename);
     int numOfLines = 0;
 
@@ -62,6 +63,11 @@ MainDeck FileReader::readBasicCard(string filename)
             {
                 throw ExceptionFile(1, filename);
             }
+        }
+
+        if (numOfLines != 52)
+        {
+            throw ExceptionFile(2, filename);
         }
     }
     // !TODO: card not enough exception

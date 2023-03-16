@@ -42,7 +42,12 @@ void Ability ::setAbilityAvailability(int _available)
 {
     available[idAbility] = _available;
 }
+void Ability ::setAbilityAvailability(int _idAbility, int _available)
+{
+    available[_idAbility] = _available;
+}
 void Ability ::setIdPemilik(int _idPemilik)
 {
     idPemilik = _idPemilik;
+    idPemilikidAbility[idPemilik] = idAbility;
 }

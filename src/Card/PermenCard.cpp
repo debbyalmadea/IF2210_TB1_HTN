@@ -11,7 +11,7 @@ PermenCard::PermenCard(int _value, int _color) : Card(-1, _color, _value, -1)
 
 void PermenCard::printInfo()
 {
-    cout << "Card: " << value << " " << intToColorString(color) << "." << endl;
+    cout << "Kartu: " << value << " " << intToColorString(color) << "." << endl;
 }
 
 bool PermenCard::operator<(const Card &other) const

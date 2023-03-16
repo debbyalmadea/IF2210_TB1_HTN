@@ -1,7 +1,7 @@
 
-
 #include "../Player/PlayerQueue.hpp"
 #include "../Player/Player.hpp"
+#include "../GameState/GameState.hpp"
 #include "Ability.hpp"
 #include <iostream>
 #include "Abilityless.hpp"
@@ -30,39 +30,64 @@ bool Abilityless::hasUsedAllAbility()
 
 void Abilityless::use(Gamestate &g)
 {
+    ConsoleInput cli;
+    string input;
     int idDeadPlayer;
     if (hasUsedAllAbility())
     {
         cout << "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah kamu kena sendiri deh, kemampuanmu menjadi abilityless. Yah, pengunaan kartu ini sia-sia" << endl;
-        setAbilityAvailability(2);
+        setAbilityAvailability(0);
+        PlayerQueue<Player> p = g.getPlayerQueue();
+        p.next();
+        g.setPlayerQueue(p);
     }
     else
     {
-        cout << "Silahkan pilih pemain yang kartunya ingin kamu matikan:" << endl;
-        cout << getIdPemilik() << endl;
-        /*print semua player*/
-        int count = 1;
-        for (int i = 0; i < 7; i++)
+        if (available[getIdAbility()] == 1)
         {
-
-            if (getIdPemilik() != i)
+            cout << "Kamu akan mematikan kartu ability dari salah satu pemain lain" << endl;
+            /*print semua player*/
+            for (int i = 0; i < 7; i++)
             {
-                cout << count << ". Pemain " << i << endl;
-                count++;
+                if (getIdPemilik() != g.getPlayerQueue().getPlayer(i).getID())
+                {
+                    cout << "<Pemain " << g.getPlayerQueue().getPlayer(i).getID() << " - "
+                         << g.getPlayerQueue().getPlayer(i).getName() << ">" << endl;
+                }
             }
-        }
-
-        cin >> idDeadPlayer;
-        if (available[idPemilikidAbility[idDeadPlayer]] == 1)
-        {
-            available[idPemilikidAbility[idDeadPlayer]] = 2;
-            cout << "Kartu ability pemain " << idDeadPlayer << " berhasil dimatikan" << endl;
+            cout << "Silahkan pilih id pemain yang kartunya ingin kamu matikan: ";
+            vector<int> except = {getIdPemilik()};
+            idDeadPlayer = cli.getInputInt(1, 7, except);
+            // try
+            // {
+            //     if (stoi(input) < 1 || stoi(input) > 7 || stoi(input) == getIdPemilik())
+            //     {
+            //         throw ExceptionIO(input);
+            //     }
+            // }
+            // catch (invalid_argument &err)
+            // {
+            //     throw ExceptionIO(input);
+            // }
+            // idDeadPlayer = stoi(input);
+            if (available[idPemilikidAbility[idDeadPlayer]] == 1)
+            {
+                setAbilityAvailability(idPemilikidAbility[idDeadPlayer], 2);
+                cout << "Kartu ability pemain " << idDeadPlayer << " berhasil dimatikan" << endl;
+            }
+            else
+            {
+                cout << "Kartu ability pemain "
+                     << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+            }
+            setAbilityAvailability(0);
+            PlayerQueue<Player> p = g.getPlayerQueue();
+            p.next();
+            g.setPlayerQueue(p);
         }
         else
         {
-            cout << "Kartu ability pemain "
-                 << "telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
-            setAbilityAvailability(0);
+            cout << "Kartu Abilityless sudah pernah dipakai" << endl;
         }
     }
 }

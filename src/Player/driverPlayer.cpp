@@ -13,30 +13,24 @@ int main()
     Player p6(6, "anjing");
     Player p7(7, "babi");
 
-    PlayerQueue pq = PlayerQueue();
-    pq.enqueue(p2);
+    PlayerQueue<Player> pq;
     pq.enqueue(p3);
     pq.enqueue(p4);
     pq.enqueue(p5);
     pq.enqueue(p6);
     pq.enqueue(p7);
     pq.enqueue(p1);
-
-    pq.displayQueue();
+    pq.enqueue(p2);
 
     pq.next();
-    pq.displayQueue();
     pq.next();
-    pq.displayQueue();
+    pq.next();
     pq.reverse();
-    pq.displayQueue();
-    pq.displayGiliran();
-    pq.next();
     pq.next();
     pq.next();
     pq.next();
     pq.next(); // harusnya udah selesai
-    pq.displayQueue();
+    pq.newRound();
     pq.displayGiliran();
 
     return 0;

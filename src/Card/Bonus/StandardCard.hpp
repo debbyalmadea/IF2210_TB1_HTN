@@ -1,7 +1,7 @@
 #ifndef _STDCARD_
 #define _STDCARD_
 
-#include "Card.hpp"
+#include "../Card.hpp"
 #include <string>
 #include <iostream>
 
@@ -14,8 +14,26 @@ protected:
     string StandardColors[2] = {"Black", "Red"};
 
 public:
-    StandardCard(int _shape, int _color, int _value) : Card(_shape, _color, _value, false)
+    StandardCard(int _shape, int _value) : Card(_shape, 1, _value, false)
     {
+        if (_shape == 1 || _shape == 2)
+        {
+            color = 1;
+        }
+        else
+        {
+            color = 0;
+        }
+    }
+
+    string getStrShape() const
+    {
+        return StandardShapes[this->getShape()];
+    }
+
+    string getStrColor() const
+    {
+        return StandardColors[this->getColor()];
     }
 
     void printInfo()
@@ -23,7 +41,7 @@ public:
         cout << "Kartu anda adalah " << value << " " << StandardShapes[shape] << " " << StandardColors[color];
     }
 
-    bool operator<(const Card &other)
+    bool operator<(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -31,7 +49,7 @@ public:
         }
         return this->value < other.getValue();
     };
-    bool operator>(const Card &other)
+    bool operator>(const Card &other) const
     {
         if (this->value == other.getValue())
         {
@@ -39,7 +57,7 @@ public:
         }
         return this->value > other.getValue();
     };
-    bool operator==(const Card &other)
+    bool operator==(const Card &other) const
     {
         if (this->value == other.getValue() && this->shape == other.getShape() && this->color == other.getColor())
         {
@@ -47,5 +65,8 @@ public:
         }
         return false;
     };
+
+    friend ostream &operator<<(ostream &os, const StandardCard &dt);
 };
+
 #endif

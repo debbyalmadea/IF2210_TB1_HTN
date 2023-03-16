@@ -40,7 +40,7 @@ public:
         generateCombinations(5);
     };
 
-    ComboTable(Player _player, Table _table)
+    ComboTable(Player _player, Table<PermenCard> _table)
     {
         player = _player;
         tableCards = _table.getInventory();

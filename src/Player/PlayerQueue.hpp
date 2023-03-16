@@ -2,16 +2,17 @@
 #define _PLAYERQUEUE_
 #define CAPACITY 7
 
-#include "Player.hpp"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
+template <typename T>
 class PlayerQueue
 {
 protected:
-    vector<Player> players;
+    vector<T> players;
     int nPlayer;
 
 public:
@@ -21,7 +22,7 @@ public:
         nPlayer = 0;
     }
 
-    void enqueue(const Player &player)
+    void enqueue(const T &player)
     {
         if (nPlayer == CAPACITY)
         {
@@ -34,29 +35,29 @@ public:
         }
     }
 
-    Player &getFirst()
+    T &getFirst()
     {
         return players[0];
     }
 
-    vector<Player> getPlayers() const
+    vector<T> getPlayers() const
     {
         return players;
     }
 
-    Player &getPlayer(int idx)
+    T &getPlayer(int idx)
     {
         return players[idx];
     }
 
     int getnPlayers()
     {
-        return nPlayer;
+        return players.size();
     }
 
-    Player dequeue()
+    T dequeue()
     {
-        Player player = getFirst();
+        T player = getFirst();
         players.erase(players.begin());
         nPlayer--;
         return player;
@@ -64,7 +65,7 @@ public:
 
     void reverse()
     {
-        Player temp;
+        T temp;
         int j = nPlayer - 1;
         for (int i = 1; i < j; i++, j--)
         {
@@ -82,7 +83,7 @@ public:
         {
             while (players[0].cekGiliran())
             {
-                Player giliran = dequeue();
+                T giliran = dequeue();
                 enqueue(giliran);
             }
         }
@@ -100,12 +101,37 @@ public:
         return check;
     }
 
+    bool rondeBaruMulai()
+    {
+        bool check = true;
+        int i = 0;
+        while (check && i < nPlayer)
+        {
+            check = check && !players[i].cekGiliran();
+            i++;
+        }
+        return check;
+    }
+
+    int countGiliranDone()
+    {
+        int count = 0;
+        for (int i = 0; i < nPlayer; i++)
+        {
+            if (players[i].cekGiliran())
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     // Lanjut ke giliran player selanjutnya. Kalau sudah semua, maka otomatis akan terbuat ronde baru
     void next()
     {
         if (!rondeSelesai())
         {
-            Player giliran = dequeue();
+            T giliran = dequeue();
             giliran.giliranSelesai();
             enqueue(giliran);
             maintainQueue();
@@ -114,15 +140,15 @@ public:
             {
                 cout << "Giliran dilanjut ke pemain selanjutnya" << endl;
             }
-            else
-            {
-                cout << "Ronde selesai" << endl;
-                newRound();
-            }
         }
-        else
+    }
+
+    void silentNext(int skip)
+    {
+        for (int i = 0; i < skip; i++)
         {
-            cout << "Ronde sudah selesai. Ganti ke ronde selanjutnya" << endl;
+            T giliran = dequeue();
+            enqueue(giliran);
         }
     }
 
@@ -132,20 +158,54 @@ public:
         {
             player.belumGiliran();
         }
-        Player nextGiliran = dequeue();
+        T nextGiliran = dequeue();
         enqueue(nextGiliran);
     }
 
-    // Melihat isi queue
-    void displayQueue() const
+    void newRound(int ID)
     {
-        cout << "Urutan permainan saat ini:" << endl;
-        for (int i = 0; i < nPlayer; i++)
+        for (auto &player : players)
         {
-            cout << "Player #" << players[i].getID() << " dengan point " << players[i].getPoint() << endl;
+            player.belumGiliran();
         }
-        cout << endl;
+        while (players[0].getID() != ID)
+        {
+            T nextGiliran = dequeue();
+            enqueue(nextGiliran);
+        }
     }
+
+    void resetRound() {
+        vector<T> reset;
+        bool finish = false;
+        int index = 1;
+        while(!finish) {
+            for (auto player: players) {
+                if (player.getID() == index) {
+                    player.belumGiliran();
+                    reset.push_back(player);
+                    break;
+                }
+            }
+            index += 1;
+            if (index == players.size()+1) {
+                finish = true;
+            }
+        }
+
+        players=reset;
+    }
+
+    // Melihat isi queue
+    // void displayQueue() const
+    // {
+    //     // cout << "Urutan permainan saat ini:" << endl;
+    //     for (int i = 0; i < nPlayer; i++)
+    //     {
+    //         cout << "Player #" << players[i].getID() << " dengan point " << players[i].getPoint() << endl;
+    //     }
+    //     cout << endl;
+    // }
 
     // Melihat player giliran saat ini
     void displayCurrentGiliran()
@@ -164,7 +224,7 @@ public:
             {
                 if (!players[i].cekGiliran())
                 {
-                    cout << "P" << players[i].getID() << " ";
+                    cout << "P" << players[i].getID() << "<" << players[i].getName() << "> ";
                 }
             }
             cout << "\n";
@@ -176,14 +236,48 @@ public:
     }
 
     // Memberi point pada player yang menang
-    void awardPlayer(Player winner, int giftPoints)
+    void awardPlayer(T winner, unsigned long long giftPoints)
     {
         for (auto &player : players)
         {
             if (player.getID() == winner.getID())
-                winner.addPoint(giftPoints);
+                player.addPoint(giftPoints);
         }
     };
+
+    void displayLeaderboard()
+    {
+        vector<T> tPlayers = players;
+        sort(tPlayers.rbegin(), tPlayers.rend());
+        cout << "Leaderboard:" << endl;
+        for (int i = 0; i < tPlayers.size(); i++)
+        {
+            cout << "   " << i + 1 << ". Pemain P" << tPlayers[i].getID() << " " << tPlayers[i].getName() << ": " << tPlayers[i].getPoint() << endl;
+        }
+    }
+    void handleCangkulWin()
+    {
+        for (auto it = players.begin(); it != players.end(); it++)
+        {
+            if (it->getSize() == 0)
+            {
+                cout << it->getName() << " has won the game! He will leave the game.";
+                players.erase(it);
+                return;
+            }
+        }
+    }
+    bool stillInGame(T Player)
+    {
+        for (auto it = players.begin(); it != players.end(); it++)
+        {
+            if (it->getID() == Player.getID())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 #endif

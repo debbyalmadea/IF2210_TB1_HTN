@@ -42,7 +42,7 @@ AbilityDeck::AbilityDeck(const AbilityDeck &other)
     deckCard.push_back(new Switch());
     deckCard.push_back(new ReRoll());
     deckCard.push_back(new ReverseDirection());
-    deckCard.push_back(new ReRoll());
+    deckCard.push_back(new SwapCard());
     deckCard.push_back(new Abilityless());
 }
 
@@ -50,14 +50,20 @@ AbilityDeck &AbilityDeck::operator=(const AbilityDeck &other)
 {
     if (&other != this)
     {
-        deckCard.push_back(new Quadruple());
-        deckCard.push_back(new Quarter());
-        deckCard.push_back(new Switch());
-        deckCard.push_back(new ReRoll());
-        deckCard.push_back(new ReverseDirection());
-        deckCard.push_back(new ReRoll());
-        deckCard.push_back(new Abilityless());
+        while (deckCard.size() != 0)
+        {
+            Ability *baru = deckCard.back();
+            delete baru;
+            deckCard.pop_back();
+        }
     }
+    deckCard.push_back(new Quadruple());
+    deckCard.push_back(new Quarter());
+    deckCard.push_back(new Switch());
+    deckCard.push_back(new ReRoll());
+    deckCard.push_back(new ReverseDirection());
+    deckCard.push_back(new SwapCard());
+    deckCard.push_back(new Abilityless());
     return *this;
 }
 
