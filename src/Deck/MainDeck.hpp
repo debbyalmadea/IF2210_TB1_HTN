@@ -4,8 +4,6 @@
 #include "../Card/PermenCard.hpp"
 #include "Deck.hpp"
 #include <vector>
-#include <algorithm>
-#include <random>
 
 using namespace std;
 

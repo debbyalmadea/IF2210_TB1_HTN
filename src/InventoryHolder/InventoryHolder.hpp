@@ -2,7 +2,6 @@
 #define INVENTORYHOLDER_HPP
 
 #include <vector>
-#include "../Card/PermenCard.hpp"
 // INVENTORYHOLDER class
 
 template <class T>

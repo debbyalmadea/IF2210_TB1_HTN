@@ -1,6 +1,5 @@
 #include "AbilityDeck.hpp"
 
-#include "../Card/PermenCard.hpp"
 #include "../Ability/Ability.hpp"
 #include "../Ability/Abilityless.hpp"
 #include "../Ability/Multiplier.hpp"
@@ -8,11 +7,6 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
-
-#include "../InventoryHolder/InventoryHolder.hpp"
-#include <vector>
-#include <algorithm>
-#include <random>
 
 using namespace std;
 
@@ -66,27 +60,3 @@ AbilityDeck &AbilityDeck::operator=(const AbilityDeck &other)
     deckCard.push_back(new Abilityless());
     return *this;
 }
-
-// int AbilityDeck::getSize()
-// {
-//     return deckCard.size();
-// }
-
-// void AbilityDeck::shuffleDeck()
-// {
-//     shuffle(deckCard.begin(), deckCard.end(), random_device());
-// }
-
-// vector<Ability *> AbilityDeck::dealCard(int n)
-// {
-//     if (deckCard.size() < n)
-//         throw "Deck too small";
-
-//     vector<Ability *> baru;
-//     for (int i = 0; i < n; i++)
-//     {
-//         baru.push_back(deckCard.back());
-//         deckCard.pop_back();
-//     }
-//     return baru;
-// }

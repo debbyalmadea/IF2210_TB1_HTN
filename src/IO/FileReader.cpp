@@ -40,7 +40,6 @@ MainDeck FileReader::readBasicCard(string filename)
 
     if (!file.is_open())
     {
-        // !TODO: file not found exception
         throw ExceptionFile(0, filename);
     }
     if (file.is_open())
@@ -70,7 +69,6 @@ MainDeck FileReader::readBasicCard(string filename)
             throw ExceptionFile(2, filename);
         }
     }
-    // !TODO: card not enough exception
     file.close();
     return MainDeck(permenCards);
 }

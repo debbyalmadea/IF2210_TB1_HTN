@@ -2,10 +2,10 @@
 
 map<string, int> PermenCard::PermenColors = {{"HIJAU", 0}, {"BIRU", 1}, {"KUNING", 2}, {"MERAH", 3}};
 
-PermenCard::PermenCard() : Card(-1, -1, -1, -1)
+PermenCard::PermenCard() : Card(-1, -1, -1)
 {
 }
-PermenCard::PermenCard(int _value, int _color) : Card(-1, _color, _value, -1)
+PermenCard::PermenCard(int _value, int _color) : Card(-1, _color, _value)
 {
 }
 
