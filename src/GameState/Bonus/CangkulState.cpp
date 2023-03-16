@@ -197,7 +197,7 @@ int CangkulState::start()
     cout << endl
          << "Game has ended! " << endl;
     int newgame;
-    cout << "Lanjut?";
+    cout << "Lanjut?" << endl;
     cout << "   0. Exit" << endl;
     cout << "   1. Main Lagi" << endl;
     newgame = cli.getInputInt(0, 1);
