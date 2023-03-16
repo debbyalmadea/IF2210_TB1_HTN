@@ -336,7 +336,6 @@ void Gamestate::evaluateSession()
         cout << endl;
     }
     ComboTable winningCombo = max<ComboTable>(playerCombos);
-
     Player winner = winningCombo.getPlayer();
     cout << "Pemain P" << winner.getID() << " " << winner.getName() << " memenangkan sesi ini!" << endl;
     try
@@ -351,6 +350,7 @@ void Gamestate::evaluateSession()
         win = true;
         cout << "POINTS OVERFLOWED! Permainan berakhir." << endl;
         playerQueue.displayLeaderboard();
+        winner = playerQueue.getWinner();
         cout << "Permainan dimenangkan oleh Pemain P" << winner.getID() << " " << winner.getName() << endl;
     }
 };

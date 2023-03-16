@@ -13,15 +13,23 @@ void ReRoll::use(Gamestate &g)
         {
             if (g.getPlayerQueue().getPlayer(i).getID() == getIdPemilik())
             {
-                g.getMainDeck().operator+(g.getPlayerQueue().getPlayer(i).getFirstCard());
-                g.getMainDeck().operator+(g.getPlayerQueue().getPlayer(i).getSecondCard());
+                Player& player = g.getPlayerQueue().getPlayer(i);
+                PermenCard firstCard = player.getFirstCard();
+                player = player - firstCard;
+                PermenCard secondCard = player.getSecondCard();
+                player = player - secondCard;
+                g.setMainDeck(g.getMainDeck() + firstCard);
+                g.setMainDeck(g.getMainDeck() + secondCard);
                 g.getMainDeck().shuffleDeck();
-                PermenCard temp1 = g.getMainDeck()[0];
-                PermenCard temp2 = g.getMainDeck()[1];
-                g.getPlayerQueue().getPlayer(i).setFirstCard(temp1);
-                g.getPlayerQueue().getPlayer(i).setSecondCard(temp2);
-                g.setMainDeck(g.getMainDeck() - temp1);
-                g.setMainDeck(g.getMainDeck() - temp2);
+
+                PermenCard newCard1 = g.getMainDeck().getTop();
+                g.setMainDeck(g.getMainDeck()-newCard1);
+                PermenCard newCard2 = g.getMainDeck().getTop();
+                g.setMainDeck(g.getMainDeck()-newCard2);
+
+                player = player + newCard1;
+                player = player + newCard2;
+
                 cout << "Melakukan pembuangan kartu yang sedang dimiliki" << endl;
                 cout << "Kamu mendapatkan 2 kartu baru yaitu : " << endl;
                 g.getPlayerQueue().getPlayer(i).getFirstCard().printInfo();

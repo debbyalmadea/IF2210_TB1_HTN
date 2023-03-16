@@ -19,8 +19,7 @@ protected:
     bool sudahGiliran;
 
 public:
-    Player() : id(0), point(0), sudahGiliran(false), name("")
-    {
+    Player() : id(0), point(0), sudahGiliran(false), name(""){
     }
 
     Player(int _id, string _name) : id(_id), point(0), sudahGiliran(false), name(_name)
@@ -141,6 +140,26 @@ public:
     bool operator>(const Player &other) const
     {
         return this->point > other.point;
+    }
+
+    Player operator+(const PermenCard& other) {
+        Player baru = *this;
+        if (baru.cards.first.getValue() == -1) {
+            baru.setFirstCard(other);
+        } else if (baru.cards.second.getValue() == -1) {
+            baru.setSecondCard(other);
+        }
+        return baru;
+    }
+
+    Player operator-(const PermenCard& other) {
+        Player baru = *this;
+        if (baru.cards.first == other) {
+            baru.setFirstCard(PermenCard());
+        } else if (cards.second == other) {
+            baru.setSecondCard(PermenCard());
+        }
+        return baru;
     }
 };
 
