@@ -152,15 +152,12 @@ void Gamestate::resetSession()
 void Gamestate::executeCommand()
 {
     Command *command;
-    // bool shouldNext = true;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
     command = NULL;
     string input = cli.getInput();
     if (input == "NEXT")
     {
         command = new Next();
-        // shouldNext = false;
-        // playerCount++;
     }
     else if (input == "HALF")
     {
@@ -214,20 +211,13 @@ void Gamestate::executeCommand()
     if (command != NULL)
     {
         command->use(*this);
-        // playerCount++;
         delete command;
     }
-    // if (shouldNext)
-    // {
-    //     playerQueue.next();
-    //     playerCount++;
-    // }
 }
 
 int Gamestate::start()
 {
-    try {
- setNewPlayer();
+    setNewPlayer();
     while (!win)
     {
         resetSession();
@@ -235,7 +225,6 @@ int Gamestate::start()
         bool dealt = false;
         while (round <= 6)
         {
-            cout << mainDeck.getSize() << endl;
             if (round != 6 && playerQueue.rondeBaruMulai() && dealt == false)
             {
                 if (round == 2)
@@ -274,9 +263,6 @@ int Gamestate::start()
     newgame = cli.getInputInt(1, 2);
 
     return newgame;
-    } catch (char const* tes) {
-        cout << tes << endl;
-    }
 }
 
 void Gamestate::dealAbility()
