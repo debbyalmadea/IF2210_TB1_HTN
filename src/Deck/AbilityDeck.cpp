@@ -56,9 +56,7 @@ AbilityDeck &AbilityDeck::operator=(const AbilityDeck &other)
     {
         while (deckCard.size() != 0)
         {
-            Ability *baru = deckCard.back();
-            delete baru;
-            deckCard.pop_back();
+            deckCard.clear();
         }
         deckCard.push_back(new Quadruple());
         deckCard.push_back(new Quarter());
