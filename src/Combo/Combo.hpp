@@ -99,10 +99,10 @@ protected:
             if (comboCards[i].getValue() == comboCards[i + 1].getValue() - 1)
             {
                 streakCount += 1;
-                streak_ind = i;
             }
             if (i + 1 == comboCards.size() - 1)
             {
+                streak_ind = comboCards[i+1].getValue();
                 color = comboCards[i + 1].getColor();
             }
         }
@@ -116,7 +116,6 @@ protected:
     void calcFlush()
     {
         int CONST = 25;
-        int color = 0;
         int streak = 0;
         int sum = 0;
         for (int i = 0; i < comboCards.size() - 1; i++)
@@ -124,24 +123,23 @@ protected:
             if (comboCards[i].getColor() == comboCards[i + 1].getColor())
             {
                 streak += 1;
-                sum += (comboCards[i].getValue()) * 10 * (i + 1);
             }
             if (i + 1 == comboCards.size() - 1)
             {
-                color = comboCards[i + 1].getColor();
-                sum += (comboCards[i + 1].getValue()) * 10 * (i + 1);
+                sum += comboCards[i + 1].getValue();
             }
         }
 
         if (streak == 4)
         {
             description = "FLUSH";
-            value = sum * 0.1 + color * 0.03 + CONST;
+            value = sum * 0.1 + CONST;
         }
     }
     void calcFullHouse()
     {
-        int CONST = 250;
+        int CONST = 300;
+        int color = 0;
         int pair = -1;
         int triple = -1;
 
@@ -150,6 +148,9 @@ protected:
             if (cardsByValue[i].size() == 3)
             {
                 triple = i;
+                for (auto & card: cardsByValue[i]) {
+                    color += card.getColor();
+                }
             }
             if (cardsByValue[i].size() == 2)
             {
@@ -160,13 +161,13 @@ protected:
         if (pair != -1 && triple != -1)
         {
             description = "FULL HOUSE";
-            value = triple * 0.1 + CONST;
+            value = triple * 0.1 + color * 0.03 + CONST;
         }
     }
 
     void calcFourOfAKind()
     {
-        int CONST = 300;
+        int CONST = 400;
         int index = -1;
 
         for (int i = 0; i < cardsByValue.size(); i++)
@@ -177,17 +178,16 @@ protected:
             }
         }
 
-        if (index != -1 && index != -1)
+        if (index != -1)
         {
-            description = "FULL HOUSE";
+            description = "FOUR OF A KIND";
             value = index * 0.1 + CONST;
         }
     }
 
     void calcStraightFlush()
     {
-        int CONST = 350;
-        int color = 0;
+        int CONST = 500;
         int streak = 0;
         int sum = 0;
 
@@ -196,12 +196,10 @@ protected:
             if (comboCards[i].getColor() == comboCards[i + 1].getColor() && comboCards[i].getValue() == comboCards[i + 1].getValue() - 1)
             {
                 streak += 1;
-                sum += (comboCards[i].getValue()) * 10 * (i + 1);
             }
             if (i + 1 == comboCards.size() - 1)
-            {
-                color = comboCards[i + 1].getColor();
-                sum += (comboCards[i + 1].getValue()) * 10 * (i + 1);
+            {            
+                sum = comboCards[i+1].getValue();
             }
         }
 
@@ -209,7 +207,7 @@ protected:
         {
             cout << "STRAIGHT FLUSH";
             description = "STRAIGHT FLUSH";
-            value = sum * 0.1 + color * 0.03 + CONST;
+            value = sum * 0.1 + CONST;
         }
     }
 
