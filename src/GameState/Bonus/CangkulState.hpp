@@ -17,6 +17,7 @@ class CangkulState
 protected:
     int round;
     bool win;
+    bool freshRound;
     PlayerQueue<CangkulPlayer> playerQueue;
     CangkulDeck mainDeck;
     Table<StandardCard> tableCards;
