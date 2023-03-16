@@ -151,9 +151,8 @@ void Gamestate::resetSession()
 
 void Gamestate::executeCommand()
 {
-    Command *command;
+    Command *command = NULL;
     vector<string> ability = {"ABILITYLESS", "QUADRUPLE", "QUARTER", "REROLL", "REVERSEDIRECTION", "SWAPCARD", "SWITCH"};
-    command = NULL;
     string input = cli.getInput();
     if (input == "NEXT")
     {
