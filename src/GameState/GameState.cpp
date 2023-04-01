@@ -95,7 +95,7 @@ void Gamestate::resetSession()
     playerQueue.resetRound();
     round = 1;
     setGiftPoint(64);
-    abilityDeck.shuffleDeck();
+    // abilityDeck.shuffleDeck();
     cout << " ------------------------------------------ " << endl
          << "| Pilih metode membaca deck                |" << endl
          << "|                                          |" << endl
@@ -330,7 +330,7 @@ void Gamestate::evaluateSession()
         cout << "Evaluasi Combo P" << currPlayer.getID() << " " << currPlayer.getName() << endl;
         ComboTable playerCombo = ComboTable(currPlayer, tableCards);
         playerCombo.calculatePossibleCombos();
-        // playerCombo.displayCombos();
+        playerCombo.displayCombos();
         playerCombos.push_back(playerCombo);
         playerQueue.next();
         cout << endl;
